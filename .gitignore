@@ -1,0 +1,6 @@
+.idea
+.DS_STORE
+build/reports/
+jspm_packages/
+node_modules/
+dist/

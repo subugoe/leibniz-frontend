@@ -1,0 +1,25 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"ecmaFeatures": {
+		"modules": true
+	},
+	"rules": {
+		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
+		"computed-property-spacing": [1, "never"],
+		"indent": [2, "tab", {"indentSwitchCase": true}],
+		"linebreak-style": [2, "unix"],
+		"no-lonely-if": 1,
+		"no-multiple-empty-lines": 1,
+		"no-nested-ternary": 1,
+		"no-self-compare": 1,
+		"space-after-keywords": 1,
+		"space-before-blocks": 1,
+		"space-before-function-paren": [1, "never"],
+		"spaced-comment": [1, "always"],
+		"quotes": [1, "backtick"],
+		"semi": [2, "never"]
+	}
+}
