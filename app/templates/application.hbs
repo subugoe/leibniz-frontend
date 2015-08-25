@@ -1,0 +1,86 @@
+<header class="header">
+
+	<img class="header_logo" src="img/logo-akademie-goettingen.png" alt="res doctae" />
+
+	<a class="header_toggle-nav js-toggle-nav" href="#"><span class="sr-only">{{t 'navigation'}}</span></a>
+
+	<div class="header_pagination">
+		<a class="header_prev-letter" href="{{letter.brief_vorgaenger}}">
+			<span class="popup">{{t 'prevLetterNumber' number=letter.brief_nummer_vorgaenger}}</span>
+		</a>
+		<span class="header_current-letter">{{t 'letterNumber' number=letter.brief_nummer}}</span>
+		<a class="header_next-letter" href="#158">
+			<span class="popup">{{t 'nextLetterNumber' number=letter.brief_nummer_nachfolger}}</span>
+		</a>
+	</div>
+
+	<div class="header_metadata">
+		<a href="#cite" class="header_cite-link">{{t 'recommendedCitation'}}</a>
+		<div class="popup -cite">
+			<span class="popup_pre-heading">{{t 'historicCriticalEdition'}}</span>
+			<h2 class="popup_heading"><a href="{{letter.brief_url}}">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a></h2>
+			<p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
+			<h3 class="popup_pre-heading">{{t 'permaLink'}}</h3>
+			<input class="popup_input" type="url" value="{{letter.brief_url}}">
+		</div>
+	</div>
+
+	<h1 class="header_title">
+		<span class="header_sender">
+			<span class="header_first-name">{{letter.absender_vorname}}</span>
+			<span class="header_last-name">{{letter.absender_nachname}}</span>
+			<span class="popup">{{t 'sender'}}</span>
+		</span>
+		&rarr;
+		<span>
+			<span class="header_first-name">{{letter.empfaenger_vorname}}</span>
+			<span class="header_last-name">{{letter.empfaenger_nachname}}</span>
+			<span class="popup">{{t 'recipient'}}</span>
+		</span>
+	</h1>
+
+	<div class="header_dates">
+		<span class="header_date -gregorian">
+			{{letter.datum_gregorianisch}}
+			<span class="popup">{{t 'gregorianDate'}}</span>
+		</span>
+		(
+		<span class="header_date -julian">
+			{{datum_julianisch}}
+			<span class="popup">{{t 'julianDate'}}</span>
+		</span>)
+	</div>
+
+</header>
+
+{{outlet}}
+
+<div class="sidebar" id="sidebar">
+
+	<p class="sidebar_subheading">{{t 'goettingenAcademyOfSciencesAndHumanities'}}</p>
+	<h2 class="sidebar_heading">{{t 'leibnizLetters'}}</h2>
+
+	<form class="sidebar_search" action="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/discover" method="post">
+		<input name="search" class="sidebar_input" placeholder="{{t 'searchLetters'}}">
+		<input type="submit" value="{{t 'search'}}">
+	</form>
+
+	<h3 class="sidebar_subheading">{{t 'browse'}}</h3>
+	<ul>
+		<li><a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=author" class="sidebar_link -sender">{{t 'sender'}}</a></li>
+		<li><a href="{{!-- TODO: Recipient URL has to be available in DSpace --}}" class="sidebar_link -recipient">{{t 'recipient'}}</a></li>
+		<li><a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=dateissued" class="sidebar_link -date">{{t 'date'}}</a></li>
+		<li><a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=volume" class="sidebar_link -number">{{t 'serialNumber'}}</a></li>
+	</ul>
+
+	<h3 class="sidebar_subheading">Info &amp; Hilfe</h3>
+	<ul>
+		{{!-- TODO: Update links --}}
+		<li><a href="about" class="sidebar_link -about">{{t 'aboutThisProjekt'}}</a></li>
+		<li><a href="contact" class="sidebar_link -contact">{{t 'contact'}}</a></li>
+		<li><a href="impressum" class="sidebar_link -legal">{{t 'impressum'}}</a></li>
+	</ul>
+
+	<p><a href="http://adw-goe.de" class="sidebar_link -back">{{t 'goToPortal'}}</a></p>
+
+</div>
