@@ -7,7 +7,12 @@
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
+* [Node.js](http://nodejs.org/) (with NPM)<br>
+	Make sure that your node version is at least 0.12.* with `node -v`. If your distribution
+	comes with an older version, update with _n_ following these steps:
+	* `sudo npm cache clean -f`
+	* `sudo npm install -g n`
+	* `sudo n stable`
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
