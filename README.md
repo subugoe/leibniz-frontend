@@ -8,14 +8,16 @@ You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)<br>
-	Make sure that your node version is at least 0.12.* with `node -v`. If your distribution
-	comes with an older version, update with _n_ following these steps:
-	* `sudo npm cache clean -f`
-	* `sudo npm install -g n`
-	* `sudo n stable`
+  Make sure that your node version is at least 0.12.* with `node -v`. If your distribution
+  comes with an older version, update with _n_ following these steps:
+  * `sudo npm cache clean -f`
+  * `sudo npm install -g n`
+  * `sudo n stable`
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* Optional: SCSS linting requires Ruby gem scss-lint. Install with `gem install scss_lint` (yes, with an underscore).
+  Since ember-cli-scss-lint currently ignores exludes, just use `scss-lint app/styles` for meaningful output.
 
 ## Installation
 
