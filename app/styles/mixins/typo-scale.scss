@@ -1,0 +1,24 @@
+$typo-scale-offset: 0 !default;
+
+@mixin typo-scale($increment) {
+  font-size: round(ms($increment)) + $typo-scale-offset;
+  // Use this to allow half lines:
+  line-height: floor(ms($increment) / (.5 * $line-height) + 1) * .5 * $line-height;
+  // Use this to only allow full lines:
+  //line-height: floor(ms($increment) / ($line-height) + 1) * $line-height;
+}
+
+// From Chopstick v0.3.3
+@function ms($increment, $value: $font-size, $ratio: $ratio) {
+  @if $increment > 0 {
+    @for $i from 1 through $increment {
+      $value: ($value * $ratio);
+    }
+  } @else {
+    $increment: abs($increment);
+    @for $i from 1 through $increment {
+      $value: ($value / $ratio);
+    }
+  }
+  @return $value
+}

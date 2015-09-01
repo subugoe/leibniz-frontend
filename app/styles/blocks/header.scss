@@ -1,0 +1,93 @@
+.header {
+  @include border(bottom);
+  width: 100%;
+  height: (4.5 * $grid);
+  padding: (.5 * $grid) (.5 * $grid) (.5 * $grid - $border-width);
+  background: $noise;
+}
+
+.header_logo {
+  position: relative;
+  margin: (-.75 * $grid) (.5 * $grid) 0 (-.25 * $grid);
+  padding: (.25 * $grid);
+  float: left;
+  border-radius: 50%;
+  background: $noise;
+
+  // Rounded bottom border
+  @include after {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 -1px 0 $border-color inset;
+    clip: rect((4.75 * $grid - $border-width), 999em, 999em, 0);
+  }
+
+  img {
+    display: block;
+  }
+}
+
+.header_left {
+  float: left;
+}
+
+.header_right {
+  float: right;
+}
+
+.header_title {
+  @include transition(all);
+  @include typo-scale(1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .-scrolled & {
+    @include typo-scale(0);
+  }
+}
+
+.header_sender,
+.header_recipient {
+  color: $primary-color;
+}
+
+.header_to {
+  @include icon('arrow-long-right');
+}
+
+.header_date {
+  @include transition(all);
+  @include typo-scale(0);
+
+  .-scrolled & {
+    font-size: $font-size-small;
+    line-height: 1;
+  }
+}
+
+.header_metadata,
+.header_pagination {
+  position: relative;
+  margin-left: $grid;
+  float: left;
+}
+
+.header_prev-letter {
+  @include icon('chevron-left', false, 1);
+  position: relative;
+}
+
+.header_current-letter {
+  position: relative;
+  margin: 0 .5em;
+  vertical-align: top;
+}
+
+.header_next-letter {
+  @include icon('chevron-right', false, 1);
+  position: relative;
+}

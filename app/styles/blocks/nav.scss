@@ -1,0 +1,54 @@
+.nav {
+  @include border(left);
+  @include transition(right);
+  position: absolute;
+  top: 0;
+  right: (-$nav-width);
+  min-height: 100%;
+  padding: $grid;
+  background: $noise;
+  width: $nav-width;
+
+  &.-visible {
+    right: 0;
+  }
+}
+
+.nav_subheading {
+  margin: 0;
+}
+
+.nav_link {
+  &.-about {
+    @include icon('info');
+  }
+
+  &.-back {
+    @include icon('arrow-with-circle-left');
+    font-weight: bold;
+  }
+
+  &.-contact {
+    @include icon('message');
+  }
+
+  &.-date {
+    @include icon('calendar');
+  }
+
+  &.-legal {
+    @include icon('paragraph');
+  }
+
+  &.-number {
+    @include icon('list');
+  }
+
+  &.-recipient {
+    @include icon('man');
+  }
+
+  &.-sender {
+    @include icon('user');
+  }
+}

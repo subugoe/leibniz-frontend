@@ -1,0 +1,36 @@
+.popup {
+  @include drop-shadow;
+  @include transition(opacity, top, z-index);
+  position: absolute;
+  left: -(.25 * $grid);
+  margin: (.25 * $grid) 0 0;
+  padding: (.5 * $grid);
+  background: $popup-bg-color;
+  color: $text-color;
+  opacity: 0;
+  z-index: -1;
+
+  &:before {
+    display: block;
+    position: absolute;
+    top: (-$grid);
+    left: (.5 * $grid);
+    width: 0;
+    height: 0;
+    border: (.5 * $grid) solid transparent;
+    border-bottom-color: $popup-bg-color;
+    content: '';
+    z-index: 999;
+  }
+
+  &.-visible {
+    top: 100%;
+    opacity: 1;
+    z-index: 99;
+  }
+
+
+  p {
+    margin-bottom: (.5 * $grid);
+  }
+}
