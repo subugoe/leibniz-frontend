@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: $text-color;
+  font: #{$font-size} / #{$grid} $font-family;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+form,
+table {
+  margin: 0 0 $grid;
+}
+
+h1 {
+  @include typo-scale(2);
+}
+
+h2 {
+  @include typo-scale(1);
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: $font-size;
+}
+
+button {
+	border: 0;
+	background: none;
+	color: inherit;
+	cursor: pointer;
+	outline: 0;
+}

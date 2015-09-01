@@ -1,0 +1,9 @@
+@mixin border($sides...) {
+  @if length($sides) > 0 {
+    @each $side in $sides {
+      border-#{$side}: $border-width $border-style $border-color;
+    }
+  } @else {
+    border: $border-width $border-style $border-color;
+  }
+}

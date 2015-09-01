@@ -1,0 +1,10 @@
+// Calculate text-color based on background-color
+// https://github.com/getchopstick/chopstick-boilerplate/blob/master/scss/_tools.mixins.scss
+@mixin text-color($background-color) {
+  // Calculations based on https://vimeo.com/60224584
+  @if (.2126 * red($background-color) + .7152 * green($background-color) + .0722 * blue($background-color)) / 255 <= .5 {
+    color: mix($white, $background-color, 95%);
+  } @else {
+    color: mix($black, $background-color, 70%);
+  }
+}

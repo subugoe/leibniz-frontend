@@ -1,0 +1,39 @@
+// Using Entypo Plus webfont
+// https://github.com/chancancode/entypo-plus
+// Not managed by bower since app.importing is too much hassle
+@mixin icon($name, $position: 'left', $scale: 0) {
+  &:before,
+  &:after {
+    font-family: 'entypo-plus';
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    text-transform: none;
+    speak: none;
+
+    @if $scale > 0 {
+      font-size: $font-size * power($ratio, $scale);
+    }
+  }
+
+  @if $position == 'left' or not $position {
+    &:before {
+      @extend .icon-#{$name};
+
+      @if $position == 'left' {
+        margin-right: .5em;
+        line-height: 1;
+        vertical-align: text-bottom;
+      }
+    }
+  } @else if $position == 'right' {
+    &:after {
+      @extend .icon-#{$name};
+      margin-left: .5em;
+      line-height: 1;
+      vertical-align: text-bottom;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.ember-view {
+  width: 100%;
+  height: 100%;
+}
+
+.ember-view_main {
+  @include transition(padding);
+  width: 100%;
+  vertical-align: top;
+
+  &.-show-nav {
+    padding-right: $nav-width;
+  }
+}

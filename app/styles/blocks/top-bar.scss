@@ -1,0 +1,15 @@
+.top-bar {
+  @include text-color($primary-color);
+  padding: (.25 * $grid);
+  background: $primary-color;
+
+  a {
+    @include text-color($primary-color);
+  }
+}
+
+.top-bar_toggle-nav {
+  @include icon('menu', false);
+  float: right;
+  font-size: $grid;
+}
