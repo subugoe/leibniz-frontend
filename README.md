@@ -1,6 +1,6 @@
 # Leibniz Frontend
 
-	TODO: Introduction
+  TODO: Introduction
 
 ## Prerequisites
 
@@ -13,9 +13,9 @@ You will need the following things properly installed on your computer.
   * `sudo npm cache clean -f`
   * `sudo npm install -g n`
   * `sudo n stable`
-* [Bower](http://bower.io/)
-* [Ember CLI](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+* [Bower](http://bower.io/): `sudo npm install bower -g`
+* [Ember CLI](http://www.ember-cli.com/): `sudo npm install ember-cli -g`
+* [PhantomJS](http://phantomjs.org/): `sudo npm install phantomjs -g`
 * Optional: SCSS linting requires Ruby gem scss-lint. Install with `gem install scss_lint` (yes, with an underscore).
   Since ember-cli-scss-lint currently ignores exludes, just use `scss-lint app/styles` for meaningful output.
 
@@ -47,4 +47,4 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-	TODO: How to deploy
+  TODO: How to deploy
