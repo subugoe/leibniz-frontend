@@ -2,106 +2,43 @@
 
   <div class="top-bar">
 
-    <a href="{{!-- TODO --}}" class="top-bar_title">{{t 'leibnizLetters'}}</a>
+    <a href="{{!-- TODO --}}" class="top-bar_title">{{intl-get 'leibnizLetters'}}</a>
 
     <button class="top-bar_toggle-nav" {{action 'toggleNav'}}>
-      <span class="sr-only">{{t 'navigation'}}</span>
+      <span class="sr-only">{{intl-get 'navigation'}}</span>
     </button>
 
   </div>
 
-  <header class="header">
+  {{outlet 'letter'}}
 
-    <div class="header_logo">
-      <img src="img/logo-akademie-goettingen.png" alt="{{t 'goettingenAcademyOfSciencesAndHumanities'}}">
-    </div>
-
-    <div class="header_left">
-
-      <h1 class="header_title">
-        <span class="header_sender">
-          <span class="header_first-name">{{letter.absender_vorname}}</span>
-          <span class="header_last-name">{{letter.absender_nachname}}</span>
-          <span class="popup">{{t 'sender'}}</span>
-        </span>
-        <span class="header_to">
-          <span class="sr-only">{{t 'to'}}</span>
-        </span>
-        <span class="header_recipient">
-          <span class="header_first-name">{{letter.empfaenger_vorname}}</span>
-          <span class="header_last-name">{{letter.empfaenger_nachname}}</span>
-          <span class="popup">{{t 'recipient'}}</span>
-        </span>
-      </h1>
-
-      <div class="header_dates">
-        <span class="header_date -gregorian">
-          {{letter.datum_gregorianisch}}
-          <span class="popup">{{t 'gregorianDate'}}</span>
-        </span>
-        (
-        <span class="header_date -julian">
-          {{datum_julianisch}}
-          <span class="popup">{{t 'julianDate'}}</span>
-        </span>)
-      </div>
-
-    </div>
-
-    <div class="header_right">
-
-      <div class="header_metadata">
-        <a href="#cite" class="header_cite-link">{{t 'recommendedCitation'}}</a>
-        <div class="popup -cite">
-          <span class="popup_pre-heading">{{t 'historicCriticalEdition'}}</span>
-          <h2 class="popup_heading"><a href="{{letter.brief_url}}">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a></h2>
-          <p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
-          <h3 class="popup_pre-heading">{{t 'permaLink'}}</h3>
-          <input class="popup_input" type="url" value="{{letter.brief_url}}">
-        </div>
-      </div>
-
-      <div class="header_pagination">
-        <a class="header_prev-letter" href="{{letter.brief_vorgaenger}}">
-          <span class="popup">{{t 'prevLetterNumber' number=letter.brief_nummer_vorgaenger}}</span>
-        </a>
-        <span class="header_current-letter">{{t 'letterNumber' number=letter.brief_nummer}}</span>
-        <a class="header_next-letter" href="#158">
-          <span class="popup">{{t 'nextLetterNumber' number=letter.brief_nummer_nachfolger}}</span>
-        </a>
-      </div>
-
-    </div>
-
-  </header>
-
-  {{outlet}}
+  {{outlet 'lanes'}}
 
 </div>
 
 <div class="nav {{if showNav '-visible'}}">
 
-  <p class="nav_subheading">{{t 'goettingenAcademyOfSciencesAndHumanities'}}</p>
-  <h2 class="nav_heading">{{t 'leibnizLetters'}}</h2>
+  <p class="nav_subheading">{{intl-get 'goettingenAcademyOfSciencesAndHumanities'}}</p>
+  <h2 class="nav_heading">{{intl-get 'leibnizLetters'}}</h2>
 
   <form class="nav_search" action="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/discover" method="post">
-    <input name="search" class="nav_input" placeholder="{{t 'searchLetters'}}">
-    <input type="submit" value="{{t 'search'}}">
+    <input name="search" class="nav_input" placeholder="{{intl-get 'search'}}">
+    <input type="submit" value="{{intl-get 'search'}}">
   </form>
 
-  <h3 class="nav_subheading">{{t 'browse'}}</h3>
+  <h3 class="nav_subheading">{{intl-get 'browse'}}</h3>
   <ul>
     <li>
-      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=author" class="nav_link -sender" target="_blank">{{t 'sender'}}</a>
+      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=author" class="nav_link -sender" target="_blank">{{intl-get 'sender'}}</a>
     </li>
     <li>
-      <a href="{{!-- TODO: Recipient URL has to be available in DSpace --}}" class="nav_link -recipient" target="_blank">{{t 'recipient'}}</a>
+      <a href="{{!-- TODO: Recipient URL has to be available in DSpace --}}" class="nav_link -recipient" target="_blank">{{intl-get 'recipient'}}</a>
     </li>
     <li>
-      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=dateissued" class="nav_link -date" target="_blank">{{t 'date'}}</a>
+      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=dateissued" class="nav_link -date" target="_blank">{{intl-get 'date'}}</a>
     </li>
     <li>
-      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=volume" class="nav_link -number" target="_blank">{{t 'serialNumber'}}</a>
+      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=volume" class="nav_link -number" target="_blank">{{intl-get 'serialNumber'}}</a>
     </li>
   </ul>
 
@@ -109,18 +46,18 @@
   <ul>
     {{!-- TODO: Update links --}}
     <li>
-      <a href="about" class="nav_link -about">{{t 'aboutThisProjekt'}}</a>
+      <a href="about" class="nav_link -about">{{intl-get 'aboutThisProjekt'}}</a>
     </li>
     <li>
-      <a href="contact" class="nav_link -contact">{{t 'contact'}}</a>
+      <a href="contact" class="nav_link -contact">{{intl-get 'contact'}}</a>
     </li>
     <li>
-      <a href="impressum" class="nav_link -legal">{{t 'impressum'}}</a>
+      <a href="impressum" class="nav_link -legal">{{intl-get 'impressum'}}</a>
     </li>
   </ul>
 
   <p>
-    <a href="http://adw-goe.de" class="nav_link -back">{{t 'goToPortal'}}</a>
+    <a href="http://adw-goe.de" class="nav_link -back">{{intl-get 'goToPortal'}}</a>
   </p>
 
 </div>
