@@ -15,7 +15,8 @@
 }
 
 .nav_subheading {
-  margin: 0;
+  @include typo-scale(1);
+  margin-bottom: (.5 * $grid);
 }
 
 .nav_link {
