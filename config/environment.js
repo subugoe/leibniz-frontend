@@ -5,8 +5,17 @@ module.exports = function(environment) {
     modulePrefix: 'leibniz-frontend',
     environment: environment,
     baseURL: '/',
-    i18n: {
-      defaultLocale: 'de'
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self'",
+      'font-src': "'self'",
+      'connect-src': "'self' http://leibniz.sub.uni-goettingen.de",
+      'img-src': "'self'",
+      'style-src': "'self'",
+      'media-src': "'self'"
+    },
+    intl: {
+      defaultLocale: 'de-de'
     },
     locationType: 'auto',
     EmberENV: {
@@ -15,7 +24,6 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
-
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
