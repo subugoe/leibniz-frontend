@@ -4,56 +4,63 @@
     <img src="img/logo-akademie-goettingen.png" alt="{{intl-get 'goettingenAcademyOfSciencesAndHumanities'}}">
   </div>
 
-  <div class="header_main">
+  {{#if content.brief_nummer}}
 
-    <h1 class="header_title">
-      <span class="header_sender">
-        <!-- TODO -->
-        <span class="header_first-name">{{content.absender_vorname}}</span>
-        <span class="header_last-name">{{content.absender_nachname}}</span>
-        <span class="popup">{{intl-get 'sender'}}</span>
-      </span>
-      <span class="header_to">
-        <span class="sr-only">{{intl-get 'to'}}</span>
-      </span>
-      <span class="header_recipient">
-        <span class="header_first-name">{{content.empfaenger_vorname}}</span>
-        <span class="header_last-name">{{content.empfaenger_nachname}}</span>
-        <span class="popup">{{intl-get 'recipient'}}</span>
-      </span>
-    </h1>
-
-    <div class="header_dates">
-      <span class="header_date -gregorian">{{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}<span class="popup">{{intl-get 'gregorianDate'}}</span></span>
-      (<span class="header_date -julian">{{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}<span class="popup">{{intl-get 'julianDate'}}</span></span>)
+    <div class="header_main">
+        <h1 class="header_title">
+          <span class="header_sender">
+            <span class="header_first-name">{{content.absender_vorname}}</span>
+            <span class="header_last-name">{{content.absender_nachname}}</span>
+            <span class="popup">{{intl-get 'sender'}}</span>
+          </span>
+          <span class="header_to">
+            <span class="sr-only">{{intl-get 'to'}}</span>
+          </span>
+          <span class="header_recipient">
+            <span class="header_first-name">{{content.empfaenger_vorname}}</span>
+            <span class="header_last-name">{{content.empfaenger_nachname}}</span>
+            <span class="popup">{{intl-get 'recipient'}}</span>
+          </span>
+        </h1>
+        <div class="header_dates">
+          <span class="header_date -gregorian">{{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}<span class="popup">{{intl-get 'gregorianDate'}}</span></span>
+          {{#if content.datum_julianisch}}
+            (<span class="header_date -julian">{{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}<span class="popup">{{intl-get 'julianDate'}}</span></span>)
+          {{/if}}
+        </div>
     </div>
 
-  </div>
-
-  <div class="header_aside">
-
-    <div class="header_pagination">
-      <a class="header_prev-letter" href="{{content.brief_nummer_vorgaenger}}">
-        <span class="popup">{{format-html-message (intl-get 'prevLetterNumber') number=content.brief_nummer_vorgaenger}}</span>
-      </a>
-      <span class="header_current-letter">{{format-html-message (intl-get 'letterNumber') number=content.brief_nummer}}</span>
-      <a class="header_next-letter" href="#158">
-        <span class="popup">{{format-html-message (intl-get 'nextLetterNumber') number=content.brief_nummer_nachfolger}}</span>
-      </a>
-    </div>
-
-    <div class="header_metadata">
-      <a href="#cite" class="header_cite-link">{{intl-get 'recommendedCitation'}}</a>
-      <div class="popup -cite">
-        <span class="popup_pre-heading">{{intl-get 'historicCriticalEdition'}}</span>
-        <h2 class="popup_heading"><a href="{{content.brief_url}}">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a></h2>
-        <p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
-        <h3 class="popup_pre-heading">{{intl-get 'permaLink'}}</h3>
-        <input class="popup_input" type="url" value="{{content.brief_url}}">
+    <div class="header_aside">
+      <div class="header_pagination">
+        {{#link-to 'letter' content.brief_id_vorgaenger class="header_prev-letter"}}
+          <span class="popup">{{format-html-message (intl-get 'prevLetterNumber') number=content.brief_nummer_vorgaenger}}</span>
+        {{/link-to}}
+        <span class="header_current-letter">{{format-html-message (intl-get 'letterNumber') number=content.brief_nummer}}</span>
+        {{#link-to 'letter' content.brief_id_nachfolger class="header_next-letter"}}
+          <span class="popup">{{format-html-message (intl-get 'nextLetterNumber') number=content.brief_nummer_nachfolger}}</span>
+        {{/link-to}}
+      </div>
+      <div class="header_metadata">
+        <a href="#cite" class="header_cite-link">{{intl-get 'recommendedCitation'}}</a>
+        <div class="popup -cite">
+          <span class="popup_pre-heading">{{intl-get 'historicCriticalEdition'}}</span>
+          <h2 class="popup_heading"><a href="{{content.brief_url}}">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a></h2>
+          <p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
+          <h3 class="popup_pre-heading">{{intl-get 'permaLink'}}</h3>
+          <input class="popup_input" type="url" value="{{content.brief_url}}">
+        </div>
       </div>
     </div>
 
-  </div>
+  {{else}}
+
+    <div class="header_main">
+      <h1 class="header_title">
+        {{format-html-message (intl-get 'letterNotAvailable') id=content.id}}
+      </h1>
+    </div>
+
+  {{/if}}
 
 </header>
 
