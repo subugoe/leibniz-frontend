@@ -7,7 +7,7 @@ module.exports = function(environment) {
     baseURL: '/',
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self'",
+      'script-src': "'self' http://leibniz.sub.uni-goettingen.de",
       'font-src': "'self'",
       'connect-src': "'self' http://leibniz.sub.uni-goettingen.de",
       'img-src': "'self'",
@@ -17,6 +17,7 @@ module.exports = function(environment) {
     intl: {
       defaultLocale: 'de-de'
     },
+    solrURL: 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
