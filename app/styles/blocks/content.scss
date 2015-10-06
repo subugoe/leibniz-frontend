@@ -1,0 +1,19 @@
+.content {
+  float: left;
+  margin-top: (-.25 * $grid + $border-width);
+  width: 100%;
+}
+
+.content_loading {
+  @include spinner($grid, border-color $border-color);
+  margin: $grid;
+}
+
+.content_lanes {
+  opacity: 0;
+
+  &.-rendered {
+    @include transition(opacity);
+    opacity: 1;
+  }
+}

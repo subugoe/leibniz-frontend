@@ -1,0 +1,9 @@
+.lane {
+  display: table-cell;
+  vertical-align: top;
+  padding: (.5 * $grid);
+
+  &.-minimized {
+    display: none;
+  }
+}

@@ -1,7 +1,7 @@
 .nav {
   @include border(left);
   @include transition(right);
-  position: absolute;
+  position: fixed;
   top: 0;
   right: (-$nav-width);
   min-height: 100%;
