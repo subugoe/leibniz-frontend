@@ -1,13 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-
   showNav: false,
-
   actions: {
-    toggleNav() {
+    toggleNav: function() {
       this.set('showNav', ! this.get('showNav'));
     }
-  }
-
+  },
 });

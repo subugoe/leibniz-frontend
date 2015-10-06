@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'leibniz-frontend/tests/helpers/start-app';
 
-module('Acceptance | user can toggle nav sidebar', {
+module('Acceptance | toggle nav sidebar', {
   beforeEach: function() {
     this.application = startApp();
   },

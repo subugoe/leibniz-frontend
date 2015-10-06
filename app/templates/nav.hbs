@@ -1,0 +1,45 @@
+<div class="nav {{if showNav '-visible'}}">
+
+  <p class="nav_subheading">{{intl-get 'goettingenAcademyOfSciencesAndHumanities'}}</p>
+  <h2 class="nav_heading">{{intl-get 'leibnizLetters'}}</h2>
+
+  <form class="nav_search" action="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/discover" method="post">
+    <input name="search" class="nav_input" placeholder="{{intl-get 'search'}}">
+    <input type="submit" value="{{intl-get 'search'}}">
+  </form>
+
+  <h3 class="nav_subheading">{{intl-get 'browse'}}</h3>
+  <ul>
+    <li>
+      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=author" class="nav_link -sender" target="_blank">{{intl-get 'sender'}}</a>
+    </li>
+    <li>
+      <a href="{{!-- TODO: Recipient URL has to be available in DSpace --}}" class="nav_link -recipient" target="_blank">{{intl-get 'recipient'}}</a>
+    </li>
+    <li>
+      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=dateissued" class="nav_link -date" target="_blank">{{intl-get 'date'}}</a>
+    </li>
+    <li>
+      <a href="http://rep.adw-goe.de/handle/11858/00-001S-0000-0006-AB16-C/browse?type=volume" class="nav_link -number" target="_blank">{{intl-get 'serialNumber'}}</a>
+    </li>
+  </ul>
+
+  <h3 class="nav_subheading">Info &amp; Hilfe</h3>
+  <ul>
+    {{!-- TODO: Update links --}}
+    <li>
+      <a href="about" class="nav_link -about">{{intl-get 'aboutThisProjekt'}}</a>
+    </li>
+    <li>
+      <a href="contact" class="nav_link -contact">{{intl-get 'contact'}}</a>
+    </li>
+    <li>
+      <a href="impressum" class="nav_link -legal">{{intl-get 'impressum'}}</a>
+    </li>
+  </ul>
+
+  <p>
+    <a href="http://adw-goe.de" class="nav_link -back">{{intl-get 'goToPortal'}}</a>
+  </p>
+
+</div>
