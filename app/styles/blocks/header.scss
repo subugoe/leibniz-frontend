@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   height: (4.5 * $grid);
-  padding: (.5 * $grid) (.5 * $grid) (.5 * $grid - $border-width);
+  padding: (.5 * $grid);
   background: $noise;
 }
 
@@ -46,8 +46,6 @@
   @include transition(all);
   @include typo-scale(1);
   margin: 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
 
   .-scrolled & {
     @include typo-scale(0);
@@ -77,21 +75,31 @@
 
 .header_metadata,
 .header_pagination {
-  text-align: center;
+  text-align: right;
 }
 
-.header_prev-letter {
-  @include icon('chevron-left', false, 1);
+.header_step {
   position: relative;
+  user-select: none;
+
+  &.-prev {
+    @include icon('chevron-left', false, 1);
+  }
+
+  &.-next {
+    @include icon('chevron-right', false, 1);
+  }
+
+  &.-disabled {
+    color: $disabled-color;
+  }
 }
 
 .header_current-letter {
   position: relative;
+  display: inline-block;
   margin: 0 .5em;
+  width: 2em;
   vertical-align: top;
-}
-
-.header_next-letter {
-  @include icon('chevron-right', false, 1);
-  position: relative;
+  text-align: center;
 }

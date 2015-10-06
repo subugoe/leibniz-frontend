@@ -8,6 +8,7 @@ $border-color: #ccc;
 $link-color: $primary-color;
 $popup-bg-color: $white;
 $text-color: #444;
+$disabled-color: tint($text-color, 60);
 
 // Dimensions
 $ratio: 1.41;
