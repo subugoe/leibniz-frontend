@@ -34,8 +34,12 @@ export default Ember.Route.extend({
     this.render({ outlet: 'letter' });
     this.controller.set('rendered', false);
   },
+  setupController: function (controller, model) {
+    this._super(controller, model);
+    controller.set('rendered', true);
+  },
   afterModel: function() {
-    Ember.run.next(() => {
+    Ember.run.next( () => {
       if ( this.context.volltext ) {
         MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => { // jshint ignore:line
           this.controller.set('rendered', true);
