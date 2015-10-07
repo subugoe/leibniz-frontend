@@ -16,8 +16,8 @@ test('toggle nav sidebar', function(assert) {
   var nav, navRight, duration;
   assert.expect(2);
 
-  // TODO: Workaround: Load a non-existing letter or MathJax will make this test fail
-  visit('/letter/0');
+  // TODO: Workaround: Load a letter without fulltext or MathJax will make this test fail
+  visit('/letter/l371');
   andThen( () => {
     nav = find('.nav');
     navRight = nav.css('right');
