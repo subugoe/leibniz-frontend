@@ -4,10 +4,10 @@
   position: fixed;
   top: 0;
   right: (-$nav-width);
+  width: $nav-width;
   min-height: 100%;
   padding: $grid;
   background: $noise;
-  width: $nav-width;
 
   &.-visible {
     right: 0;

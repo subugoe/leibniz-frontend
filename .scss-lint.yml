@@ -14,7 +14,7 @@ linters:
     enabled: true
 
   ColorKeyword:
-    enabled: true
+    enabled: false
 
   Comment:
     enabled: true
@@ -58,8 +58,8 @@ linters:
 
   Indentation:
     enabled: true
-    character: tab
-    width: 1
+    character: space
+    width: 2
 
   LeadingZero:
     enabled: true
