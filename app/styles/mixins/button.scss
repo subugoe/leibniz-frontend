@@ -8,7 +8,7 @@
     background: none;
 
     &:hover {
-      background: $shade-color;
+      background: $shade;
     }
   } @else {
     background: $link-color;

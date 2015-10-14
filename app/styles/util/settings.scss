@@ -2,6 +2,7 @@
 $alpha-color: #c90230;
 $black: #000;
 $white: #fff;
+$shade: rgba($black, .05);
 
 // Named colors
 $border-color: #ccc;
@@ -9,12 +10,14 @@ $link-color: $alpha-color;
 $link-hover-color: shade($link-color, 20);
 $popup-bg-color: $white;
 $text-color: #444;
+$text-color-light: #888;
 $disabled-color: tint($text-color, 60);
-$shade-color: rgba($black, .05);
+$highlight-color: shade($white, 5);
 
 // Dimensions
 $ratio: 1.41;
 $font-family: Georgia, serif;
+$font-family-secondary: Arial, Helvetica, sans-serif;
 $font-size: 16px;
 $font-size-small: 14px;
 $grid: 28px;

@@ -1,3 +1,30 @@
+// Calculate color-text based on background-color
+// https://github.com/getchopstick/chopstick-boilerplate/blob/master/scss/_tools.mixins.scss
+@function auto-color($background-color) {
+  // Calculations based on https://vimeo.com/60224584
+  @if (.2126 * red($background-color) + .7152 * green($background-color) + .0722 * blue($background-color)) / 255 <= .5 {
+    @return mix($white, $background-color, 95%);
+  } @else {
+    @return mix($black, $background-color, 70%);
+  }
+}
+
+// Get the long hex representation of a short hex color for SVG building
+@function color-to-string($color) {
+  $colorStr: inspect($color); // converting to string
+  @if type-of($color) != color {
+    @error "#{$color} is not a valid color";
+  }
+  @if str-length($colorStr) != 4 {
+    @return $colorStr;
+  }
+  $r: str-slice($colorStr, 2, 2);
+  $g: str-slice($colorStr, 3, 3);
+  $b: str-slice($colorStr, 4, 4);
+  $long-hex: '#' + $r + $r + $g + $g + $b + $b;
+  @return $long-hex;
+}
+
 @function power($x, $n) {
   $ret: 1;
   @if $n > 0 {
@@ -17,33 +44,55 @@
   @return mix(black, $color, $percent);
 }
 
-// Calculate color-text based on background-color
-// https://github.com/getchopstick/chopstick-boilerplate/blob/master/scss/_tools.mixins.scss
-@function auto-color($background-color) {
-  // Calculations based on https://vimeo.com/60224584
-  @if (.2126 * red($background-color) + .7152 * green($background-color) + .0722 * blue($background-color)) / 255 <= .5 {
-    @return mix($white, $background-color, 95%);
-  } @else {
-    @return mix($black, $background-color, 70%);
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
   }
+  @return $string;
 }
 
-// Get the long hex representation of a short hex color for SVG building
-// Note that this returns a string, not a color!
-@function long-hex($color) {
-  // TODO: Validation
-  $colorStr: inspect($color); // converting to string
-  @if type-of($color) != color or str-length($colorStr) != 4 {
-    @error "#{$color} is not a valid short hex color";
-  }
-  $r: str-slice($colorStr, 2, 2);
-  $g: str-slice($colorStr, 3, 3);
-  $b: str-slice($colorStr, 4, 4);
-  $long-hex: '#' + $r + $r + $g + $g + $b + $b;
-  @return $long-hex;
+// Generate base64-encoded inline SVG to use as background
+@function svg($width, $height, $code) {
+  $svg: "<svg xmlns='http://www.w3.org/2000/svg' width='#{$width}' height='#{$height}'>#{$code}</svg>";
+  @return url("data:image/svg+xml;utf8,#{url-encode($svg)}");
 }
 
 // Add percentage of white to a color
 @function tint($color, $percent) {
   @return mix(white, $color, $percent);
+}
+
+@function url-encode($string) {
+  $map: (
+    "%": "%25",
+    "<": "%3C",
+    ">": "%3E",
+    " ": "%20",
+    "!": "%21",
+    "*": "%2A",
+    "'": "%27",
+    '"': "%22",
+    "(": "%28",
+    ")": "%29",
+    ";": "%3B",
+    ":": "%3A",
+    "@": "%40",
+    "&": "%26",
+    "=": "%3D",
+    "+": "%2B",
+    "$": "%24",
+    ",": "%2C",
+    "/": "%2F",
+    "?": "%3F",
+    "#": "%23",
+    "[": "%5B",
+    "]": "%5D"
+  );
+  $new: $string;
+  @each $search, $replace in $map {
+    $new: str-replace($new, $search, $replace);
+  }
+  @return $new;
 }
