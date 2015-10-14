@@ -10,7 +10,7 @@ module.exports = function(environment) {
       'script-src': "'self' http://leibniz.sub.uni-goettingen.de",
       'font-src': "'self'",
       'connect-src': "'self' http://leibniz.sub.uni-goettingen.de",
-      'img-src': "'self'",
+      'img-src': "'self' data:",
       'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"
     },
