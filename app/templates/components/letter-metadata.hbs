@@ -27,5 +27,5 @@
       {{t 'languages'}}
     {{/if}}
   </h3>
-  <p>{{#each content.sprache as |sprache index|}}{{if index ', '}}{{sprache}}{{/each}}</p>
+  <p>{{#each content.sprache as |sprache index|}}{{if index ', '}}{{t (concat 'language' (ucFirst sprache))}}{{/each}}</p>
 </aside>
