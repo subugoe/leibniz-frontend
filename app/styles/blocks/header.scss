@@ -87,7 +87,7 @@
   user-select: none;
 
   &:hover {
-    background: $shade-color;
+    background: $shade;
   }
 
   &.-prev {
@@ -121,20 +121,26 @@
 }
 
 .header_toggle-metadata {
+  @include font(highlight);
+  @include transition(background, color);
   position: relative;
   top: (-$border-width);
   height: ($grid + 2 * $border-width);
   width: (9 * $grid);
-  background: url("data:image/svg+xml;utf8,
-    <svg xmlns='http://www.w3.org/2000/svg' width='#{7 * $grid}' height='#{$grid + 2 * $border-width} '>
-      <path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{long-hex($border-color)}' style='stroke-width: #{$border-width}' fill='#ffffff'/>
-    </svg>") center top no-repeat;
+  background:
+    svg(
+      7 * $grid,
+      $grid + 2 * $border-width,
+      "<path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#ffffff'/>"
+    ) center top no-repeat;
 
   @include hover {
-    color: auto-color($link-hover-color);
-    background: url("data:image/svg+xml;utf8,
-      <svg xmlns='http://www.w3.org/2000/svg' width='#{7 * $grid}' height='#{$grid + 2 * $border-width} '>
-        <path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{long-hex($border-color)}' style='stroke-width: #{$border-width}' fill='#{$link-hover-color}'/>
-      </svg>") center top no-repeat;
+    color: $link-hover-color;
+    background:
+      svg(
+        7 * $grid,
+        $grid + 2 * $border-width,
+        "<path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
+      ) center top no-repeat;
   }
 }
