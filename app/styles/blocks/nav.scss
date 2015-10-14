@@ -12,6 +12,10 @@
   &.-visible {
     right: 0;
   }
+
+  a {
+    @include link-border-on-hover;
+  }
 }
 
 .nav_subheading {

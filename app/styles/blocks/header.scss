@@ -1,15 +1,17 @@
 .header {
   @include border(bottom);
+  @include drop-shadow;
   position: relative;
+  float: left;
   width: 100%;
-  height: (4.5 * $grid);
+  height: (3 * $grid);
   padding: (.5 * $grid);
   background: $noise;
 }
 
 .header_logo {
   position: relative;
-  margin: (-.75 * $grid) (.5 * $grid) 0 (-.25 * $grid);
+  margin: (-1.75 * $grid) (.25 * $grid) 0 (-.25 * $grid);
   padding: (.25 * $grid);
   float: left;
   border-radius: 50%;
@@ -23,11 +25,13 @@
     height: 100%;
     border-radius: 50%;
     box-shadow: 0 -1px 0 $border-color inset;
-    clip: rect((4.75 * $grid - $border-width), 999em, 999em, 0);
+    clip: rect((4.25 * $grid - $border-width), 999em, 999em, 0);
   }
 
   img {
     display: block;
+    width: (4 * $grid);
+    height: auto;
   }
 }
 
@@ -54,7 +58,7 @@
 
 .header_sender,
 .header_recipient {
-  color: $primary-color;
+  color: $alpha-color;
 }
 
 .header_to {
@@ -79,8 +83,12 @@
 }
 
 .header_step {
-  position: relative;
+  @include button('shady');
   user-select: none;
+
+  &:hover {
+    background: $shade-color;
+  }
 
   &.-prev {
     @include icon('chevron-left', false, 1);
@@ -98,8 +106,35 @@
 .header_current-letter {
   display: inline-block;
   position: relative;
-  width: 2em;
-  margin: 0 .5em;
+  width: 4em;
   text-align: center;
-  vertical-align: top;
+}
+
+.header_citation {
+  text-align: center;
+}
+
+.header_below {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.header_toggle-metadata {
+  position: relative;
+  top: (-$border-width);
+  height: ($grid + 2 * $border-width);
+  width: (9 * $grid);
+  background: url("data:image/svg+xml;utf8,
+    <svg xmlns='http://www.w3.org/2000/svg' width='#{7 * $grid}' height='#{$grid + 2 * $border-width} '>
+      <path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{long-hex($border-color)}' style='stroke-width: #{$border-width}' fill='#ffffff'/>
+    </svg>") center top no-repeat;
+
+  @include hover {
+    color: auto-color($link-hover-color);
+    background: url("data:image/svg+xml;utf8,
+      <svg xmlns='http://www.w3.org/2000/svg' width='#{7 * $grid}' height='#{$grid + 2 * $border-width} '>
+        <path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{long-hex($border-color)}' style='stroke-width: #{$border-width}' fill='#{$link-hover-color}'/>
+      </svg>") center top no-repeat;
+  }
 }

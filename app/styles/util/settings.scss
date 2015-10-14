@@ -1,14 +1,16 @@
 // Colors
-$primary-color: #c90230;
+$alpha-color: #c90230;
 $black: #000;
 $white: #fff;
 
 // Named colors
 $border-color: #ccc;
-$link-color: $primary-color;
+$link-color: $alpha-color;
+$link-hover-color: shade($link-color, 20);
 $popup-bg-color: $white;
 $text-color: #444;
 $disabled-color: tint($text-color, 60);
+$shade-color: rgba($black, .05);
 
 // Dimensions
 $ratio: 1.41;
@@ -20,6 +22,7 @@ $border-width: 1px;
 $border-style: solid;
 $line-height: $grid;
 $nav-width: (10 * $grid);
+$br: 3px; // border-radius
 
 // Locations
 $img-path: '../img/';
