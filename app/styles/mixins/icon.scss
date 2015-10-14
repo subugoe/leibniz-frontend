@@ -14,26 +14,23 @@
     speak: none;
 
     @if $scale > 0 {
-      font-size: $font-size * power($ratio, $scale);
+      font-size: round($font-size * power($ratio, $scale));
+      line-height: $grid;
     }
   }
 
-  @if $position == 'left' or not $position {
-    &:before {
-      @extend .icon-#{$name};
+  &:before {
+    @extend .icon-#{$name};
 
-      @if $position == 'left' {
-        margin-right: .5em;
-        line-height: 1;
-        vertical-align: text-bottom;
-      }
-    }
-  } @else if $position == 'right' {
-    &:after {
-      @extend .icon-#{$name};
-      margin-left: .5em;
-      line-height: 1;
+    @if $position == 'left' {
+      margin-right: .5em;
       vertical-align: text-bottom;
+    } @else if $position == 'right' {
+      float: right;
+      margin-left: .5em;
+      vertical-align: text-bottom;
+    } @else {
+      vertical-align: middle;
     }
   }
 }

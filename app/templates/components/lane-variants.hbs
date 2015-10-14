@@ -1,5 +1,15 @@
 {{! TODO}}
 
-<div>TODO: Varianten</div>
+{{#each content.variants as |variant|}}
+  <div class="variant">
+    <ul>
+      <li>ID: {{variant.id}}</li>
+      <li>Lemma: {{variant.lemma}}</li>
+      <li>Text: {{{variant.text_schnipsel}}}</li>
+      <li>Textzeuge: {{#each variant.textzeuge as |textzeuge index|}}{{if index ', '}}{{textzeuge}}{{/each}}</li>
+      <li></li>
+    </ul>
+  </div>
+{{/each}}
 
 {{yield}}

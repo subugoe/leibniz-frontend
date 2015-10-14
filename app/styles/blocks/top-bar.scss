@@ -1,15 +1,23 @@
 .top-bar {
-  @include text-color($primary-color);
-  padding: (.25 * $grid);
-  background: $primary-color;
+  padding: (.25 * $grid) (.25 * $grid) (.25 * $grid) (5 * $grid);
+  background: $alpha-color;
+  color: auto-color($alpha-color);
 
   a {
-    @include text-color($primary-color);
+    color: auto-color($alpha-color);
+
+    @include hover {
+      color: auto-color($alpha-color);
+    }
   }
 }
 
 .top-bar_toggle-nav {
-  @include icon('menu', false);
+  @include icon('menu', 'right');
   float: right;
-  font-size: $grid;
+
+  &:before {
+    margin-left: .25em;
+    font-size: $grid;
+  }
 }

@@ -18,7 +18,7 @@
     display: block;
     position: absolute;
     top: (-.5 * $grid);
-    left: (.5 * $grid);
+    left: (.3 * $grid);
     width: 0;
     height: 0;
     border: (.25 * $grid) solid transparent;
@@ -32,7 +32,7 @@
     left: auto;
 
     &:before {
-      right: (.5 * $grid);
+      right: (.3 * $grid);
       left: auto;
     }
   }
@@ -49,8 +49,4 @@
   p {
     margin-bottom: (.5 * $grid);
   }
-}
-
-.popup_parent {
-  position: relative;
 }

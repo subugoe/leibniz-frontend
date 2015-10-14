@@ -1,8 +1,8 @@
-@mixin border-on-hover {
+@mixin link-border-on-hover {
   @include transition(border-color);
   border-bottom: $border-width $border-style transparent;
 
   @include hover {
-    border-color: $link-color;
+    border-color: $link-hover-color;
   }
 }

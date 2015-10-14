@@ -1,11 +1,10 @@
 .content {
   width: 100%;
-  margin-top: (-.25 * $grid + $border-width);
   float: left;
 }
 
 .content_loading {
-  @include spinner($grid, border-color $border-color);
+  @include spinner($grid, border-color $alpha-color);
   margin: $grid;
 }
 

@@ -1,3 +1,16 @@
+.letter {
+  a {
+    @include link-border;
+  }
+}
+
 .letter_fulltext-not-available {
   font-style: italic;
+}
+
+// TODO
+.letter_mark {
+  background: $shade-color;
+  border-radius: $br;
+  padding: .5em;
 }
