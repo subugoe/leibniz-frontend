@@ -2,8 +2,8 @@
 // https://github.com/chancancode/entypo-plus
 // Not managed by bower since app.importing is too much hassle
 @mixin icon($name, $position: 'left', $scale: 0) {
-  &:before,
-  &:after {
+  &:before {
+    vertical-align: top;
     font-family: 'entypo-plus';
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -15,7 +15,7 @@
 
     @if $scale > 0 {
       font-size: round($font-size * power($ratio, $scale));
-      line-height: $grid;
+      line-height: $g;
     }
   }
 
@@ -24,13 +24,9 @@
 
     @if $position == 'left' {
       margin-right: .5em;
-      vertical-align: text-bottom;
     } @else if $position == 'right' {
       float: right;
       margin-left: .5em;
-      vertical-align: text-bottom;
-    } @else {
-      vertical-align: middle;
     }
   }
 }
