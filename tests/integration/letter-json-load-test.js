@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 var App;
 
-module('Letter JSON load test', {
+module('Integration | Letter JSON load test', {
   beforeEach: function() {
     App = startApp();
   },

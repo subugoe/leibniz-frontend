@@ -45,24 +45,28 @@ export default Ember.Route.extend({
   },
   afterModel: function() {
     Ember.run.next( () => {
-      // Turn static links into ember transition links
-      var route = this;
-      // TODO: Get a elements directly
-      Ember.$('.metadata').find('a').click( function(e) {
-        e.preventDefault();
-        var letterID = Ember.$(this).attr('href');
-        route.transitionTo('letter', letterID);
-      });
-
-      // Render letter with MathJax
-      if ( this.context.volltext ) {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => { // jshint ignore:line
-          this.controller.set('rendered', true);
-        });
-      } else {
-        this.controller.set('rendered', true);
-      }
+      this.activateLinks();
+      this.renderMathjax();
     });
+  },
+  // Turn static links into ember transition links
+  activateLinks: function() {
+    var route = this;
+    // TODO: Get a elements directly
+    Ember.$('.metadata').find('a').click( function(e) {
+      e.preventDefault();
+      var letterID = Ember.$(this).attr('href');
+      route.transitionTo('letter', letterID);
+    });
+  },
+  renderMathjax: function() {
+    if ( this.context.volltext ) {
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => { // jshint ignore:line
+        this.controller.set('rendered', true);
+      });
+    } else {
+      this.controller.set('rendered', true);
+    }
   }
 });
 

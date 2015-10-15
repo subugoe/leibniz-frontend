@@ -1,10 +1,4 @@
 <aside class="metadata">
-  <h2>{{t 'metadata'}}</h2>
-
-  {{yield}}
-
-  <p>{{{t 'series' series=content.reihe}}}, {{{t 'number' number=content.brief_nummer}}}</p>
-
   <h3>{{t 'context'}}</h3>
   <p>{{{content.kontext}}}</p>
 
@@ -28,4 +22,6 @@
     {{/if}}
   </h3>
   <p>{{#each content.sprache as |sprache index|}}{{if index ', '}}{{t (concat 'language' (ucFirst sprache))}}{{/each}}</p>
+
+  {{yield}}
 </aside>
