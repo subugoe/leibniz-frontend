@@ -4,16 +4,14 @@
   position: relative;
   float: left;
   width: 100%;
-  height: (3 * $grid);
-  padding: (.5 * $grid);
   background: $noise;
 }
 
 .header_logo {
-  position: relative;
-  margin: (-1.75 * $grid) (.25 * $grid) 0 (-.25 * $grid);
-  padding: (.25 * $grid);
-  float: left;
+  position: absolute;
+  left: ($g / 2);
+  margin: (-1.25 * $g) ($g / 4) 0 (-$g / 4);
+  padding: ($g / 4);
   border-radius: 50%;
   background: $noise;
 
@@ -25,25 +23,25 @@
     height: 100%;
     border-radius: 50%;
     box-shadow: 0 -1px 0 $border-color inset;
-    clip: rect((4.25 * $grid - $border-width), 999em, 999em, 0);
+    clip: rect((4.25 * $g), 999em, 999em, 0);
   }
 
   img {
     display: block;
-    width: (4 * $grid);
+    width: (4 * $g);
     height: auto;
   }
 }
 
 .header_main {
-  padding-right: 10em; // Make room for header_aside
+  padding: ($g / 2) 12em ($g / 2) (5 * $g); // Make room on right for header_aside
 }
 
 .header_aside {
   position: absolute;
   top: 0;
   right: 0;
-  padding: (.5 * $grid);
+  padding: ($g / 2);
 }
 
 .header_title {
@@ -75,11 +73,6 @@
     font-size: $font-size-small;
     line-height: 1;
   }
-}
-
-.header_metadata,
-.header_pagination {
-  text-align: right;
 }
 
 .header_step {
@@ -114,6 +107,10 @@
   text-align: center;
 }
 
+.header_cite-link {
+  display: inline;
+}
+
 .header_below {
   position: absolute;
   text-align: center;
@@ -122,25 +119,30 @@
 
 .header_toggle-metadata {
   @include font(highlight);
+  @include icon('chevron-down', null);
   @include transition(background, color);
   position: relative;
-  top: (-$border-width);
-  height: ($grid + 2 * $border-width);
-  width: (9 * $grid);
+  top: (-$g / 2);
+  height: ($g + 2 * $border-width);
+  width: (9 * $g);
   background:
     svg(
-      7 * $grid,
-      $grid + 2 * $border-width,
-      "<path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#ffffff'/>"
+      7 * $g,
+      $g + 2 * $border-width,
+      "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($white)}'/>"
     ) center top no-repeat;
 
   @include hover {
     color: $link-hover-color;
     background:
       svg(
-        7 * $grid,
-        $grid + 2 * $border-width,
-        "<path d='M0,14.5 c14,.5,14,-14,28,-14 l140,0 c14,0,14,14,28,14 l-14,14 l-168,0 Z' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
+        7 * $g,
+        $g + 2 * $border-width,
+        "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
       ) center top no-repeat;
+  }
+
+  &.-open {
+    @include icon('chevron-up', null);
   }
 }

@@ -1,20 +1,26 @@
 .metadata {
-  @include border(bottom);
+  @include border(top);
   display: none;
   clear: both;
-  padding: (.5 * $grid);
-  background: $shade;
+  padding: ($g / 2);
+  background: $highlight-color;
 
   h2 {
-    margin-bottom: (.5 * $grid);
+    margin-bottom: ($g / 2);
   }
 
   h3 {
     font-weight: bold;
-    margin: (.5 * $grid) 0 0;
+    margin: 0;
+
+    &:not(:first-child) {
+      margin-top: ($g / 2);
+    }
   }
 
-  p {
+  p,
+  ol,
+  ul {
     margin: 0;
   }
 

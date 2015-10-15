@@ -1,5 +1,5 @@
 .top-bar {
-  padding: (.25 * $grid) (.25 * $grid) (.25 * $grid) (5 * $grid);
+  padding: ($g / 4) ($g / 4) ($g / 4) (5 * $g);
   background: $alpha-color;
   color: auto-color($alpha-color);
 
@@ -18,6 +18,6 @@
 
   &:before {
     margin-left: .25em;
-    font-size: $grid;
+    font-size: $g;
   }
 }

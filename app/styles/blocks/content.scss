@@ -4,8 +4,8 @@
 }
 
 .content_loading {
-  @include spinner($grid, border-color $alpha-color);
-  margin: $grid;
+  @include spinner($g, border-color $alpha-color);
+  margin: $g;
 }
 
 .content_lanes {

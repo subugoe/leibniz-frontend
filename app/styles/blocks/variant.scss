@@ -1,0 +1,16 @@
+.variant {
+  @include drop-shadow;
+  border-radius: $br;
+  margin-bottom: ($g / 2);
+  padding: ($g / 2);
+  background: $white;
+}
+
+.variant_textual-witness {
+  background: $shade;
+  border-radius: $br 0 0;
+  float: right;
+  font-style: italic;
+  margin: ($g / 2) (-$g / 2) ($g / 2) ($g / 2);
+  padding: 0 .5em;
+}

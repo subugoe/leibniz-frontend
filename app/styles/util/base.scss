@@ -11,12 +11,13 @@ body {
 
 body {
   color: $text-color;
-  font: #{$font-size} / #{$grid} $font-family;
+  font: #{$font-size} / #{$g} $font-family;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
 a {
+  @include transition(color, border-color);
   color: $link-color;
   text-decoration: none;
 
@@ -33,7 +34,7 @@ ol,
 ul,
 form,
 table {
-  margin: 0 0 $grid;
+  margin: 0 0 $g;
 }
 
 h1 {

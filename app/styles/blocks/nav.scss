@@ -6,21 +6,17 @@
   right: (-$nav-width);
   width: $nav-width;
   min-height: 100%;
-  padding: $grid;
+  padding: $g;
   background: $noise;
 
   &.-visible {
     right: 0;
   }
-
-  a {
-    @include link-border-on-hover;
-  }
 }
 
 .nav_subheading {
   @include typo-scale(1);
-  margin-bottom: (.5 * $grid);
+  margin-bottom: ($g / 2);
 }
 
 .nav_link {

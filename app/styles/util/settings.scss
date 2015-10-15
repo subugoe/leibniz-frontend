@@ -2,12 +2,12 @@
 $alpha-color: #c90230;
 $black: #000;
 $white: #fff;
-$shade: rgba($black, .05);
+$shade: rgba($black, .06);
 
 // Named colors
 $border-color: #ccc;
 $link-color: $alpha-color;
-$link-hover-color: shade($link-color, 20);
+$link-hover-color: shade($link-color, 30);
 $popup-bg-color: $white;
 $text-color: #444;
 $text-color-light: #888;
@@ -17,14 +17,14 @@ $highlight-color: shade($white, 5);
 // Dimensions
 $ratio: 1.41;
 $font-family: Georgia, serif;
-$font-family-secondary: Arial, Helvetica, sans-serif;
 $font-size: 16px;
 $font-size-small: 14px;
-$grid: 28px;
+$g: 28px; // base grid
+$u: $g / 1px; // strip unit
 $border-width: 1px;
 $border-style: solid;
-$line-height: $grid;
-$nav-width: (10 * $grid);
+$line-height: $g;
+$nav-width: (10 * $g);
 $br: 3px; // border-radius
 
 // Locations
@@ -32,3 +32,12 @@ $img-path: '../img/';
 
 // Others
 $noise: url($img-path + 'noise.png');
+
+$buttonSvgPath: 'M0,#{$u/2+.5}
+  c#{$u/2},.5,#{$u/2},#{-$u/2},#{$u},#{-$u/2}
+  l#{5*$u},0
+  c#{$u/2},0,#{$u/2},#{$u/2},#{$u},#{$u/2}
+  c#{-$u/2},0,#{-$u/2},#{$u/2},#{-$u},#{$u/2}
+  l#{-5*$u},0
+  c#{-$u/2},0,#{-$u/2},#{-$u/2},#{-$u},#{-$u/2}
+  Z';
