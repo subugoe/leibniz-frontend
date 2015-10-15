@@ -1,14 +1,12 @@
-{{! TODO}}
-
 {{#each content.variants as |variant|}}
-  <div class="variant">
-    <ul>
-      <li>ID: {{variant.id}}</li>
-      <li>Lemma: {{variant.lemma}}</li>
-      <li>Text: {{{variant.text_schnipsel}}}</li>
-      <li>Textzeuge: {{#each variant.textzeuge as |textzeuge index|}}{{if index ', '}}{{textzeuge}}{{/each}}</li>
-      <li></li>
-    </ul>
+  <div class="variant" id="{{variant.id}}">
+
+    {{{variant.text_schnipsel}}}
+
+    <span class="variant_textual-witness">
+      {{#each variant.textzeuge as |textzeuge index|}}{{if index ', '}}{{textzeuge}}{{/each}}
+      {{#pop-up}}{{t 'textualWitness'}}{{/pop-up}}
+    </span>
   </div>
 {{/each}}
 

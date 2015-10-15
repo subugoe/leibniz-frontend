@@ -1,7 +1,9 @@
 <header class="header">
 
   <div class="header_logo">
-    <img src="img/logo-akademie-goettingen.png" alt="{{t 'goettingenAcademyOfSciencesAndHumanities'}}">
+    <a href="https://adw-goe.de/" target="_blank">
+      <img src="img/logo-akademie-goettingen.png" alt="{{t 'goettingenAcademyOfSciencesAndHumanities'}}">
+    </a>
   </div>
 
   {{#if content.brief_nummer}}
@@ -56,16 +58,18 @@
         {{/if}}
       </div>
       <div class="header_citation">
-        <span class="header_cite-link">{{t 'recommendedCitation'}}</span>
-        {{#pop-up wide=true}}
-          <span class="popup_pre-heading">{{t 'historicCriticalEdition'}}</span>
-          <h2 class="popup_heading">
-            <a href="{{content.brief_url}}">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a>
-          </h2>
-          <p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
-          <h3 class="popup_pre-heading">{{t 'permaLink'}}</h3>
-          <input class="popup_input" type="url" value="{{content.brief_url}}">
-        {{/pop-up}}
+        <div class="header_cite-link">
+          {{t 'recommendedCitation'}}
+          {{#pop-up wide=true}}
+            <span class="popup_pre-heading">{{t 'historicCriticalEdition'}}</span>
+            <h2 class="popup_heading">
+              <a href="{{content.brief_url}}" target="_blank">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a>
+            </h2>
+            <p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
+            <h3 class="popup_pre-heading">{{t 'permaLink'}}</h3>
+            <input class="popup_input" type="url" value="{{content.brief_url}}">
+          {{/pop-up}}
+        </div>
       </div>
     </div>
 
@@ -81,13 +85,11 @@
 
   {{yield}}
 
+  {{letter-metadata content=content}}
+
   <div class="header_below">
-    <button class="header_toggle-metadata" {{action 'toggleMetadata'}}>
-      {{#if showMetadata}}
-        {{t 'metadataHide'}}
-      {{else}}
-        {{t 'metadataShow'}}
-      {{/if}}
+    <button class="header_toggle-metadata {{if showMetadata '-open'}}" {{action 'toggleMetadata'}}>
+      {{if showMetadata (t 'metadataHide') (t 'metadataShow')}}
     </button>
   </div>
 
