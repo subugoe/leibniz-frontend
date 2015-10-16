@@ -1,6 +1,7 @@
 .lane {
   display: table-cell;
   padding: ($g / 2);
+  position: relative;
   vertical-align: top;
 
   & + & {
@@ -9,9 +10,5 @@
 
   &.-minimized {
     display: none;
-  }
-
-  &.-variants {
-    background: $shade;
   }
 }

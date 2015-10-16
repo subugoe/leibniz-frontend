@@ -1,9 +1,9 @@
 .metadata {
   @include border(top);
-  display: none;
-  clear: both;
-  padding: ($g / 2);
   background: $highlight-color;
+  clear: both;
+  display: none;
+  padding: ($g / 2);
 
   h2 {
     margin-bottom: ($g / 2);

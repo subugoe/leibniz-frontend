@@ -1,6 +1,13 @@
 .content {
-  width: 100%;
   float: left;
+  position: relative;
+  width: 100%;
+
+  svg {
+    pointer-events: none; // TODO: Find a way to ignore pointer events in IE<10
+    position: absolute;
+    top: 0;
+  }
 }
 
 .content_loading {
@@ -9,6 +16,7 @@
 }
 
 .content_lanes {
+  display: table;
   opacity: 0;
 
   &.-rendered {

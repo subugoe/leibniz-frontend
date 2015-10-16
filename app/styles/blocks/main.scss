@@ -1,7 +1,7 @@
 .main {
   @include transition(padding);
-  width: 100%;
   vertical-align: top;
+  width: 100%;
 
   &.-show-nav {
     padding-right: $nav-width;

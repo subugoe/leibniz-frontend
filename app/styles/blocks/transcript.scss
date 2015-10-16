@@ -1,0 +1,57 @@
+.transcript {
+  @extend %lane;
+
+  a {
+    @include link-border;
+  }
+
+  p {
+    text-indent: $g;
+
+    &.noindent {
+      text-indent: 0;
+    }
+
+    &.center {
+      text-align: center;
+    }
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .space-before {
+    margin-left: 4em; // TODO: Justify multi-column paragraphs
+  }
+
+  .tospace {
+    letter-spacing: .5em;
+  }
+
+  .reference {
+    @include transition(color, background);
+    cursor: pointer;
+
+    &.-afootnote,
+    &.-cfootnote {
+      background: $shade;
+      border-radius: $br;
+      padding: ($g / 4);
+    }
+
+    &.-hover {
+      background: $link-hover-color;
+      color: auto-color($link-hover-color);
+    }
+
+    &.-highlight {
+      background: $text-color-light;
+      color: $white;
+    }
+  }
+}
+
+.transcript_fulltext-not-available {
+  font-style: italic;
+}

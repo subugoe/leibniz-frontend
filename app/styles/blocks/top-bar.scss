@@ -1,7 +1,7 @@
 .top-bar {
-  padding: ($g / 4) ($g / 4) ($g / 4) (5 * $g);
   background: $alpha-color;
   color: auto-color($alpha-color);
+  padding: ($g / 4) ($g / 4) ($g / 4) (5 * $g);
 
   a {
     color: auto-color($alpha-color);
@@ -17,7 +17,7 @@
   float: right;
 
   &:before {
-    margin-left: .25em;
     font-size: $g;
+    margin-left: .25em;
   }
 }

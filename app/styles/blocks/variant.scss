@@ -1,16 +1,50 @@
 .variant {
   @include drop-shadow;
-  border-radius: $br;
-  margin-bottom: ($g / 2);
-  padding: ($g / 2);
+  @include transition(color, background);
   background: $white;
+  border-left: $border-width-bold $border-style $border-color-dark;
+  border-radius: $br;
+  cursor: pointer;
+  left: ($g / 2);
+  overflow: hidden;
+  padding: ($g / 4);
+  position: absolute;
+  right: ($g / 2);
+
+  &.-hover {
+    background: $link-hover-color;
+    color: auto-color($link-hover-color);
+  }
+
+  &.-highlight {
+    background: $text-color-light;
+    color: $white;
+  }
+
+  .eds {
+    font-style: italic;
+  }
+
+  .source {
+    font-weight: bold;
+
+    + .source {
+      margin-left: .5em;
+    }
+  }
 }
 
-.variant_textual-witness {
+.variant_type {
   background: $shade;
   border-radius: $br 0 0;
   float: right;
-  font-style: italic;
-  margin: ($g / 2) (-$g / 2) ($g / 2) ($g / 2);
-  padding: 0 .5em;
+  font-size: $font-size-small;
+  line-height: 1;
+  margin: ($g / 4) (-$g / 4) (-$g / 4) ($g / 4);
+  padding: ($g / 4);
+
+  &.-dark {
+    background: $shade-dark;
+    color: $white;
+  }
 }

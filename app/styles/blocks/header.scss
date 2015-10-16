@@ -1,35 +1,35 @@
 .header {
   @include border(bottom);
   @include drop-shadow;
-  position: relative;
-  float: left;
-  width: 100%;
   background: $noise;
+  float: left;
+  position: relative;
+  width: 100%;
 }
 
 .header_logo {
-  position: absolute;
+  background: $noise;
+  border-radius: 50%;
   left: ($g / 2);
   margin: (-1.25 * $g) ($g / 4) 0 (-$g / 4);
   padding: ($g / 4);
-  border-radius: 50%;
-  background: $noise;
+  position: absolute;
 
   // Rounded bottom border
   @include after {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
     box-shadow: 0 -1px 0 $border-color inset;
-    clip: rect((4.25 * $g), 999em, 999em, 0);
+    clip: rect(4.25 * $g, 999em, 999em, 0);
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 
   img {
     display: block;
-    width: (4 * $g);
     height: auto;
+    width: (4 * $g);
   }
 }
 
@@ -38,10 +38,10 @@
 }
 
 .header_aside {
-  position: absolute;
-  top: 0;
-  right: 0;
   padding: ($g / 2);
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .header_title {
@@ -60,9 +60,8 @@
 }
 
 .header_to {
-  //@include icon('arrow-long-right', false);
   &:before {
-    content: '\2192';
+    content: '\2192'; // right arrow
   }
 }
 
@@ -99,8 +98,8 @@
 .header_current-letter {
   display: inline-block;
   position: relative;
-  width: 4em;
   text-align: center;
+  width: 4em;
 }
 
 .header_citation {
@@ -121,25 +120,24 @@
   @include font(highlight);
   @include icon('chevron-down', null);
   @include transition(background, color);
-  position: relative;
-  top: (-$g / 2);
-  height: ($g + 2 * $border-width);
-  width: (9 * $g);
-  background:
-    svg(
+  background: svg(
       7 * $g,
       $g + 2 * $border-width,
       "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($white)}'/>"
     ) center top no-repeat;
+  height: $g + 2 * $border-width;
+  position: relative;
+  top: -$g / 2;
+  width: 9 * $g;
+  z-index: 1;
 
   @include hover {
-    color: $link-hover-color;
-    background:
-      svg(
+    background: svg(
         7 * $g,
         $g + 2 * $border-width,
         "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
       ) center top no-repeat;
+    color: $link-hover-color;
   }
 
   &.-open {

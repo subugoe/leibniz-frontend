@@ -1,13 +1,13 @@
 .nav {
   @include border(left);
   @include transition(right);
-  position: fixed;
-  top: 0;
-  right: (-$nav-width);
-  width: $nav-width;
+  background: $noise;
   min-height: 100%;
   padding: $g;
-  background: $noise;
+  position: fixed;
+  right: -$nav-width;
+  top: 0;
+  width: $nav-width;
 
   &.-visible {
     right: 0;
@@ -51,5 +51,15 @@
 
   &.-sender {
     @include icon('user');
+  }
+}
+
+.nav_search {
+  [type=text] {
+    width: 177px; // TODO: magic number, calculate instead
+  }
+
+  [type=submit] {
+    @include icon('magnifying-glass', null);
   }
 }

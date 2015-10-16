@@ -3,9 +3,8 @@
 
     {{{variant.text_schnipsel}}}
 
-    <span class="variant_textual-witness">
-      {{#each variant.textzeuge as |textzeuge index|}}{{if index ', '}}{{textzeuge}}{{/each}}
-      {{#pop-up}}{{t 'textualWitness'}}{{/pop-up}}
+    <span class="variant_type {{if (eq variant.type 'addition') '-dark'}}">
+      {{t variant.type}}
     </span>
   </div>
 {{/each}}

@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   classNames: 'popup',
   tagName: 'span',
   didInsertElement: function() {
-    var $this = this.$()
+    var $this = this.$();
     if ( this.get('wide') ) {
       $this.addClass('-wide');
     }
