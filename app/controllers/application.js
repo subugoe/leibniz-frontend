@@ -9,7 +9,6 @@ export default Ember.Controller.extend({
       var runningTime = 0;
       var interval = setInterval( () => {
          Ember.$(window).trigger('resize');
-         console.dir('tr');
          runningTime += 100;
          if ( runningTime > duration ) {
            clearInterval(interval);

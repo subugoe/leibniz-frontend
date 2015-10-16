@@ -14,7 +14,7 @@ export default Ember.Route.extend({
       },
       dataType: 'jsonp',
       jsonp: 'json.wrf'
-    }).then(function(json) {
+    }).then( function(json) {
       var letter = {};
       if ( json.response.docs.length > 0 ) {
         // TODO: Is letter always the first doc in response?
@@ -61,20 +61,16 @@ export default Ember.Route.extend({
     Ember.run.next( () => {
       this.activateLinks();
 
-      // Render MathJax
-      var context = this.context;
-      // TODO: JShint complains about Promise not being defined though it obviously is
-      var promise = new Ember.RSVP.Promise( function(resolve) {
-        if ( context.volltext ) {
-          MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => { // jshint ignore:line
-            resolve(true);
-          });
-        } else {
-          resolve(true);
-        }
+      // Convert image references to SVG images
+      Ember.$('.transcript').find('.reference.-image').each( (index, ref) => {
+        var imageID = Ember.$(ref).data('id');
+        this.loadSVG(imageID).then( function(svg) {
+          Ember.$(ref).html(svg);
+        });
       });
 
-      promise.then( () => {
+      // Render MathJax, then position variants
+      this.renderMathJax().then( () => {
         this.positionVariants();
         Ember.$(window).resize( () => this.positionVariants() );
         this.controller.set('rendered', true);
@@ -91,9 +87,38 @@ export default Ember.Route.extend({
       route.transitionTo('letter', letterID);
     });
   },
+  loadSVG: function(id) {
+    return new Ember.RSVP.Promise( function(resolve) {
+      Ember.$.ajax({
+        url: config.solrURL,
+        data: {
+          wt: 'json',
+          q: `id:${id}`
+        },
+        dataType: 'jsonp',
+        jsonp: 'json.wrf'
+      }).then( function(json) {
+        if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('svg_code')) {
+          resolve(json.response.docs[0].svg_code);
+        }
+      });
+    });
+  },
+  renderMathJax: function() {
+    var context = this.context;
+    return new Ember.RSVP.Promise( function(resolve) {
+      if ( context.volltext ) {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => { // jshint ignore:line
+          resolve(true);
+        });
+      } else {
+        resolve(true);
+      }
+    });
+  },
   positionVariants: function() {
     var $ = Ember.$;
-    $('.content').find('svg').remove(); // TODO: Find a more elegant way to re-render SVG
+    $('.content_svg-overlay').remove(); // TODO: Find a more elegant way to re-render SVG
     var $laneTranscript = $('.transcript');
     var $laneVariants = $('.variants');
     var $references = $laneTranscript.find('.reference.-afootnote, .reference.-cfootnote');
@@ -104,6 +129,7 @@ export default Ember.Route.extend({
     // Using plain JS for SVG since jQuery struggles with namespaces
     var svgNS = 'http://www.w3.org/2000/svg';
     var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('class', 'content_svg-overlay');
     svg.setAttribute('width', $('.content').width());
     svg.setAttribute('height', $('.content').height());
     document.getElementsByClassName('content')[0].appendChild(svg);
@@ -112,12 +138,14 @@ export default Ember.Route.extend({
       var $this = $(this);
       var variantID = $this.data('id');
       var $variant = $variants.filter('#' + variantID).show();
+      if ( $variant.length === 0 ) {
+        return true; // variant not available
+      }
       var left = $this.position().left;
       var top = $this.position().top;
       var bottom = $this.position().top + $this.outerHeight();
       var variantTop = (top < prevVariantBottom ? prevVariantBottom : top + 10); // TODO: Calucalte this value
       prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;
-
       $variant.css( {top: variantTop} );
 
       // Draw a curved line from reference to variant
