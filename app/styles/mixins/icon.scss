@@ -3,15 +3,15 @@
 // Not managed by bower since app.importing is too much hassle
 @mixin icon($name, $position: 'left', $scale: 0) {
   &:before {
-    vertical-align: top;
     font-family: 'entypo-plus';
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-style: normal;
     font-variant: normal;
     font-weight: normal;
-    text-transform: none;
     speak: none;
+    text-transform: none;
+    vertical-align: top;
 
     @if $scale > 0 {
       font-size: round($font-size * power($ratio, $scale));

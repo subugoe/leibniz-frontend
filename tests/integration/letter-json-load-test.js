@@ -14,7 +14,7 @@ module('Integration | Letter JSON load test', {
 
 test('Letter loaded and header rendered', function(assert) {
   assert.expect(2);
-  // TODO: Workaround: Load a letter without fulltext or MathJax will make this test fail
+  // TODO: Workaround: Lr soad a letter without fulltext or MathJax will make this test fail
   visit('/letter/l3746').then(function() {
     assert.ok(find('.header_sender .header_last-name').text().length > 0, 'Header contains sender\'s last name');
     assert.ok(find('.header_recipient .header_last-name').text().length > 0, 'Header contains recipients\'s last name');

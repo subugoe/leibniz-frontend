@@ -1,11 +1,13 @@
 $typo-scale-offset: 0 !default;
+$typo-scale-allow-half-steps: false;
 
 @mixin typo-scale($increment) {
   font-size: round(ms($increment)) + $typo-scale-offset;
-  // Use this to allow half lines:
-  line-height: floor(ms($increment) / (.5 * $line-height) + 1) * .5 * $line-height;
-  // Use this to only allow full lines:
-  //line-height: floor(ms($increment) / ($line-height) + 1) * $line-height;
+  @if $typo-scale-allow-half-steps {
+    line-height: floor(ms($increment) / (.5 * $line-height) + 1) * .5 * $line-height;
+  } @else {
+    line-height: floor(ms($increment) / ($line-height) + 1) * $line-height;
+  }
 }
 
 // From Chopstick v0.3.3

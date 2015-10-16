@@ -1,7 +1,7 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html,
@@ -19,11 +19,17 @@ body {
 a {
   @include transition(color, border-color);
   color: $link-color;
+  outline: 0;
   text-decoration: none;
 
   &:hover {
     color: $link-hover-color;
   }
+}
+
+abbr {
+  border-bottom: $border-width dotted;
+  cursor: help;
 }
 
 h1,
@@ -53,10 +59,46 @@ h6 {
 }
 
 button {
-  border: 0;
-  outline: 0;
-  font: inherit;
   background: none;
+  border: 0;
   color: inherit;
   cursor: pointer;
+  font: inherit;
+  outline: 0;
+}
+
+[type=search],
+[type=text],
+[type=url] {
+  background: $white;
+  border: $border-width solid $border-color;
+  border-radius: $br;
+  font: inherit;
+  padding: ($g / 4);
+
+  &:focus {
+    border-color: $link-hover-color;
+  }
+}
+
+[type=submit] {
+  @include transition(background, border-color);
+  background: $link-color;
+  border: $border-width solid $link-color;
+  border-radius: $br;
+  color: auto-color($link-color);
+  cursor: pointer;
+  font: inherit;
+  min-width: (1.5 * $g);
+  padding: ($g / 4);
+
+  &:hover {
+    background: $link-hover-color;
+    border-color: $link-hover-color;
+  }
+
+  &:active {
+    background: $white;
+    color: $link-hover-color;
+  }
 }

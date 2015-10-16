@@ -1,41 +1,41 @@
 .popup {
   @include drop-shadow;
   @include transition(opacity, z-index);
-  border-radius: $br;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin: ($g / 4) 0 0;
-  padding: ($g / 4) ($g / 2);
   background: $popup-bg-color;
+  border-radius: $br;
   color: $text-color;
   font-size: $font-size;
   font-style: normal;
-  text-align: left;
+  left: 0;
+  margin: ($g / 4) 0 0;
   opacity: 0;
-  z-index: -1;
+  padding: ($g / 4) ($g / 2);
+  position: absolute;
+  text-align: left;
+  top: 100%;
   transition-delay: .3s;
+  z-index: -1;
 
   &:before {
-    display: block;
-    position: absolute;
-    top: (-$g / 2);
-    left: ($g / 2);
-    width: 0;
-    height: 0;
     border: ($g / 4) solid transparent;
     border-bottom-color: $popup-bg-color;
     content: '';
+    display: block;
+    height: 0;
+    left: ($g / 2);
+    position: absolute;
+    top: (-$g / 2);
+    width: 0;
     z-index: 999;
   }
 
   &.-right {
-    right: 0;
     left: auto;
+    right: 0;
 
     &:before {
-      right: ($g / 2);
       left: auto;
+      right: ($g / 2);
     }
   }
 
@@ -46,6 +46,10 @@
   :hover > & {
     opacity: 1;
     z-index: 99;
+  }
+
+  input {
+    width: 100%;
   }
 
   p {
