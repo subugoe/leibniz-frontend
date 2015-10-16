@@ -83,7 +83,6 @@ linters:
 
   PropertySortOrder:
     enabled: true
-    order: smacss
 
   PropertySpelling:
     enabled: true
