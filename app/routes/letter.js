@@ -122,6 +122,11 @@ export default Ember.Route.extend({
     var $laneTranscript = $('.transcript');
     var $laneVariants = $('.variants');
     var $references = $laneTranscript.find('.reference.-afootnote, .reference.-cfootnote');
+
+    if ( $references.length === 0 ) {
+      return;
+    }
+
     var $variants = $laneVariants.find('.variant').hide();
     var prevVariantBottom = 0;
     var marginBetweenVariants = parseInt( $laneVariants.css('padding') );
@@ -139,7 +144,7 @@ export default Ember.Route.extend({
       var variantID = $this.data('id');
       var $variant = $variants.filter('#' + variantID).show();
       if ( $variant.length === 0 ) {
-        return true; // variant not available
+        return; // variant not available
       }
       var left = $this.position().left;
       var top = $this.position().top;
