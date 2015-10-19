@@ -1,40 +1,52 @@
-{{letter-header content=content}}
+{{#if content.brief_nummer}}
 
-<main class="content">
+  {{letter-header content=content}}
 
-  {{#unless rendered}}
-    <div class="content_loading">
-      <span class="sr-only">{{{t 'loading'}}}</span>
-    </div>
-  {{/unless}}
+  <main class="content">
 
-  <div class="content_lanes {{if rendered '-rendered'}}">
+    {{#unless rendered}}
+      <div class="content_loading">
+        <span class="sr-only">{{{t 'loading'}}}</span>
+      </div>
+    {{/unless}}
 
-    {{#if content.volltext}}
+    <div class="content_lanes {{if rendered '-rendered'}}">
 
-      {{#each content.view.lanes as |lane|}}
+      {{#if content.volltext}}
 
-        <div class="lane -minimized">
-          <nav class="nav -vertical">
-            {{t lane.type}}
-            <ul>
-              <li><a href="#" class="nav_button -restore"><span class="popup">{{t 'restore'}}</span></a></li>
-            </ul>
-          </nav>
+        {{#each content.view.lanes as |lane|}}
+
+          <div class="lane -minimized">
+            <nav class="nav -vertical">
+              {{t lane.type}}
+              <ul>
+                <li><a href="#" class="nav_button -restore"><span class="popup">{{t 'restore'}}</span></a></li>
+              </ul>
+            </nav>
+          </div>
+
+          {{letter-lane lane=lane content=content}}
+
+        {{/each}}
+
+      {{else}}
+
+        <div class="lane">
+          <p class="transcript_fulltext-not-available">{{{t 'fulltextNotAvailable'}}}</p>
         </div>
 
-        {{letter-lane lane=lane content=content}}
+      {{/if}}
 
-      {{/each}}
+    </div>
 
-    {{else}}
+  </main>
 
-      <div class="lane">
-        <p class="transcript_fulltext-not-available">{{{t 'fulltextNotAvailable'}}}</p>
-      </div>
+{{else}}
 
-    {{/if}}
-
+  <div class="header_main">
+    <h1 class="header_title">
+      {{{t 'letterNotExisting' id=content.id}}}
+    </h1>
   </div>
 
-</main>
+{{/if}}
