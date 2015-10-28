@@ -1,30 +1,3 @@
 .metadata {
-  @include border(top);
-  background: $highlight-color;
-  clear: both;
-  display: none;
-  padding: ($g / 2);
-
-  h2 {
-    margin-bottom: ($g / 2);
-  }
-
-  h3 {
-    font-weight: bold;
-    margin: 0;
-
-    &:not(:first-child) {
-      margin-top: ($g / 2);
-    }
-  }
-
-  p,
-  ol,
-  ul {
-    margin: 0;
-  }
-
-  a {
-    @include link-border;
-  }
+  @extend %header-aside;
 }

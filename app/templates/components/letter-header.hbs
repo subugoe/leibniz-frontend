@@ -36,6 +36,7 @@
           </span>
           ({{{t 'dateJulian'}}})
         {{/if}}
+        {{!TODO: Explain how approximate dates are represented}}
       {{/pop-up}}
     </div>
   </div>
@@ -44,7 +45,12 @@
     <div class="header_pagination">
       {{#if content.brief_id_vorgaenger}}
         {{#link-to 'letter' content.brief_id_vorgaenger (query-params view=content.viewQuery) class="header_step -prev"}}
-          {{#pop-up}}{{{t 'letterPrev'}}}<br>{{{t 'series' series=content.reihe}}}<br>{{{t 'number' number=content.brief_nummer_vorgaenger}}}{{/pop-up}}
+          {{#pop-up wide=true}}
+            {{{t 'letterPrev'}}}<br>
+            {{{t 'series' series=content.reihe}}}<br>
+            {{{t 'volume' volume=content.band}}}<br>
+            {{{t 'number' number=content.brief_nummer_vorgaenger}}}
+          {{/pop-up}}
         {{/link-to}}
       {{else}}
         <span class="header_step -prev -disabled">
@@ -52,12 +58,21 @@
         </span>
       {{/if}}
       <span class="header_current-letter">
-        {{content.reihe}}, {{content.brief_nummer}}
-        {{#pop-up}}{{{t 'series' series=content.reihe}}}<br>{{{t 'number' number=content.brief_nummer}}}{{/pop-up}}
+        {{content.reihe}}, {{content.band}}, N.&nbsp;{{content.brief_nummer}}
+        {{#pop-up}}
+          {{{t 'series' series=content.reihe}}}<br>
+          {{{t 'volume' volume=content.band}}}<br>
+          {{{t 'number' number=content.brief_nummer}}}
+        {{/pop-up}}
       </span>
       {{#if content.brief_id_nachfolger}}
         {{#link-to 'letter' content.brief_id_nachfolger (query-params view=content.viewQuery) class="header_step -next"}}
-          {{#pop-up}}{{{t 'letterNext'}}}<br>{{{t 'series' series=content.reihe}}}<br>{{{t 'number' number=content.brief_nummer_nachfolger}}}{{/pop-up}}
+          {{#pop-up wide=true}}
+            {{{t 'letterNext'}}}<br>
+            {{{t 'series' series=content.reihe}}}<br>
+            {{{t 'volume' volume=content.band}}}<br>
+            {{{t 'number' number=content.brief_nummer_nachfolger}}}
+          {{/pop-up}}
         {{/link-to}}
       {{else}}
         <span class="header_step -next -disabled">
@@ -65,29 +80,20 @@
         </span>
       {{/if}}
     </div>
-    <div class="header_citation">
-      <div class="header_cite-link">
-        {{t 'recommendedCitation'}}
-        {{#pop-up wide=true}}
-          <span class="popup_pre-heading">{{t 'historicCriticalEdition'}}</span>
-          <h2 class="popup_heading">
-            <a href="{{content.brief_url}}" target="_blank">Leibniz, Gottfried Wilhelm: Sämtliche Schriften und Briefe</a>
-          </h2>
-          <p>Hrsg. v. Berlin-Brandenburgischen Akademie der Wissenschaften / Akademie der Wissenschaften zu Göttingen</p>
-          <h3 class="popup_sub-heading">{{t 'permaLink'}}</h3>
-          <input class="popup_input" type="url" value="{{content.brief_url}}">
-        {{/pop-up}}
-      </div>
-    </div>
+  </div>
+
+  <div class="header_below">
+    <button class="header_toggle -metadata {{if showMetadata '-open'}}" {{action 'toggleMetadata'}}>
+      {{if showMetadata (t 'metadataHide') (t 'metadataShow')}}
+    </button>
+    <button class="header_toggle -citation {{if showCitation '-open'}}" {{action 'toggleCitation'}}>
+      {{if showCitation (t 'citationHide') (t 'citationShow')}}
+    </button>
   </div>
 
   {{letter-metadata content=content}}
 
-  <div class="header_below">
-    <button class="header_toggle-metadata {{if showMetadata '-open'}}" {{action 'toggleMetadata'}}>
-      {{if showMetadata (t 'metadataHide') (t 'metadataShow')}}
-    </button>
-  </div>
+  {{letter-citation content=content}}
 
   {{yield}}
 
