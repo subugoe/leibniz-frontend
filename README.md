@@ -1,5 +1,7 @@
 # Leibniz Frontend
 
+[![Build Status][travis-badge]][travis]
+
   TODO: Introduction
 
 ## Prerequisites
@@ -47,3 +49,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 TODO: How to deploy
+
+[travis]: https://travis-ci.org/subugoe/leibniz-frontend
+[travis-badge]: https://travis-ci.org/subugoe/leibniz-frontend.svg?branch=develop
