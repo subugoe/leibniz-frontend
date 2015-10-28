@@ -28,7 +28,7 @@ languageName:
   ndl: 'Niederländisch'
   rus: 'Russisch'
   swe: 'Schwedisch'
-leibnizLetters: 'Leibniz-Briefe'
+leibnizLetters: 'Briefportal Leibniz'
 letterNext: 'Folgender Brief dieser Korrespondenz'
 letterNotExisting: 'Brief <i>{id}</i> existiert nicht'
 letterNotExistingPrev: 'Kein vorhergehender Brief vorhanden'

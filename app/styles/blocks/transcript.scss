@@ -17,18 +17,6 @@
     }
   }
 
-  .italic {
-    font-style: italic;
-  }
-
-  .space-before {
-    margin-left: 4em; // TODO: Justify multi-column paragraphs
-  }
-
-  .tospace {
-    letter-spacing: .5em;
-  }
-
   .reference {
     @include transition(color, background);
     cursor: pointer;
