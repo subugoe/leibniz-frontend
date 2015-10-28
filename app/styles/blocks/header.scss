@@ -1,6 +1,5 @@
 .header {
   @include border(bottom);
-  @include drop-shadow;
   background: $noise;
   float: left;
   position: relative;
@@ -79,8 +78,9 @@
   @include button('shady');
   user-select: none;
 
-  &:hover {
+  @include hover {
     background: $shade;
+    box-shadow: 0 0 $border-width $border-color inset;
   }
 
   &.-prev {
@@ -96,52 +96,34 @@
   }
 }
 
-.header_current-letter {
-  display: inline-block;
-  position: relative;
-  text-align: center;
-  width: 4em;
-}
-
-.header_citation {
-  text-align: center;
-}
-
-.header_cite-link {
-  display: inline;
-}
-
 .header_below {
+  font-size: 0; // Get rid of whitespace between buttons
   position: absolute;
   text-align: center;
+  margin-top: -$g / 2;
   width: 100%;
+  z-index: 1;
 }
 
-.header_toggle-metadata {
+.header_toggle {
   @include font(highlight);
+  @include header-button;
   @include icon('chevron-down', null);
   @include transition(background, color);
-  background: svg(
-      7 * $g,
-      $g + 2 * $border-width,
-      "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($white)}'/>"
-    ) center top no-repeat;
-  height: $g + 2 * $border-width;
-  position: relative;
-  top: -$g / 2;
-  width: 9 * $g;
-  z-index: 1;
 
-  @include hover {
-    background: svg(
-        7 * $g,
-        $g + 2 * $border-width,
-        "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
-      ) center top no-repeat;
-    color: $link-hover-color;
+  &:not(:first-child):not(:last-child) {
+    @include header-button(center);
+  }
+
+  &:first-child {
+    @include header-button(left);
+  }
+
+  &:last-child {
+    @include header-button(right);
   }
 
   &.-open {
-    @include icon('chevron-up', null);
+    @include icon('cross', null);
   }
 }

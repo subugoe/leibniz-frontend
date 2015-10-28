@@ -5,15 +5,12 @@ export default Ember.Controller.extend({
   actions: {
     toggleNav: function() {
       this.set('showNav', ! this.get('showNav'));
-      var duration = parseFloat(Ember.$('.main').css('transition-duration')) * 1000;
-      var runningTime = 0;
-      var interval = setInterval( () => {
-         Ember.$(window).trigger('resize');
-         runningTime += 100;
-         if ( runningTime > duration ) {
-           clearInterval(interval);
-         }
-      }, 100);
+
+      // Remove and redraw variant connectors once animation is complete
+      Ember.$('.content_svg-overlay').remove();
+      Ember.$('.main').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', () => {
+        Ember.$(window).resize(); // trigger variant connectores redraw
+      });
     }
   },
 });

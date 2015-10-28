@@ -13,33 +13,22 @@ module('Acceptance | toggle nav sidebar', {
 });
 
 test('toggle nav sidebar', function(assert) {
-  var nav, navRight, duration;
+  var navRight;
   assert.expect(2);
 
   // TODO: Workaround: Load a letter without fulltext or MathJax will make this test fail
   visit('/letter/l371');
   andThen( () => {
-    nav = find('.nav');
-    navRight = nav.css('right');
-    // FIXME: Double time to make sure animation is finished even when laggy
-    duration = parseInt( parseFloat(nav.css('transition-duration')) * 2 * 1000 );
+    navRight = find('.nav').css('right');
   });
 
   click('button.top-bar_toggle-nav');
   andThen( () => {
-    var done = assert.async();
-    setTimeout( () => {
-      assert.ok( find('.nav.-visible').css('right') === '0px', 'nav sidebar should become visible');
-      done();
+    assert.ok( find('.nav.-visible').css('right') === '0px', 'nav sidebar should become visible');
+  });
 
-      click('button.top-bar_toggle-nav');
-      andThen( () => {
-        var done2 = assert.async();
-        setTimeout( () => {
-          assert.ok( nav.css('right') === navRight, 'nav sidebar should be hidden again' );
-          done2();
-        }, duration );
-      });
-    }, duration );
+  click('button.top-bar_toggle-nav');
+  andThen( () => {
+    assert.ok( find('.nav').css('right') === navRight, 'nav sidebar should be hidden again' );
   });
 });

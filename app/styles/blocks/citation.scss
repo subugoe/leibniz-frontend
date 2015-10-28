@@ -1,0 +1,11 @@
+.citation {
+  @extend %header-aside;
+}
+
+.citation_overline {
+  color: $text-color-light;
+}
+
+.citation_input {
+  width: 100%;
+}

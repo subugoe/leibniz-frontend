@@ -1,5 +1,5 @@
-// Allow starting numerals with decimal point
-/*jshint -W008 */
+// Allow starting numerals with decimal point:
+/* jshint -W008 */
 import Ember from 'ember';
 import config from '../config/environment';
 
@@ -116,17 +116,20 @@ export default Ember.Route.extend({
       }
     });
   },
+  clearVariantConnectors: function() {
+    Ember.$('.content_svg-overlay').remove(); // TODO: Find a more elegant way to re-render SVG
+  },
   positionVariants: function() {
     var $ = Ember.$;
-    $('.content_svg-overlay').remove(); // TODO: Find a more elegant way to re-render SVG
     var $laneTranscript = $('.transcript');
-    var $laneVariants = $('.variants');
     var $references = $laneTranscript.find('.reference.-afootnote, .reference.-cfootnote');
 
+    this.clearVariantConnectors();
     if ( $references.length === 0 ) {
       return;
     }
 
+    var $laneVariants = $('.variants');
     var $variants = $laneVariants.find('.variant').hide();
     var prevVariantBottom = 0;
     var marginBetweenVariants = parseInt( $laneVariants.css('padding') );
@@ -183,7 +186,7 @@ export default Ember.Route.extend({
   }
 });
 
-// jshint ignore:start
+/* global MathJax */
 MathJax.Hub.Config({
   extensions: ['tex2jax.js'],
   jax: ['input/TeX', 'output/HTML-CSS'],
@@ -196,4 +199,3 @@ MathJax.Hub.Config({
     availableFonts: ['TeX']
   }
 });
-// jshint ignore:end
