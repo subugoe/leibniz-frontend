@@ -1,3 +1,11 @@
+.italic {
+  font-style: italic;
+}
+
+.space-before {
+  margin-left: 4em; // TODO: Justify multi-column paragraphs
+}
+
 // Only display content to screen readers
 // See: http://a11yproject.com/posts/how-to-hide-content/
 .sr-only {
@@ -9,4 +17,8 @@
   padding: 0;
   position: absolute;
   width: 1px;
+}
+
+.tospace {
+  letter-spacing: .5em;
 }

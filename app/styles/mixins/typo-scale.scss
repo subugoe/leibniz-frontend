@@ -1,5 +1,5 @@
 $typo-scale-offset: 0 !default;
-$typo-scale-allow-half-steps: false;
+$typo-scale-allow-half-steps: true;
 
 @mixin typo-scale($increment) {
   font-size: round(ms($increment)) + $typo-scale-offset;

@@ -24,6 +24,7 @@
 @import 'extends/header-aside';
 
 @import 'util/base';
+@import 'util/modifiers';
 
 @import 'blocks/citation';
 @import 'blocks/content';
@@ -34,7 +35,6 @@
 @import 'blocks/nav';
 @import 'blocks/popup';
 @import 'blocks/sidebar';
-@import 'blocks/sr-only';
 @import 'blocks/top-bar';
 @import 'blocks/transcript';
 @import 'blocks/variant';
