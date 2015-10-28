@@ -1,45 +1,47 @@
 .header {
   @include border(bottom);
+  background: $noise;
+  float: left;
   position: relative;
   width: 100%;
-  height: (4.5 * $grid);
-  padding: (.5 * $grid);
-  background: $noise;
 }
 
 .header_logo {
-  position: relative;
-  margin: (-.75 * $grid) (.5 * $grid) 0 (-.25 * $grid);
-  padding: (.25 * $grid);
-  float: left;
-  border-radius: 50%;
   background: $noise;
+  border-radius: 50%;
+  left: ($g / 2);
+  margin: (-1.25 * $g) ($g / 4) 0 (-$g / 4);
+  padding: ($g / 4);
+  position: absolute;
 
   // Rounded bottom border
   @include after {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
     box-shadow: 0 -1px 0 $border-color inset;
-    clip: rect((4.75 * $grid - $border-width), 999em, 999em, 0);
+    clip: rect(4.25 * $g, 999em, 999em, 0);
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 
   img {
     display: block;
+    height: auto;
+    width: (4 * $g);
   }
 }
 
 .header_main {
-  padding-right: 10em; // Make room for header_aside
+  height: (3 * $g);
+  padding: ($g / 2) 12em ($g / 2) (5 * $g); // Make room on right for header_aside
 }
 
 .header_aside {
+  padding: ($g / 2);
   position: absolute;
   right: 0;
   top: 0;
-  padding: (.5 * $grid);
 }
 
 .header_title {
@@ -54,13 +56,12 @@
 
 .header_sender,
 .header_recipient {
-  color: $primary-color;
+  color: $alpha-color;
 }
 
 .header_to {
-  //@include icon('arrow-long-right', false);
   &:before {
-    content: '\2192';
+    content: '\2192'; // right arrow
   }
 }
 
@@ -73,14 +74,14 @@
   }
 }
 
-.header_metadata,
-.header_pagination {
-  text-align: right;
-}
-
 .header_step {
-  position: relative;
+  @include button('shady');
   user-select: none;
+
+  @include hover {
+    background: $shade;
+    box-shadow: 0 0 $border-width $border-color inset;
+  }
 
   &.-prev {
     @include icon('chevron-left', false, 1);
@@ -95,11 +96,34 @@
   }
 }
 
-.header_current-letter {
-  position: relative;
-  display: inline-block;
-  margin: 0 .5em;
-  width: 2em;
-  vertical-align: top;
+.header_below {
+  font-size: 0; // Get rid of whitespace between buttons
+  position: absolute;
   text-align: center;
+  margin-top: -$g / 2;
+  width: 100%;
+  z-index: 1;
+}
+
+.header_toggle {
+  @include font(highlight);
+  @include header-button;
+  @include icon('chevron-down', null);
+  @include transition(background, color);
+
+  &:not(:first-child):not(:last-child) {
+    @include header-button(center);
+  }
+
+  &:first-child {
+    @include header-button(left);
+  }
+
+  &:last-child {
+    @include header-button(right);
+  }
+
+  &.-open {
+    @include icon('cross', null);
+  }
 }

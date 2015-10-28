@@ -1,12 +1,12 @@
 .nav {
   @include border(left);
   @include transition(right);
-  position: fixed;
-  top: 0;
-  right: (-$nav-width);
-  min-height: 100%;
-  padding: $grid;
   background: $noise;
+  min-height: 100%;
+  padding: $g;
+  position: fixed;
+  right: -$nav-width;
+  top: 0;
   width: $nav-width;
 
   &.-visible {
@@ -16,7 +16,7 @@
 
 .nav_subheading {
   @include typo-scale(1);
-  margin-bottom: (.5 * $grid);
+  margin-bottom: ($g / 2);
 }
 
 .nav_link {
@@ -51,5 +51,15 @@
 
   &.-sender {
     @include icon('user');
+  }
+}
+
+.nav_search {
+  [type=text] {
+    width: 177px; // TODO: magic number, calculate instead
+  }
+
+  [type=submit] {
+    @include icon('magnifying-glass', null);
   }
 }

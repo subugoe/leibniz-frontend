@@ -1,7 +1,12 @@
 .lane {
   display: table-cell;
+  padding: ($g / 2);
+  position: relative;
   vertical-align: top;
-  padding: (.5 * $grid);
+
+  & + & {
+    border-left: $border-width $border-style $border-color;
+  }
 
   &.-minimized {
     display: none;

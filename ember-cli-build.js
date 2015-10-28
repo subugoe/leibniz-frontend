@@ -20,6 +20,7 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  // Import MathJax via Funnel since there are sooo many components
   var mathJax = new Funnel(app.bowerDirectory + '/MathJax', {
     destDir: '/assets/MathJax'
   });

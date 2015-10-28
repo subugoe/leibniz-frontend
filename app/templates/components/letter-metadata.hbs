@@ -1,0 +1,29 @@
+<aside class="metadata">
+  <h2 class="metadata_heading">{{t 'metadata'}}</h2>
+
+  <h3>{{t 'context'}}</h3>
+  <p>{{{content.kontext}}}</p>
+
+  <h3>{{t 'tradition'}}</h3>
+  {{{content.ueberlieferung}}}
+
+  <h3>
+    {{#if (eq content.ort.length 1)}}
+      {{t 'location'}}
+    {{else}}
+      {{t 'locations'}}
+    {{/if}}
+  </h3>
+  <p>{{#each content.ort as |ort index|}}{{if index ', '}}{{ort}}{{/each}}</p>
+
+  <h3>
+    {{#if (eq content.sprache.length 1)}}
+      {{t 'language'}}
+    {{else}}
+      {{t 'languages'}}
+    {{/if}}
+  </h3>
+  <p>{{#each content.sprache as |sprache index|}}{{if index ', '}}{{t (concat 'languageName.' sprache)}}{{/each}}</p>
+
+  {{yield}}
+</aside>

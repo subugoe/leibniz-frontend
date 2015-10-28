@@ -1,25 +1,34 @@
 // Colors
-$primary-color: #c90230;
+$alpha-color: #c90230;
 $black: #000;
 $white: #fff;
+$shade: rgba($black, .06);
+$shade-dark: rgba($black, .6);
 
 // Named colors
 $border-color: #ccc;
-$link-color: $primary-color;
+$border-color-dark: #aaa;
+$link-color: $alpha-color;
+$link-hover-color: shade($link-color, 30);
 $popup-bg-color: $white;
 $text-color: #444;
+$text-color-light: #888;
 $disabled-color: tint($text-color, 60);
+$highlight-color: shade($white, 5);
 
 // Dimensions
 $ratio: 1.41;
 $font-family: Georgia, serif;
 $font-size: 16px;
 $font-size-small: 14px;
-$grid: 28px;
+$g: 28px; // base grid
+$u: ($g / 1px); // strip unit
 $border-width: 1px;
+$border-width-bold: 3px;
 $border-style: solid;
-$line-height: $grid;
-$nav-width: (10 * $grid);
+$line-height: $g;
+$nav-width: (10 * $g);
+$br: 3px; // border-radius
 
 // Locations
 $img-path: '../img/';

@@ -1,0 +1,6 @@
+@mixin font($type: null) {
+  @if $type == highlight {
+    color: $text-color-light;
+    font-size: $font-size-small;
+  }
+}

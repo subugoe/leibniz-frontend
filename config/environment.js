@@ -10,14 +10,14 @@ module.exports = function(environment) {
       'script-src': "'self' http://leibniz.sub.uni-goettingen.de",
       'font-src': "'self'",
       'connect-src': "'self' http://leibniz.sub.uni-goettingen.de",
-      'img-src': "'self'",
+      'img-src': "'self' data:",
       'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"
     },
     intl: {
       defaultLocale: 'de-de'
     },
-    firstLetterID: 'l3747', // TODO: Get first letter ID from Sole
+    firstLetterID: 'l3717', // TODO: Get first letter ID from Solr
     solrURL: 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select',
     locationType: 'auto',
     EmberENV: {

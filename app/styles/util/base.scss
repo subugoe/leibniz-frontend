@@ -1,7 +1,7 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html,
@@ -11,14 +11,29 @@ body {
 
 body {
   color: $text-color;
-  font: #{$font-size} / #{$grid} $font-family;
+  font: #{$font-size} / #{$g} $font-family;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
 a {
+  @include transition(color, border-color);
   color: $link-color;
+  outline: 0;
   text-decoration: none;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+}
+
+abbr {
+  border-bottom: $border-width dotted;
+  cursor: help;
+}
+
+i {
+  font-style: italic;
 }
 
 h1,
@@ -29,7 +44,7 @@ ol,
 ul,
 form,
 table {
-  margin: 0 0 $grid;
+  margin: 0 0 $g;
 }
 
 h1 {
@@ -48,9 +63,46 @@ h6 {
 }
 
 button {
-	border: 0;
-	background: none;
-	color: inherit;
-	cursor: pointer;
-	outline: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: 0;
+}
+
+[type=search],
+[type=text],
+[type=url] {
+  background: $white;
+  border: $border-width solid $border-color;
+  border-radius: $br;
+  font: inherit;
+  padding: ($g / 4);
+
+  &:focus {
+    border-color: $link-hover-color;
+  }
+}
+
+[type=submit] {
+  @include transition(background, border-color);
+  background: $link-color;
+  border: $border-width solid $link-color;
+  border-radius: $br;
+  color: auto-color($link-color);
+  cursor: pointer;
+  font: inherit;
+  min-width: (1.5 * $g);
+  padding: ($g / 4);
+
+  &:hover {
+    background: $link-hover-color;
+    border-color: $link-hover-color;
+  }
+
+  &:active {
+    background: $white;
+    color: $link-hover-color;
+  }
 }

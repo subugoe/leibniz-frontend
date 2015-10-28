@@ -1,5 +1,12 @@
-{{! TODO}}
+{{#each content.variants as |variant|}}
+  <div class="variant" id="{{variant.id}}">
 
-<div>TODO: Varianten</div>
+    {{{variant.text_schnipsel}}}
+
+    <span class="variant_type {{if (eq variant.type 'addition') '-dark'}}">
+      {{t variant.type}}
+    </span>
+  </div>
+{{/each}}
 
 {{yield}}

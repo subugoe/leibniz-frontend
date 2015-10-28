@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="assets/leibniz-frontend.css">
     <link rel="stylesheet" href="assets/test-support.css">
 
+    <link rel="stylesheet" href="test-helpers/disable-transitions.css">
+
     {{content-for 'head-footer'}}
     {{content-for 'test-head-footer'}}
   </head>
@@ -28,6 +30,8 @@
     <script src="assets/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="testem.js"></script>
     <script src="assets/test-loader.js"></script>
+
+    <script src="test-helpers/disable-animations.js"></script>
 
     {{content-for 'body-footer'}}
     {{content-for 'test-body-footer'}}

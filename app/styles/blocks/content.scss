@@ -1,19 +1,27 @@
 .content {
   float: left;
-  margin-top: (-.25 * $grid + $border-width);
+  position: relative;
   width: 100%;
+
 }
 
 .content_loading {
-  @include spinner($grid, border-color $border-color);
-  margin: $grid;
+  @include spinner($g, border-color $alpha-color);
+  margin: $g;
 }
 
 .content_lanes {
+  display: table;
   opacity: 0;
 
   &.-rendered {
     @include transition(opacity);
     opacity: 1;
   }
+}
+
+.content_svg-overlay {
+  pointer-events: none; // TODO: Find a way to ignore pointer events in IE<10
+  position: absolute;
+  top: 0;
 }
