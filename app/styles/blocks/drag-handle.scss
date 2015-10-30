@@ -1,0 +1,33 @@
+$drag-handle-height: 3 * $u !default; // no unit
+
+.drag-handle {
+  cursor: ew-resize;
+  height: 100%;
+  margin-left: (-$g / 4);
+  padding: ($g / 2) 0;
+  position: absolute;
+  top: ($g / 2);
+  width: ($g / 2 + 2 * $border-width);
+  z-index: 1;
+
+  $buttonSvgPath: "M#{$u / 4 + .5}, 0\
+    c0, #{$u / 4}, #{$u / 4}, #{$u / 4}, #{$u / 4}, #{$u / 2}\
+    l0, #{$drag-handle-height - 2 * $u / 2}\
+    c0, #{$u / 4}, #{-$u / 4}, #{$u / 4}, #{-$u / 4}, #{$u / 2}\
+    c0, #{-$u / 4}, #{-$u / 4}, #{-$u / 4}, #{-$u / 4}, #{-$u / 2}\
+    l0, #{-$drag-handle-height + 2 * $u / 2}\
+    c0, #{-$u / 4}, #{$u / 4}, #{-$u / 4}, #{$u / 4}, #{-$u / 2}\
+    Z
+    M#{$u / 4 + .5}, #{$u / 2}
+    l0, #{$drag-handle-height - $u}";
+
+  @include hover {
+    background: svg(
+      $g / 2 + 2 * $border-width,
+      999px,
+      "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
+    ) center center no-repeat;;
+    color: $link-hover-color;
+  }
+
+}

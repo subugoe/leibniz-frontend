@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: 'popup',
+  classNames: 'pop-up',
   tagName: 'span',
   didInsertElement: function() {
     var $this = this.$();

@@ -1,4 +1,4 @@
-.popup {
+.pop-up {
   @include drop-shadow;
   @include transition(opacity, z-index);
   background: $popup-bg-color;

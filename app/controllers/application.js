@@ -5,11 +5,10 @@ export default Ember.Controller.extend({
   actions: {
     toggleNav: function() {
       this.set('showNav', ! this.get('showNav'));
-
-      // Remove and redraw variant connectors once animation is complete
-      Ember.$('.content_svg-overlay').remove();
+      // Remove and redraw variant connectors
+      this.send('beforeResize');
       Ember.$('.main').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', () => {
-        Ember.$(window).resize(); // trigger variant connectores redraw
+        this.send('afterResize');
       });
     }
   },

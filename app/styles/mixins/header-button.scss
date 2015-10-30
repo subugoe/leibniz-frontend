@@ -1,13 +1,15 @@
+$header-button-width: 5 * $u !default; // no unit
+
 @mixin header-button($position: null) {
   @if $position == left {
     padding: 0 ($g / 2) 0 $g;
     $buttonSvgPath: "M0, #{$u / 2 + .5}\
-      c#{$u / 2}, .5, #{$u / 2}, #{-$u / 2}, #{$u}, #{-$u / 2}\
+      c#{$u / 2}, 0, #{$u / 2}, #{-$u / 2}, #{$u}, #{-$u / 2}\
       l#{999 - $u}, 0\
       l0, #{$u}\
       l#{-999 + $u}, 0\
       c#{-$u / 2}, 0, #{-$u / 2}, #{-$u / 2}, #{-$u}, #{-$u / 2}\
-      Z" !default;
+      Z";
   } @else if $position == center {
     border-left: $border-width solid $border-color;
     padding: 0 ($g / 2);
@@ -15,7 +17,7 @@
       l999, 0\
       l0, #{$u}\
       l-999, 0\
-      Z" !default;
+      Z";
   } @else if $position == right {
     border-left: $border-width solid $border-color;
     padding: 0 $g 0 ($g / 2);
@@ -24,17 +26,17 @@
       c#{$u / 2}, 0, #{$u / 2}, #{$u / 2}, #{$u}, #{$u / 2}\
       c#{-$u / 2}, 0, #{-$u / 2}, #{$u / 2}, #{-$u}, #{$u / 2}\
       l#{-999 + $u}, 0\
-      Z" !default;
+      Z";
   } @else {
     padding: 0 $g;
     $buttonSvgPath: "M0, #{$u / 2 + .5}\
-      c#{$u / 2}, .5,#{$u / 2}, #{-$u / 2}, #{$u}, #{-$u / 2}\
-      l#{999 - 2 * $u}, 0\
+      c#{$u / 2}, 0, #{$u / 2}, #{-$u / 2}, #{$u}, #{-$u / 2}\
+      l#{$header-button-width - 2 * $u}, 0\
       c#{$u / 2}, 0, #{$u / 2}, #{$u / 2}, #{$u}, #{$u / 2}\
       c#{-$u / 2}, 0, #{-$u / 2}, #{$u / 2}, #{-$u}, #{$u / 2}\
-      l#{-999 + 2 * $u}, 0\
+      l#{-$header-button-width + 2 * $u}, 0\
       c#{-$u / 2}, 0, #{-$u / 2}, #{-$u / 2}, #{-$u}, #{-$u / 2}\
-      Z" !default;
+      Z";
   }
 
   background: svg(
