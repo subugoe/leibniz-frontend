@@ -1,6 +1,6 @@
 .variant {
   @include drop-shadow;
-  @include transition(color, background);
+  @include transition(color, background, top);
   background: $white;
   border-left: $border-width-bold $border-style $border-color-dark;
   border-radius: $br;

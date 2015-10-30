@@ -14,7 +14,12 @@
 
       {{#if content.volltext}}
 
-        {{#each content.view.lanes as |lane|}}
+        {{#each content.view.lanes as |lane index|}}
+
+          {{#if index}}
+            {{!TODO: Find a way to omit those parameters}}
+            {{drag-handle beforeResize='beforeResize' afterResize='afterResize'}}
+          {{/if}}
 
           <div class="lane -minimized">
             <nav class="nav -vertical">

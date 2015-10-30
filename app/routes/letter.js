@@ -4,6 +4,14 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Route.extend({
+  actions: {
+    beforeResize: function() {
+      this.clearVariantConnectors();
+    },
+    afterResize: function() {
+      this.positionVariants();
+    }
+  },
   model: function(params) {
     return Ember.$.ajax({
       url: config.solrURL,
