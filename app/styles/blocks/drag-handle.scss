@@ -25,9 +25,8 @@ $drag-handle-height: 3 * $u !default; // no unit
     background: svg(
       $g / 2 + 2 * $border-width,
       999px,
-      "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($highlight-color)}'/>"
-    ) center center no-repeat;;
-    color: $link-hover-color;
+      "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($link-hover-color)}'/>"
+    ) center center no-repeat;
   }
 
 }
