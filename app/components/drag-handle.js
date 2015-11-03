@@ -4,7 +4,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: 'drag-handle',
   mouseMove: function(event) {
-    var dragHandlerHeight = 86; // as set in CSS
+    var dragHandlerHeight = 98; // as set in CSS
     this.$().css('background-position', `center ${event.offsetY - dragHandlerHeight / 2}px`);
   },
   mouseDown: function() {
