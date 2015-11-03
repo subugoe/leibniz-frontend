@@ -80,7 +80,10 @@ export default Ember.Route.extend({
       // Render MathJax, then position variants
       this.renderMathJax().then( () => {
         this.positionVariants();
-        Ember.$(window).resize( () => this.positionVariants() );
+        Ember.$('.content').resize( () => {
+          Ember.run.debounce(this, this.clearVariantConnectors, 250, true);
+          Ember.run.debounce(this, this.positionVariants, 250);
+        });
         this.controller.set('rendered', true);
       });
     });
@@ -178,14 +181,14 @@ export default Ember.Route.extend({
       svg.appendChild(path);
 
       // Add click handler to highlight reference/variant pair
-      $this.add($variant).click( () => {
+      $this.add($variant).off('click').click( () => {
         $this.add($variant).toggleClass('-highlight');
         return false;
       });
 
       // NOTE: Cannot use toggleClass because element can be moved under the
       // mouse pointer which does not trigger mouseEnter
-      $this.add($variant).hover( () => {
+      $this.add($variant).off('hover').hover( () => {
         $this.add($variant).addClass('-hover');
       }, () => {
         $this.add($variant).removeClass('-hover');
