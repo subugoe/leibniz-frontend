@@ -14,7 +14,8 @@
     "qunit": "~1.17.1",
     "reset-css": "~2.0.2011012602",
     "spinners": "~1.2.2",
-    "MathJax": "~2.5.3"
+    "MathJax": "~2.5.3",
+    "javascript-detect-element-resize": "~0.5.3"
   },
   "resolutions": {
     "ember": "^2.1.0"

@@ -98,9 +98,9 @@
 
 .header_below {
   font-size: 0; // Get rid of whitespace between buttons
+  margin-top: (-$g / 2);
   position: absolute;
   text-align: center;
-  margin-top: -$g / 2;
   width: 100%;
   z-index: 1;
 }
