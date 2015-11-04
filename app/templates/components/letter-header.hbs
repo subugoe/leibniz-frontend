@@ -8,36 +8,37 @@
 
   <div class="header_main">
     <h1 class="header_title">
-      <span class="header_sender">
-        <span class="header_first-name">{{content.absender_vorname}}</span>
-        <span class="header_last-name">{{content.absender_nachname}}</span>
-        {{#pop-up}}{{t 'sender'}}{{/pop-up}}
-      </span>
-      <span class="header_to">
-        <span class="sr-only">{{t 'to'}}</span>
-      </span>
-      <span class="header_recipient">
-        <span class="header_first-name">{{content.empfaenger_vorname}}</span>
-        <span class="header_last-name">{{content.empfaenger_nachname}}</span>
-        {{#pop-up}}{{t 'recipient'}}{{/pop-up}}
+      <span class="header_correspondents">
+        {{content.korrespondenten_anzeige}}
+        {{#pop-up}}
+          {{t 'sender'}}:
+          <span class="header_sender-first-name">{{content.absender_vorname}}</span>
+          <span class="header_sender-last-name">{{content.absender_nachname}}</span>
+          <br>
+          {{t 'recipient'}}:
+          <span class="header_recipient-first-name">{{content.empfaenger_vorname}}</span>
+          <span class="header_recipient-last-name">{{content.empfaenger_nachname}}</span>
+        {{/pop-up}}
       </span>
     </h1>
-    <div class="header_dates">
-      {{content.datum_anzeige}}
-      {{#pop-up}}
-        <span class="header_date -gregorian">
-          {{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}
-        </span>
-        ({{{t 'dateGregorian'}}})
-        {{#if content.datum_julianisch}}
-          <br>
-          <span class="header_date -julian">
-            {{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}
-          </span>
-          ({{{t 'dateJulian'}}})
-        {{/if}}
-        {{!TODO: Explain how approximate dates are represented}}
-      {{/pop-up}}
+    <div class="header_subtitle">
+      <div class="header_dates">
+        {{content.datum_anzeige}}
+        {{#pop-up}}
+          {{#if content.datum_julianisch}}
+            {{{t 'dateJulian'}}}:
+            <time class="header_date -julian" datetime="{{content.datum_julianisch}}">
+              {{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}
+            </time>
+            <br>
+          {{/if}}
+          {{{t 'dateGregorian'}}}:
+          <time class="header_date -gregorian" datetime="{{content.datum_gregorianisch}}">
+            {{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}
+          </time>
+          {{!TODO: Explain how approximate dates are represented}}
+        {{/pop-up}}
+      </div>
     </div>
   </div>
 
@@ -45,7 +46,7 @@
     <div class="header_pagination">
       {{#if content.brief_id_vorgaenger}}
         {{#link-to 'letter' content.brief_id_vorgaenger (query-params view=content.viewQuery) class="header_step -prev"}}
-          {{#pop-up wide=true}}
+          {{#pop-up}}
             {{{t 'letterPrev'}}}<br>
             {{{t 'series' series=content.reihe}}}<br>
             {{{t 'volume' volume=content.band}}}<br>
@@ -67,7 +68,7 @@
       </span>
       {{#if content.brief_id_nachfolger}}
         {{#link-to 'letter' content.brief_id_nachfolger (query-params view=content.viewQuery) class="header_step -next"}}
-          {{#pop-up wide=true}}
+          {{#pop-up}}
             {{{t 'letterNext'}}}<br>
             {{{t 'series' series=content.reihe}}}<br>
             {{{t 'volume' volume=content.band}}}<br>
