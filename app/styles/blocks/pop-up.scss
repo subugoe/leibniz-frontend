@@ -14,6 +14,7 @@
   text-align: left;
   top: 100%;
   transition-delay: .3s;
+  white-space: nowrap;
   z-index: -1;
 
   &:before {
@@ -37,10 +38,6 @@
       left: auto;
       right: ($g / 2);
     }
-  }
-
-  &.-wide {
-    min-width: (12 * $g);
   }
 
   :hover > & {
