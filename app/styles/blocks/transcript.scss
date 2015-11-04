@@ -29,8 +29,7 @@
     }
 
     &.-hover {
-      background: $link-hover-color;
-      color: auto-color($link-hover-color);
+      color: $link-color;
     }
 
     &.-highlight {
