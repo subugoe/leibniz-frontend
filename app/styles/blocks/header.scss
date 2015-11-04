@@ -45,33 +45,17 @@
 }
 
 .header_title {
-  @include transition(all);
   @include typo-scale(1);
-  margin: 0;
-
-  .-scrolled & {
-    @include typo-scale(0);
-  }
-}
-
-.header_sender,
-.header_recipient {
   color: $alpha-color;
+  margin: 0;
 }
 
-.header_to {
-  &:before {
-    content: '\2192'; // right arrow
-  }
+.header_correspondents {
+  display: inline-block;
 }
 
-.header_date {
-  @include transition(all);
-
-  .-scrolled & {
-    font-size: $font-size-small;
-    line-height: 1;
-  }
+.header_dates {
+  display: inline-block;
 }
 
 .header_step {
@@ -102,7 +86,7 @@
   text-align: center;
   margin-top: -$g / 2;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .header_toggle {
