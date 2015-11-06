@@ -167,7 +167,6 @@ export default Ember.Route.extend({
       var bottom = $this.position().top + $this.outerHeight();
 
       var variantTop = (top < prevVariantBottom ? prevVariantBottom : top);
-      prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;
       $variant.css( {top: variantTop} );
 
       // Draw a curved line from reference to variant
@@ -196,7 +195,11 @@ export default Ember.Route.extend({
       }, () => {
         $this.add($variant).removeClass('-hover');
       });
+
+      prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;
     });
+
+    $laneVariants.height(prevVariantBottom);
   }
 });
 
