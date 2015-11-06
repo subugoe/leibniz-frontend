@@ -79,7 +79,8 @@ export default Ember.Route.extend({
 
       // Render MathJax, then position variants
       this.renderMathJax().then( () => {
-        this.positionVariants();
+        // TODO: For some reason, resize is always triggered once
+        // this.positionVariants();
         Ember.$('.content').resize( () => {
           Ember.run.debounce(this, this.clearVariantConnectors, 250, true);
           Ember.run.debounce(this, this.positionVariants, 250);
@@ -91,7 +92,7 @@ export default Ember.Route.extend({
   // Turn static links into ember transition links
   activateLinks: function() {
     var route = this;
-    // TODO: Get a elements directly
+    // TODO: Get <a> elements directly
     Ember.$('.metadata').find('a').click( function(e) {
       e.preventDefault();
       var letterID = Ember.$(this).attr('href');
@@ -143,7 +144,8 @@ export default Ember.Route.extend({
     var $laneVariants = $('.variants');
     var $variants = $laneVariants.find('.variant').hide();
     var prevVariantBottom = 0;
-    var marginBetweenVariants = parseInt( $laneVariants.css('padding') );
+    // NOTE: Shorthand css properties like `padding` are not supported in Firefox
+    var marginBetweenVariants = parseInt( $laneVariants.css('lineHeight') ) / 2;
 
     // Using plain JS for SVG since jQuery struggles with namespaces
     var svgNS = 'http://www.w3.org/2000/svg';
@@ -163,7 +165,8 @@ export default Ember.Route.extend({
       var left = $this.position().left;
       var top = $this.position().top;
       var bottom = $this.position().top + $this.outerHeight();
-      var variantTop = (top < prevVariantBottom ? prevVariantBottom : top + 10); // TODO: Calucalte this value
+
+      var variantTop = (top < prevVariantBottom ? prevVariantBottom : top);
       prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;
       $variant.css( {top: variantTop} );
 
