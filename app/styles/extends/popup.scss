@@ -1,0 +1,46 @@
+%popup {
+  @include drop-shadow;
+  @include transition(opacity, z-index);
+  background: $popup-bg-color;
+  border-radius: $br;
+  color: $text-color;
+  font-size: $font-size;
+  font-style: normal;
+  left: 0;
+  margin: ($g / 4) 0 0;
+  opacity: 0;
+  padding: ($g / 4) ($g / 2);
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  white-space: nowrap;
+  z-index: -1;
+
+  &:before {
+    border: ($g / 4) solid transparent;
+    border-bottom-color: $popup-bg-color;
+    content: '';
+    display: block;
+    height: 0;
+    left: ($g / 2);
+    position: absolute;
+    top: (-$g / 2);
+    width: 0;
+    z-index: 999;
+  }
+
+  &.-right {
+    left: auto;
+    right: 0;
+
+    &:before {
+      left: auto;
+      right: ($g / 2);
+    }
+  }
+}
+
+%popup-visible {
+  opacity: 1;
+  z-index: 99;
+}
