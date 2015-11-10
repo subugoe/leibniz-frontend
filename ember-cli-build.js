@@ -26,5 +26,9 @@ module.exports = function(defaults) {
     destDir: '/assets/MathJax'
   });
 
-  return app.toTree(mathJax);
+  var fontello = new Funnel('public/assets/fontello', {
+    destDir: '/assets/fontello'
+  });
+
+  return app.toTree([mathJax, fontello]);
 };
