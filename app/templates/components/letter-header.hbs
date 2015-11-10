@@ -25,18 +25,31 @@
       <div class="header_dates">
         {{content.datum_anzeige}}
         {{#pop-up}}
-          {{#if content.datum_julianisch}}
+          {{#if content.bothDatesPresent}}
             {{{t 'dateJulian'}}}:
             <time class="header_date -julian" datetime="{{content.datum_julianisch}}">
               {{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}
             </time>
             <br>
+            {{{t 'dateGregorian'}}}:
+            <time class="header_date -gregorian" datetime="{{content.datum_gregorianisch}}">
+              {{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}
+            </time>
+          {{else}}
+            {{#if content.datum_julianisch}}
+              {{{t 'dateJulian'}}}
+            {{else}}
+              {{#if content.datum_gregorianisch}}
+                {{{t 'dateGregorian'}}}
+              {{/if}}
+            {{/if}}
           {{/if}}
-          {{{t 'dateGregorian'}}}:
-          <time class="header_date -gregorian" datetime="{{content.datum_gregorianisch}}">
-            {{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}
-          </time>
-          {{!TODO: Explain how approximate dates are represented}}
+          {{#if content.exactDateUnknown}}
+            <br>{{t 'exactDateUnknown'}}
+          {{/if}}
+          {{#if content.dateAddedByEditor}}
+            <br>{{t 'addedByEditor'}}
+          {{/if}}
         {{/pop-up}}
       </div>
     </div>
@@ -59,7 +72,7 @@
         </span>
       {{/if}}
       <span class="header_current-letter">
-        {{content.reihe}}, {{content.band}}, N.&nbsp;{{content.brief_nummer}}
+        {{content.reihe}}, {{content.band}} N.&nbsp;{{content.brief_nummer}}
         {{#pop-up}}
           {{{t 'series' series=content.reihe}}}<br>
           {{{t 'volume' volume=content.band}}}<br>

@@ -1,14 +1,14 @@
 <header class="lane_header">
-  <div class="lane-type-select">
-    <span class="lane-type-select_toggle">
+  <div class="select-lane-type">
+    <span class="select-lane-type_toggle">
       {{t lane.type}}
     </span>
-    <div class="lane-type-select_dropdown">
-      <ul class="lane-type-select_list">
+    <div class="select-lane-type_dropdown">
+      <ul class="select-lane-type_list">
         {{#each laneTypes as |laneType|}}
           {{#unless (eq laneType lane.type)}}
-            <li class="lane-type-select_item">
-              <button class="lane-type-select_button">
+            <li class="select-lane-type_item">
+              <button class="select-lane-type_button">
                 {{t laneType}}
               </button>
             </li>

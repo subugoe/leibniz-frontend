@@ -27,7 +27,9 @@ export default Ember.Route.extend({
       if ( json.response.docs.length > 0 ) {
         // TODO: Is letter always the first doc in response?
         letter = json.response.docs[0];
-        letter.volltext = letter.volltext;
+        letter.bothDatesPresent = letter.datum_julianisch && letter.datum_gregorianisch;
+        letter.dateAddedByEditor = letter.datum_anzeige.indexOf('[') > -1;
+        letter.exactDateUnknown = letter.datum_julianisch_bis;
         letter.variants = json.response.docs.slice(1);
         // Determine variant type from ID
         // TODO: Would be nice to use for ( ... of ... ) here, but breaks tests
@@ -35,7 +37,7 @@ export default Ember.Route.extend({
           var typeHint = variant.id.substr(0, 4);
           switch ( typeHint ) {
             case 'vara':
-              variant.type = 'addition';
+              variant.type = 'note';
               break;
             case 'varc':
               variant.type = 'variant';
