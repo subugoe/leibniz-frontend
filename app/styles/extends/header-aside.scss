@@ -1,6 +1,6 @@
 %header-aside {
   @include border(top);
-  background: $highlight-color;
+  background-color: $aside-bg-color;
   clear: both;
   display: none;
   padding: ($g / 2);
