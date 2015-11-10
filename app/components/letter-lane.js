@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   }),
   actions: {
     toggleLaneTypeDropdown: function() {
-      this.$().find('.lane-type-select_dropdown').toggleClass('-open');
+      this.$().find('.select-lane-type_dropdown').toggleClass('-open');
     },
     changeLaneType: function() {
       // TODO

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   queryParams: ['view'],
   laneTypes: [
-    'scans',
+    'manuscript',
     'transcript',
     'variants'
   ],
