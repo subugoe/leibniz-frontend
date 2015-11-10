@@ -25,13 +25,10 @@ module.exports = function(defaults) {
   var mathJax = new Funnel('bower_components/MathJax', {
     destDir: '/assets/MathJax'
   });
-  module.exports = app.toTree(mathJax);
 
   var fontello = new Funnel('public/assets/fontello', {
     destDir: '/assets/fontello'
   });
 
-  module.exports = app.toTree(fontello);
-
-  return app.toTree();
+  return app.toTree([mathJax, fontello]);
 };
