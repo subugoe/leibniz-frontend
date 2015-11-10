@@ -1,0 +1,39 @@
+.lane-type-select {
+  display: inline-block;
+  position: relative;
+}
+
+.lane-type-select_toggle {
+  @include transition(color);
+  color: $text-color-light;
+  display: inline-block;
+}
+
+.lane-type-select_dropdown {
+  @extend %popup;
+
+  &.-open {
+    @extend %popup-visible;
+  }
+}
+
+.lane-type-select_list {
+  margin: (-$g / 4) (-$g / 2);
+}
+
+.lane-type-select_item {
+  & + & {
+    border-top: $border-width $border-style $border-color;
+  }
+}
+
+.lane-type-select_button {
+  color: $link-color;
+  display: block;
+  padding: ($g / 4) ($g / 2);
+  width: 100%;
+
+  @include hover {
+    color: $link-hover-color;
+  }
+}

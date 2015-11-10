@@ -1,0 +1,24 @@
+<header class="lane_header">
+  <div class="lane-type-select">
+    <span class="lane-type-select_toggle">
+      {{t lane.type}}
+    </span>
+    <div class="lane-type-select_dropdown">
+      <ul class="lane-type-select_list">
+        {{#each laneTypes as |laneType|}}
+          {{#unless (eq laneType lane.type)}}
+            <li class="lane-type-select_item">
+              <button class="lane-type-select_button">
+                {{t laneType}}
+              </button>
+            </li>
+          {{/unless}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</header>
+
+{{component (concat 'lane-' lane.type) content=content}}
+
+{{yield}}

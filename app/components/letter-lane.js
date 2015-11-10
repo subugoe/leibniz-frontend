@@ -7,10 +7,14 @@ export default Ember.Component.extend({
     var lane = this.get('lane');
     return lane ? this.get('lane').type : '';
   }),
-  layoutName: function() {
-    var lane = this.get('lane');
-    return lane ? 'components/lane-' + lane.type : null;
-  }.property('lane'),
+  actions: {
+    toggleLaneTypeDropdown: function() {
+      this.$().find('.lane-type-select_dropdown').toggleClass('-open');
+    },
+    changeLaneType: function() {
+      // TODO
+    }
+  },
   didInsertElement: function() {
     var $this = this.$();
     var lane = this.get('lane');

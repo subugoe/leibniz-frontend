@@ -12,3 +12,10 @@
     display: none;
   }
 }
+
+.lane_header {
+  background: $shade;
+  margin: (-$g / 2) (-$g / 2) $g;
+  padding: ($g / 2);
+  text-align: center;
+}
