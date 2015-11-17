@@ -1,6 +1,6 @@
 // TODO: Find a way to glob-import mixins and blocks
 
-@import 'bower_components/reset-css/reset';
+@import 'bower_components/reset-css/_reset'; // Underscore is required to distinguish from reset.css
 @import 'bower_components/spinners/stylesheets/spinners';
 @import 'vendor/entypo-plus';
 

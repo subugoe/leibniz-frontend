@@ -36,6 +36,12 @@
       background: $text-color-light;
       color: $white;
     }
+
+    &.-image {
+      display: block;
+      text-align: center;
+      margin: $g 0;
+    }
   }
 }
 
