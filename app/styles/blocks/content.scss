@@ -5,7 +5,7 @@
 }
 
 .content_loading {
-  @include spinner($g, border-color $alpha-color);
+  @extend %spinner;
   margin: $g;
 }
 
