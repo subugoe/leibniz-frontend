@@ -25,9 +25,16 @@
   }
   &.-sup {
     position: relative;
-    top: -0.7em;
+    top: -0.5em;
     vertical-align: super;
-    margin-left: -0.7em;
+    margin-left: -0.5em;
+    font-size: 80%;
+  }
+  &.-sub {
+    position: relative;
+    bottom: -0.5em;
+    vertical-align: super;
+    margin-left: -0.5em;
     font-size: 80%;
   }
   &.-small-rectangle {
@@ -42,6 +49,9 @@
     display: inline-block;
     border: 1px solid $text-color;
   }
+  &.-upper {
+
+  }
 }
 
 .symbol_sub {
@@ -51,4 +61,21 @@
     display: inline-block;
     line-height: 1.4em;
     margin-left: -1.5em;
+}
+
+.symbol-frac {
+  display: inline-table;
+  line-height: 0.5em;
+  position: relative;
+  top: -0.5em;
+}
+
+.symbol-row {
+  display: table-row;
+  font-size: 80%;
+}
+
+.symbol-content {
+  display: table-cell;
+  text-align: center;
 }
