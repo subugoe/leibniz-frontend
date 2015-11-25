@@ -15,14 +15,14 @@ $text-color: #444;
 $text-color-light: #888;
 $disabled-color: tint($text-color, 60);
 $highlight-color: shade($white, 5);
-$aside-bg-color: rgba(#000, .06);
 
 // Variant colors
-$variant-colors-count: 7;
+$variant-colors-count: 5;
 $variant-colors-hue-step: 360 / ($variant-colors-count + 1);
+$variant-color-offset: 0;
 $variant-colors: ();
 @for $i from 1 through $variant-colors-count {
-  $variant-colors: join($variant-colors, adjust-hue($alpha-color, 360 - $i * $variant-colors-hue-step));
+  $variant-colors: join($variant-colors, adjust-hue($alpha-color, ($i + $variant-color-offset) * $variant-colors-hue-step));
 }
 
 // Dimensions

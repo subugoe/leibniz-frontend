@@ -1,18 +1,22 @@
 .variant {
+  @extend %variant-colors;
   @include drop-shadow;
-  @include transition(color, background, top);
+  @include transition(color, background, opacity, top);
   background: $white;
   border-left: $border-width-bold $border-style $border-color-dark;
   border-radius: $br;
   cursor: pointer;
   left: ($g / 2);
+  opacity: 0; // set opaque by JS after positioning
   overflow: hidden;
   padding: ($g / 4);
   position: absolute;
   right: ($g / 2);
+  top: 0;
 
   &.-hover {
     color: $link-color;
+    transition: none;
   }
 
   &.-highlight {

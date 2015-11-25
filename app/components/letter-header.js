@@ -4,11 +4,11 @@ export default Ember.Component.extend({
   showCitation: false,
   showMetadata: false,
   actions: {
-    toggleCitation: function() {
+    toggleCitation() {
       Ember.$('.citation').slideToggle();
       this.set('showCitation', ! this.get('showCitation'));
     },
-    toggleMetadata: function() {
+    toggleMetadata() {
       Ember.$('.metadata').slideToggle();
       this.set('showMetadata', ! this.get('showMetadata'));
     }

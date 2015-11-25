@@ -24,12 +24,14 @@ a {
 
   &:hover {
     color: $link-hover-color;
+    transition: none;
   }
 }
 
 abbr {
   border-bottom: $border-width dotted;
   cursor: help;
+  text-decoration: none;
 }
 
 i {

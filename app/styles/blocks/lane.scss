@@ -13,9 +13,24 @@
   }
 }
 
+.lane_actions {
+  margin-bottom: $g;
+  min-height: $g;
+
+  ul {
+    display: table;
+    margin: 0 auto;
+  }
+
+  li {
+    display: table-cell;
+    padding: 0 ($g / 4);
+  }
+}
+
 .lane_header {
   background: $shade;
-  margin: (-$g / 2) (-$g / 2) $g;
+  margin: (-$g / 2) (-$g / 2) ($g / 2);
   padding: ($g / 2);
   text-align: center;
 }

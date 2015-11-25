@@ -3,12 +3,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: 'drag-handle',
-  mouseMove: function(event) {
+  mouseMove(event) {
     var dragHandlerHeight = 98; // as set in CSS
     this.$().css('background-position', `center ${event.offsetY - dragHandlerHeight / 2}px`);
   },
-  mouseDown: function() {
-    this.sendAction('beforeResize');
+  mouseDown() {
+    this.sendAction('clearVariantConnectors');
     var $this = this.$();
     var contentWidth = $('.content').outerWidth();
     $(window).on( 'mousemove', (event) => {
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
       }
     });
-    $(window).on( 'mouseup', () => {
+    $(window).off('mouseup').on('mouseup', () => {
       $(window).off('mousemove');
       this.sendAction('afterResize');
       // TODO: Save new state

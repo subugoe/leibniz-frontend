@@ -1,20 +1,11 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'leibniz-frontend/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'leibniz-frontend/tests/helpers/module-for-acceptance';
 
-module('Acceptance | header toggles', {
-  beforeEach: function() {
-    this.application = startApp();
-  },
-
-  afterEach: function() {
-    Ember.run(this.application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | header toggles test');
 
 test('toggle metadata', function(assert) {
   assert.expect(4);
-  visit('/letter/l371');
+  visit('/');
 
   click('button.header_toggle.-metadata');
   andThen( () => {

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: 'pop-up',
   tagName: 'span',
-  didInsertElement: function() {
+  didInsertElement() {
     var $this = this.$();
     var $parent = $this.parent();
     $parent.css('position', 'relative');
