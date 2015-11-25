@@ -22,36 +22,48 @@
       </span>
     </h1>
     <div class="header_subtitle">
-      <div class="header_dates">
-        {{content.datum_anzeige}}
-        {{#pop-up}}
-          {{#if content.bothDatesPresent}}
-            {{{t 'dateJulian'}}}:
-            <time class="header_date -julian" datetime="{{content.datum_julianisch}}">
-              {{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}
-            </time>
-            <br>
-            {{{t 'dateGregorian'}}}:
-            <time class="header_date -gregorian" datetime="{{content.datum_gregorianisch}}">
-              {{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}
-            </time>
-          {{else}}
-            {{#if content.datum_julianisch}}
-              {{{t 'dateJulian'}}}
+      {{#if content.beilage_brief_id}}
+        <div class="header_attachment">
+          {{content.beilage_titel}}
+          {{! TODO: content.beilage_brief_nummer}}
+          ({{t 'attachmentTo'}}
+          {{#each content.beilage_brief_id as |brief_id index|}}
+            {{if index ', '}}
+            {{#link-to 'letter' brief_id}}{{brief_id}}{{/link-to}}
+          {{/each}})
+        </div>
+      {{else}}
+        <div class="header_dates">
+          {{content.datum_anzeige}}
+          {{#pop-up}}
+            {{#if content.bothDatesPresent}}
+              {{{t 'dateJulian'}}}:
+              <time class="header_date -julian" datetime="{{content.datum_julianisch}}">
+                {{format-date content.datum_julianisch day='numeric' month='long' year='numeric'}}
+              </time>
+              <br>
+              {{{t 'dateGregorian'}}}:
+              <time class="header_date -gregorian" datetime="{{content.datum_gregorianisch}}">
+                {{format-date content.datum_gregorianisch day='numeric' month='long' year='numeric'}}
+              </time>
             {{else}}
-              {{#if content.datum_gregorianisch}}
-                {{{t 'dateGregorian'}}}
+              {{#if content.datum_julianisch}}
+                {{{t 'dateJulian'}}}
+              {{else}}
+                {{#if content.datum_gregorianisch}}
+                  {{{t 'dateGregorian'}}}
+                {{/if}}
               {{/if}}
             {{/if}}
-          {{/if}}
-          {{#if content.exactDateUnknown}}
-            <br>{{t 'exactDateUnknown'}}
-          {{/if}}
-          {{#if content.dateAddedByEditor}}
-            <br>{{t 'addedByEditor'}}
-          {{/if}}
-        {{/pop-up}}
-      </div>
+            {{#if content.exactDateUnknown}}
+              <br>{{t 'exactDateUnknown'}}
+            {{/if}}
+            {{#if content.dateAddedByEditor}}
+              <br>{{t 'addedByEditor'}}
+            {{/if}}
+          {{/pop-up}}
+        </div>
+      {{/if}}
     </div>
   </div>
 
