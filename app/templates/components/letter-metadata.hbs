@@ -5,7 +5,15 @@
   <p>{{{content.kontext}}}</p>
 
   <h3>{{t 'tradition'}}</h3>
-  {{{content.ueberlieferung}}}
+  <ul>
+    {{#each content.witnesses as |witness index|}}
+      <li class="metadata_witness -color{{index}}">
+        {{witness.identifier}}
+        {{witness.type}}
+        {{{witness.text}}}
+      </li>
+    {{/each}}
+  </ul>
 
   <h3>
     {{#if (eq content.ort.length 1)}}
