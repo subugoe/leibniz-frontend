@@ -8,14 +8,17 @@ export default Ember.Component.extend({
     return lane ? this.get('lane').type : '';
   }),
   actions: {
-    toggleLaneTypeDropdown: function() {
+    toggleLaneTypeDropdown() {
       this.$().find('.select-lane-type_dropdown').toggleClass('-open');
     },
-    changeLaneType: function() {
+    changeLaneType() {
       // TODO
+    },
+    positionVariants() {
+      this.sendAction('positionVariants');
     }
   },
-  didInsertElement: function() {
+  didInsertElement() {
     var $this = this.$();
     var lane = this.get('lane');
     if ( typeof lane !== 'undefined' && lane.hasOwnProperty('width') ) {

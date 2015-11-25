@@ -2,7 +2,7 @@
 
   {{letter-header content=content}}
 
-  <main class="content">
+  <main class="content" id="content">
 
     {{#unless rendered}}
       <div class="content_loading">
@@ -18,7 +18,7 @@
 
           {{#if index}}
             {{!TODO: Find a way to omit those parameters}}
-            {{drag-handle beforeResize='beforeResize' afterResize='afterResize'}}
+            {{drag-handle beforeResize='clearVariantConnectors' afterResize='positionVariants'}}
           {{/if}}
 
           <div class="lane -minimized">
@@ -30,7 +30,7 @@
             </nav>
           </div>
 
-          {{letter-lane lane=lane content=content laneTypes=laneTypes}}
+          {{letter-lane lane=lane content=content laneTypes=laneTypes positionVariants='positionVariants'}}
 
         {{/each}}
 

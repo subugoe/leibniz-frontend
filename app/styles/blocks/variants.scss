@@ -2,3 +2,17 @@
   @extend %lane;
   background: $shade;
 }
+
+.variants_button {
+  @include button;
+  background: $disabled-color;
+  min-width: 4em;
+
+  &.-active {
+    @extend %variant-backgrounds;
+  }
+
+  @include hover {
+    background: shade($disabled-color, 25);
+  }
+}

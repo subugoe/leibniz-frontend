@@ -5,45 +5,19 @@ import config from '../config/environment';
 
 export default Ember.Route.extend({
   actions: {
-    beforeResize: function() {
+    clearVariantConnectors: function() {
       this.clearVariantConnectors();
     },
-    afterResize: function() {
+    positionVariants: function() {
       this.positionVariants();
     }
   },
   model: function(params) {
-    return Ember.$.ajax({
-      url: config.solrURL,
-      data: {
-        wt: 'json',
-        q: `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`,
-        rows: 9999
-      },
-      dataType: 'jsonp',
-      jsonp: 'json.wrf'
-    }).then( function(json) {
+    var query = `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`;
+    return this.solrQuery(query).then( (json) => {
       var letter = {};
       if ( json.response.docs.length > 0 ) {
-        // TODO: Is letter always the first doc in response?
-        letter = json.response.docs[0];
-        letter.bothDatesPresent = letter.datum_julianisch && letter.datum_gregorianisch;
-        letter.dateAddedByEditor = letter.datum_anzeige.indexOf('[') > -1;
-        letter.exactDateUnknown = letter.datum_julianisch_bis;
-        letter.variants = json.response.docs.slice(1);
-        // Determine variant type from ID
-        // TODO: Would be nice to use for ( ... of ... ) here, but breaks tests
-        letter.variants.forEach( function(variant) {
-          var typeHint = variant.id.substr(0, 4);
-          switch ( typeHint ) {
-            case 'vara':
-              variant.type = 'note';
-              break;
-            case 'varc':
-              variant.type = 'variant';
-              break;
-          }
-        });
+        letter = this.parseSolrResponse(json);
       } else {
         letter.id = params.letter_id;
       }
@@ -58,6 +32,60 @@ export default Ember.Route.extend({
 
       return letter;
     });
+  },
+  solrQuery: function(query) {
+    return Ember.$.ajax({
+      data: {
+        q: query,
+        rows: 9999,
+        wt: 'json'
+      },
+      dataType: 'jsonp',
+      jsonp: 'json.wrf',
+      url: config.solrURL
+    });
+  },
+  parseSolrResponse: function(json) {
+    // TODO: Is letter always the first doc in response?
+    var letter = json.response.docs[0];
+    letter.bothDatesPresent = letter.datum_julianisch && letter.datum_gregorianisch;
+    letter.dateAddedByEditor = letter.datum_anzeige.indexOf('[') > -1;
+    letter.exactDateUnknown = letter.datum_julianisch_bis;
+    letter.variants = json.response.docs.slice(1);
+    // Merge 'textzeuge' arrays
+    if ( letter.textzeuge_bezeichnung ) {
+      letter.witnesses = [];
+      letter.textzeuge_bezeichnung.forEach( function(textzeuge, index) {
+        // Use 1-based index for easier Sass and Handlebars handling
+        letter.witnesses[index + 1] = {
+          identifier: textzeuge,
+          type: letter.textzeuge_art[index],
+          text: letter.textzeuge_text[index],
+          visible: true
+        };
+      });
+    }
+    // Determine variant type from ID
+    if ( letter.variants ) {
+      letter.variants.forEach( function(variant) {
+        var typeHint = variant.id.substr(0, 4);
+        if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
+          variant.textzeuge[0] = variant.textzeuge[0].trim(); // TODO: Remove this once Solr is cleaned
+          var witnessIdentifier = variant.textzeuge[0];
+          variant.visible = true;
+          variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
+        }
+        switch ( typeHint ) {
+          case 'vara':
+            variant.type = 'note';
+            break;
+          case 'varc':
+            variant.type = 'variant';
+            break;
+        }
+      });
+    }
+    return letter;
   },
   renderTemplate: function() {
     this.render({ outlet: 'letter' });
@@ -84,8 +112,8 @@ export default Ember.Route.extend({
         // TODO: For some reason, resize is always triggered once
         // this.positionVariants();
         Ember.$('.content').resize( () => {
-          Ember.run.debounce(this, this.clearVariantConnectors, 250, true);
-          Ember.run.debounce(this, this.positionVariants, 250);
+          Ember.run.debounce(this, this.clearVariantConnectors, 333, true);
+          Ember.run.debounce(this, this.positionVariants, 333);
         });
         this.controller.set('rendered', true);
       });
@@ -102,16 +130,8 @@ export default Ember.Route.extend({
     });
   },
   loadSVG: function(id) {
-    return new Ember.RSVP.Promise( function(resolve) {
-      Ember.$.ajax({
-        url: config.solrURL,
-        data: {
-          wt: 'json',
-          q: `id:${id}`
-        },
-        dataType: 'jsonp',
-        jsonp: 'json.wrf'
-      }).then( function(json) {
+    return new Ember.RSVP.Promise( (resolve) => {
+      this.solrQuery(`id:${id}`).then( function(json) {
         if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('svg_code')) {
           resolve(json.response.docs[0].svg_code);
         }
@@ -120,9 +140,9 @@ export default Ember.Route.extend({
   },
   renderMathJax: function() {
     var context = this.context;
-    return new Ember.RSVP.Promise( function(resolve) {
-      if ( context.volltext ) {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => { // jshint ignore:line
+    return new Ember.RSVP.Promise( (resolve) => {
+      if ( context.volltext && typeof MathJax !== 'undefined' ) {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub], () => {
           resolve(true);
         });
       } else {
@@ -155,7 +175,7 @@ export default Ember.Route.extend({
     svg.setAttribute('class', 'content_svg-overlay');
     svg.setAttribute('width', $('.content').width());
     svg.setAttribute('height', $('.content').height());
-    document.getElementsByClassName('content')[0].appendChild(svg);
+    document.getElementById('content').appendChild(svg);
 
     $references.each( function() {
       var $this = $(this);
@@ -169,11 +189,13 @@ export default Ember.Route.extend({
       var bottom = $this.position().top + $this.outerHeight();
 
       var variantTop = (top < prevVariantBottom ? prevVariantBottom : top);
-      $variant.css( {top: variantTop} );
+      $variant.css( {opacity: 1, top: variantTop} );
 
       // Draw a curved line from reference to variant
       var path = document.createElementNS(svgNS, 'path');
-      path.setAttribute('stroke', '#aaaaaa');
+      // TODO: Use color from CSS only if in long hex format, short hex is not supported by SVG
+      var strokeColor = $variant.css('border-color').length < 66 ? $variant.css('border-color') : '#aaaaaa';
+      path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');
       var pathD = `M ${left + 3}, ${bottom - .5}
@@ -206,15 +228,18 @@ export default Ember.Route.extend({
 });
 
 /* global MathJax */
-MathJax.Hub.Config({
-  extensions: ['tex2jax.js'],
-  jax: ['input/TeX', 'output/HTML-CSS'],
-  tex2jax: {
-    inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-    displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
-    processEscapes: true
-  },
-  'HTML-CSS': {
-    availableFonts: ['TeX']
-  }
-});
+if ( typeof MathJax !== 'undefined' ) {
+  MathJax.Hub.Config({
+    extensions: ['tex2jax.js'],
+    'HTML-CSS': {
+      availableFonts: ['TeX']
+    },
+    jax: ['input/TeX', 'output/HTML-CSS'],
+    styles: { '#MathJax_Message': { display: 'none' }},
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
+      processEscapes: true
+    }
+  });
+}

@@ -1,0 +1,12 @@
+%variant-backgrounds {
+  @for $i from 1 through $variant-colors-count {
+    $color: nth($variant-colors, $i);
+    &.-color#{$i} {
+      background: $color;
+
+      @include hover {
+        background: shade($color, 25);
+      }
+    }
+  }
+}

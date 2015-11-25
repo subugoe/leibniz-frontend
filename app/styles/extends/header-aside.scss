@@ -1,6 +1,6 @@
 %header-aside {
   @include border(top);
-  background-color: $aside-bg-color;
+  box-shadow: 0 $g (6 * $g) $shade inset;
   clear: both;
   display: none;
   padding: ($g / 2);

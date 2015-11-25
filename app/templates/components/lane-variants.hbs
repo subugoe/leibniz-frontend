@@ -1,12 +1,26 @@
+<div class="lane_actions">
+  <ul>
+    {{#each content.witnesses as |witness index|}}
+      <li>
+        <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
+          {{witness.identifier}}
+        </button>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+
 {{#each content.variants as |variant|}}
-  <div class="variant" id="{{variant.id}}">
+  {{#if variant.visible}}
+    <div class="variant {{if variant.witnessIndex (concat '-color' variant.witnessIndex)}}" id="{{variant.id}}">
 
-    {{{variant.text_schnipsel}}}
+      {{{variant.text_schnipsel}}}
 
-    <span class="variant_type {{if (eq variant.type 'note') '-dark'}}">
-      {{t variant.type}}
-    </span>
-  </div>
+      <span class="variant_type {{if (eq variant.type 'note') '-dark'}}">
+        {{t variant.type}}
+      </span>
+    </div>
+  {{/if}}
 {{/each}}
 
 {{yield}}
