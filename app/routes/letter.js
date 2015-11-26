@@ -189,12 +189,11 @@ export default Ember.Route.extend({
       var bottom = $this.position().top + $this.outerHeight();
 
       var variantTop = (top < prevVariantBottom ? prevVariantBottom : top);
-      $variant.css( {opacity: 1, top: variantTop} );
+      $variant.css( {top: variantTop} ).addClass('-visible');
 
       // Draw a curved line from reference to variant
       var path = document.createElementNS(svgNS, 'path');
-      // TODO: Use color from CSS only if in long hex format, short hex is not supported by SVG
-      var strokeColor = $variant.css('border-color').length < 66 ? $variant.css('border-color') : '#aaaaaa';
+      var strokeColor = $variant.css('border-left-color'); // This provides an SVG-compatible rgb(...) color value
       path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');

@@ -1,8 +1,8 @@
 .variant {
   @extend %variant-colors;
   @include drop-shadow;
-  @include transition(color, background, opacity, top);
-  background: $white;
+  @include transition(color, background, opacity);
+  background: white;
   border-left: $border-width-bold $border-style $border-color-dark;
   border-radius: $br;
   cursor: pointer;
@@ -21,7 +21,11 @@
 
   &.-highlight {
     background: $text-color-light;
-    color: $white;
+    color: white;
+  }
+
+  &.-visible {
+    opacity: 1;
   }
 
   .eds {
@@ -48,6 +52,6 @@
 
   &.-dark {
     background: $shade-dark;
-    color: $white;
+    color: white;
   }
 }
