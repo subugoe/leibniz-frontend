@@ -7,9 +7,9 @@ module.exports = function(environment) {
     baseURL: '/',
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' http://leibniz.sub.uni-goettingen.de",
+      'script-src': "*",
       'font-src': "'self'",
-      'connect-src': "'self' http://leibniz.sub.uni-goettingen.de",
+      'connect-src': "*",
       'img-src': "'self' data:",
       'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"
