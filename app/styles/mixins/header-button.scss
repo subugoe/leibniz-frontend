@@ -42,8 +42,10 @@ $header-button-width: 5 * $u !default; // no unit
   background: svg(
     999px,
     $g + 2 * $border-width,
-    "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string($white)}'/>"
+    "<path d='#{$buttonSvgPath}' stroke='#{color-to-string($border-color)}' style='stroke-width: #{$border-width}' fill='#{color-to-string(white)}'/>"
   ) $position top no-repeat;
+  border-radius: 0;
+  box-shadow: none;
   color: $link-color;
   height: $g + $border-width;
 

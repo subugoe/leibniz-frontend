@@ -1,28 +1,28 @@
 // Base colors
 $alpha-color: #c90230;
-$black: #000;
-$white: #fff;
-$shade: rgba($black, .06);
-$shade-dark: rgba($black, .6);
+$shade: rgba(black, .06);
+$shade-medium: rgba(black, .12);
+$shade-dark: rgba(black, .6);
+$shine: rgba(white, .3);
 
 // Semantic colors
 $border-color: #ccc;
 $border-color-dark: #aaa;
 $link-color: $alpha-color;
 $link-hover-color: shade($link-color, 30);
-$popup-bg-color: $white;
+$popup-bg-color: white;
 $text-color: #444;
 $text-color-light: #888;
 $disabled-color: tint($text-color, 60);
-$highlight-color: shade($white, 5);
+$highlight-color: shade(white, 5);
 
 // Variant colors
 $variant-colors-count: 5;
 $variant-colors-hue-step: 360 / ($variant-colors-count + 1);
-$variant-color-offset: 0;
+$variant-color-offset: 90; // degrees
 $variant-colors: ();
 @for $i from 1 through $variant-colors-count {
-  $variant-colors: join($variant-colors, adjust-hue($alpha-color, ($i + $variant-color-offset) * $variant-colors-hue-step));
+  $variant-colors: join($variant-colors, adjust-hue($alpha-color, $i * $variant-colors-hue-step + $variant-color-offset));
 }
 
 // Dimensions
@@ -38,6 +38,8 @@ $border-style: solid;
 $line-height: $g;
 $nav-width: (10 * $g);
 $br: 3px; // border-radius
+
+$transition-duration: .4s;
 
 // Locations
 $img-path: '../img/';

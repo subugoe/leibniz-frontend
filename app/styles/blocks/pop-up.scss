@@ -1,8 +1,8 @@
 .pop-up {
   @extend %popup;
-  transition-delay: .3s;
 
   :hover > & {
     @extend %popup-visible;
+    transition-delay: .5s;
   }
 }

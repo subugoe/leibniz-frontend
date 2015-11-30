@@ -1,21 +1,35 @@
 @mixin button($style: 'solid') {
-  @include transition(background, border);
+  @include transition(background, color, box-shadow);
+  border: 0;
   border-radius: $br;
+  cursor: pointer;
   display: inline-block;
-  padding: 0 .5em;
+  font: inherit;
+  min-width: (1.5 * $g);
+  outline: 0;
+  padding: 0 ($g / 4);
+  text-align: center;
+
+  @include hover {
+    transition: none;
+  }
 
   @if $style == 'shady' {
-    background: none;
+    box-shadow: none;
+    color: $link-color;
 
-    &:hover {
+    @include hover {
       background: $shade;
+      box-shadow: 0 (-$border-width) 0 $shade-medium inset;
+      color: $link-hover-color;
     }
   } @else {
     background: $link-color;
+    box-shadow: 0 (-$border-width) 0 $shade-medium inset;
     color: auto-color($link-color);
-    text-shadow: 0 -1px 0 rgba($black, .2);
+    text-shadow: 0 -1px 0 $shade-medium;
 
-    &:hover {
+    @include hover {
       background: $link-hover-color;
     }
   }

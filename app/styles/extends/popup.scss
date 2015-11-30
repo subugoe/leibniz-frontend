@@ -8,25 +8,24 @@
   font-style: normal;
   left: 0;
   margin: ($g / 4) 0 0;
+  min-width: 12em;
   opacity: 0;
   padding: ($g / 4) ($g / 2);
   position: absolute;
   text-align: left;
   top: 100%;
-  white-space: nowrap;
   z-index: -1;
 
   &:before {
-    border: ($g / 4) solid transparent;
-    border-bottom-color: $popup-bg-color;
+    background: $popup-bg-color;
     content: '';
     display: block;
-    height: 0;
+    height: ($g / 2);
     left: ($g / 2);
     position: absolute;
-    top: (-$g / 2);
-    width: 0;
-    z-index: 999;
+    top: (-$g / 6);
+    transform: rotate(45deg);
+    width: ($g / 2);
   }
 
   &.-right {
@@ -42,5 +41,6 @@
 
 %popup-visible {
   opacity: 1;
-  z-index: 99;
+  transition-duration: 0s;
+  z-index: 999;
 }

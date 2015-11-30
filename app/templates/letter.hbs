@@ -21,15 +21,6 @@
             {{drag-handle beforeResize='clearVariantConnectors' afterResize='positionVariants'}}
           {{/if}}
 
-          <div class="lane -minimized">
-            <nav class="nav -vertical">
-              {{t lane.type}}
-              <ul>
-                <li><a href="#" class="nav_button -restore"><span class="popup">{{t 'restore'}}</span></a></li>
-              </ul>
-            </nav>
-          </div>
-
           {{letter-lane lane=lane content=content laneTypes=laneTypes positionVariants='positionVariants'}}
 
         {{/each}}
@@ -48,10 +39,23 @@
 
 {{else}}
 
-  <div class="header_main">
-    <h1 class="header_title">
-      {{{t 'letterNotExisting' id=content.id}}}
-    </h1>
-  </div>
+  {{#if content.error}}
+
+      <div class="header_main">
+        <h1 class="header_title">
+          {{{t 'databaseError'}}}
+        </h1>
+        <p>{{content.error}}</p>
+      </div>
+
+  {{else}}
+
+    <div class="header_main">
+      <h1 class="header_title">
+        {{{t 'letterNotExisting' id=content.id}}}
+      </h1>
+    </div>
+
+  {{/if}}
 
 {{/if}}
