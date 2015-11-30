@@ -8,7 +8,6 @@ export default Ember.Component.extend({
     this.$().css('background-position', `center ${event.offsetY - dragHandlerHeight / 2}px`);
   },
   mouseDown() {
-    this.sendAction('clearVariantConnectors');
     var $this = this.$();
     var contentWidth = $('.content').outerWidth();
     $(window).on( 'mousemove', (event) => {

@@ -63,6 +63,7 @@ export default Ember.Route.extend({
     letter.dateAddedByEditor = letter.datum_anzeige.indexOf('[') > -1;
     letter.exactDateUnknown = letter.datum_julianisch_bis;
     letter.variants = json.response.docs.slice(1);
+
     // Merge 'textzeuge' arrays
     if ( 'textzeuge_bezeichnung' in letter ) {
       letter.witnesses = [];
@@ -87,7 +88,23 @@ export default Ember.Route.extend({
       }
     }
 
-    // Determine variant type from ID
+    // Convert XHTML to HTML5
+    letter.volltext = Ember.$('<div/>', { html: letter.volltext }).html();
+
+    var regex = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?><\/span>(.*?)<span class="[^"]*end-reference[^>]*><\/span>/g;
+    letter.volltext = letter.volltext.replace(regex, function (str, id, text) {
+      // Append every <p>, prepend every </p> with reference span using a
+      // different data attribute for non-linked parts of this reference
+      text = text.replace('</p>', '</span></p>');
+      text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference" data-ref-id="${id}">`);
+      text = `<span class="reference" data-ref-id="${id}">${text}</span>`;
+      // Replace last dummy with actual reference
+      var lastDataIndex = text.lastIndexOf('data-ref-id');
+      text = text.substr(0, lastDataIndex) + 'data-id' + text.substr(lastDataIndex + 'data-ref-id'.length);
+      return text;
+    });
+
+    // Determine variant types from IDs
     if ( 'variants' in letter ) {
       letter.variants.forEach( function(variant) {
         var typeHint = variant.id.substr(0, 4);
@@ -104,12 +121,13 @@ export default Ember.Route.extend({
           var witnessIdentifier = variant.textzeuge[0];
           variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
         } else {
-          // This letter contains variants without textual witnesses
+          // Letter contains variants without textual witnesses
           letter.otherVariants = true;
         }
         variant.visible = true;
       });
     }
+
     return letter;
   },
   renderTemplate: function() {
@@ -136,7 +154,7 @@ export default Ember.Route.extend({
       this.renderMathJax().then( () => {
         // TODO: For some reason, resize is always triggered once
         // this.positionVariants();
-        Ember.$('.content').resize( () => {
+        Ember.$('.lane').resize( () => {
           Ember.run.debounce(this, this.clearVariantConnectors, 333, true);
           Ember.run.debounce(this, this.positionVariants, 333);
         });
@@ -181,7 +199,7 @@ export default Ember.Route.extend({
   positionVariants: function() {
     var $ = Ember.$;
     var $laneTranscript = $('.transcript');
-    var $references = $laneTranscript.find('.reference.-afootnote, .reference.-cfootnote');
+    var $references = $laneTranscript.find('.reference');
 
     this.clearVariantConnectors();
     if ( $references.length === 0 ) {
@@ -233,17 +251,18 @@ export default Ember.Route.extend({
       svg.appendChild(path);
 
       // Add click handler to highlight reference/variant pair
-      $this.add($variant).off('click').click( () => {
-        $this.add($variant).toggleClass('-highlight');
+      var $group = $this.add($references.filter(`[data-ref-id=${variantID}]`)).add($variant);
+      $group.off('click').click( () => {
+        $group.toggleClass('-highlight');
         return false;
       });
 
       // NOTE: Cannot use toggleClass because element can be moved under the
       // mouse pointer which does not trigger mouseEnter
-      $this.add($variant).off('hover').hover( () => {
-        $this.add($variant).addClass('-hover');
+      $group.hover( () => {
+        $group.addClass('-hover');
       }, () => {
-        $this.add($variant).removeClass('-hover');
+        $group.removeClass('-hover');
       });
 
       prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;

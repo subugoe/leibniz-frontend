@@ -15,7 +15,7 @@ test('toggle variants', function(assert) {
 
   click('.variants .variants_button:first');
   andThen(function() {
-    var visibleVariants = find('.variants .variant:visible').length;
-    assert.ok(visibleVariants < variantsCount, 'some variants should be hidden');
+    var visibleVariantsCount = find('.variants .variant:visible').length;
+    assert.ok(visibleVariantsCount < variantsCount, 'some variants should be hidden');
   });
 });
