@@ -16,7 +16,7 @@ export default Ember.Route.extend({
     var query = `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`;
     return this.solrQuery(query).then( (json) => {
       var letter = {};
-      if ( json.response.docs.length > 0 ) {
+      if ( typeof json.response === 'object' && json.response.docs.length > 0 ) {
         letter = this.parseSolrResponse(json);
       } else {
         letter.id = params.letter_id;
@@ -31,18 +31,29 @@ export default Ember.Route.extend({
       }
 
       return letter;
+    }, function(error) {
+      return {error};
     });
   },
   solrQuery: function(query) {
-    return Ember.$.ajax({
-      data: {
-        q: query,
-        rows: 9999,
-        wt: 'json'
-      },
-      dataType: 'jsonp',
-      jsonp: 'json.wrf',
-      url: config.solrURL
+    // TODO: JSONP does not allow error handling. For now, just assume the
+    // request failed if there is no response within 3 seconds.
+    return new Ember.RSVP.Promise( function(resolve, reject){
+      Ember.$.ajax({
+        data: {
+          q: query,
+          rows: 9999,
+          wt: 'json'
+        },
+        dataType: 'jsonp',
+        jsonp: 'json.wrf',
+        url: config.solrURL,
+        timeout: 3000
+      }).done( function(data) {
+        resolve(data);
+      }).error( function() {
+        reject(new Error('Solr request timed out'));
+      });
     });
   },
   parseSolrResponse: function(json) {
@@ -53,7 +64,7 @@ export default Ember.Route.extend({
     letter.exactDateUnknown = letter.datum_julianisch_bis;
     letter.variants = json.response.docs.slice(1);
     // Merge 'textzeuge' arrays
-    if ( letter.textzeuge_bezeichnung ) {
+    if ( 'textzeuge_bezeichnung' in letter ) {
       letter.witnesses = [];
       letter.textzeuge_bezeichnung.forEach( function(textzeuge, index) {
         // Use 1-based index for easier Sass and Handlebars handling
@@ -65,16 +76,21 @@ export default Ember.Route.extend({
         };
       });
     }
+    if ( 'beilage_brief_link' in letter ) {
+      letter.attachmentToLetters = [];
+      for ( let link of letter.beilage_brief_link ) {
+        let $link = Ember.$(link);
+        let parentLetter = {};
+        parentLetter.id = $link.attr('href');
+        parentLetter.number = $link.text();
+        letter.attachmentToLetters.push( parentLetter );
+      }
+    }
+
     // Determine variant type from ID
-    if ( letter.variants ) {
+    if ( 'variants' in letter ) {
       letter.variants.forEach( function(variant) {
         var typeHint = variant.id.substr(0, 4);
-        if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
-          variant.textzeuge[0] = variant.textzeuge[0].trim(); // TODO: Remove this once Solr is cleaned
-          var witnessIdentifier = variant.textzeuge[0];
-          variant.visible = true;
-          variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
-        }
         switch ( typeHint ) {
           case 'vara':
             variant.type = 'note';
@@ -83,6 +99,15 @@ export default Ember.Route.extend({
             variant.type = 'variant';
             break;
         }
+        if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
+          variant.textzeuge[0] = variant.textzeuge[0].trim(); // TODO: Remove this once Solr is cleaned
+          var witnessIdentifier = variant.textzeuge[0];
+          variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
+        } else {
+          // This letter contains variants without textual witnesses
+          letter.otherVariants = true;
+        }
+        variant.visible = true;
       });
     }
     return letter;
@@ -123,7 +148,7 @@ export default Ember.Route.extend({
   activateLinks: function() {
     var route = this;
     // TODO: Get <a> elements directly
-    Ember.$('.metadata').find('a').click( function(e) {
+    Ember.$('.metadata').find('a').not('[href^="http://"]').click( function(e) {
       e.preventDefault();
       var letterID = Ember.$(this).attr('href');
       route.transitionTo('letter', letterID);
@@ -164,10 +189,11 @@ export default Ember.Route.extend({
     }
 
     var $laneVariants = $('.variants');
-    var $variants = $laneVariants.find('.variant').hide();
-    var prevVariantBottom = 0;
+    var $actionsBlock = $laneVariants.find('.lane_actions');
+    var $variants = $laneVariants.find('.variant');
+    var prevVariantBottom = $actionsBlock.position().top + $actionsBlock.outerHeight();
     // NOTE: Shorthand css properties like `padding` are not supported in Firefox
-    var marginBetweenVariants = parseInt( $laneVariants.css('lineHeight') ) / 2;
+    var marginBetweenVariants = parseInt( $laneVariants.css('line-height') ) / 2;
 
     // Using plain JS for SVG since jQuery struggles with namespaces
     var svgNS = 'http://www.w3.org/2000/svg';
@@ -180,7 +206,7 @@ export default Ember.Route.extend({
     $references.each( function() {
       var $this = $(this);
       var variantID = $this.data('id');
-      var $variant = $variants.filter('#' + variantID).show();
+      var $variant = $variants.filter('#' + variantID);
       if ( $variant.length === 0 ) {
         return; // variant not available
       }
@@ -193,7 +219,8 @@ export default Ember.Route.extend({
 
       // Draw a curved line from reference to variant
       var path = document.createElementNS(svgNS, 'path');
-      var strokeColor = $variant.css('border-left-color'); // This provides an SVG-compatible rgb(...) color value
+      // NOTE: This provides an SVG-compatible rgb(...) color value
+      var strokeColor = $variant.css('border-left-color');
       path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');

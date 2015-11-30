@@ -38,6 +38,10 @@ i {
   font-style: italic;
 }
 
+b {
+  font-weight: bold;
+}
+
 h1,
 h2,
 h3,
@@ -65,46 +69,30 @@ h6 {
 }
 
 button {
-  background: none;
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
-  outline: 0;
+  @include button;
+
+  // Remove 1px border set by Firefox
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
 }
 
 [type=search],
 [type=text],
 [type=url] {
-  background: $white;
-  border: $border-width solid $border-color;
-  border-radius: $br;
+  @include placeholder-color($border-color);
+  @include transition(background);
+  background: $shade;
+  border: 0;
+  border-bottom: $border-width-bold solid $link-color;
   font: inherit;
-  padding: ($g / 4);
+  outline: 0;
+  padding: ($g / 4) ($g / 4) ($g / 4 - $border-width-bold);
 
   &:focus {
+    background: $shine;
     border-color: $link-hover-color;
-  }
-}
-
-[type=submit] {
-  @include transition(background, border-color);
-  background: $link-color;
-  border: $border-width solid $link-color;
-  border-radius: $br;
-  color: auto-color($link-color);
-  cursor: pointer;
-  font: inherit;
-  min-width: (1.5 * $g);
-  padding: ($g / 4);
-
-  &:hover {
-    background: $link-hover-color;
-    border-color: $link-hover-color;
-  }
-
-  &:active {
-    background: $white;
-    color: $link-hover-color;
+    transition: none;
   }
 }

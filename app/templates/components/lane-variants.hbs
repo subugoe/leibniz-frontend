@@ -5,8 +5,22 @@
         <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
           {{witness.identifier}}
         </button>
+        {{#pop-up}}
+          <b>{{{witness.type}}}</b><br>
+          {{{witness.text}}}
+        {{/pop-up}}
       </li>
     {{/each}}
+    {{#if content.otherVariants}}
+      <li>
+        <button {{action 'toggleVariants' 'other'}} class="variants_button -other {{if otherVariantsVisible '-active'}}">
+          <span class="sr-only">{{t 'otherVariants'}}</span>
+        </button>
+        {{#pop-up}}
+          {{t 'otherVariants'}}
+        {{/pop-up}}
+      </li>
+    {{/if}}
   </ul>
 </div>
 

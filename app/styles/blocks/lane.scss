@@ -7,15 +7,10 @@
   & + & {
     border-left: $border-width $border-style $border-color;
   }
-
-  &.-minimized {
-    display: none;
-  }
 }
 
 .lane_actions {
-  margin-bottom: $g;
-  min-height: $g;
+  padding-bottom: ($g / 2);
 
   ul {
     display: table;
@@ -26,6 +21,10 @@
     display: table-cell;
     padding: 0 ($g / 4);
   }
+}
+
+.lane_content {
+  position: relative;
 }
 
 .lane_header {
