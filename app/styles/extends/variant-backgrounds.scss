@@ -5,7 +5,7 @@
       background: $color;
 
       @include hover {
-        background: shade($color, 25);
+        background: shade($color, 20);
       }
     }
   }

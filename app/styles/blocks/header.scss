@@ -57,13 +57,15 @@
   display: inline-block;
 }
 
+.header_date {
+  white-space: nowrap;
+}
+
 .header_step {
   @include button('shady');
-  user-select: none;
 
   @include hover {
     background: $shade;
-    box-shadow: 0 0 $border-width $border-color inset;
   }
 
   &.-prev {

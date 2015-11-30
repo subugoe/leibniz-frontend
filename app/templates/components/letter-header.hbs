@@ -22,15 +22,13 @@
       </span>
     </h1>
     <div class="header_subtitle">
-      {{#if content.beilage_brief_id}}
+      {{#if content.beilage_titel}}
         <div class="header_attachment">
           {{content.beilage_titel}}
-          {{! TODO: content.beilage_brief_nummer}}
           ({{t 'attachmentTo'}}
-          {{#each content.beilage_brief_id as |brief_id index|}}
+          {{#each content.attachmentToLetters as |letter index|}}
             {{if index ', '}}
-            {{#link-to 'letter' brief_id}}{{brief_id}}{{/link-to}}
-          {{/each}})
+            {{#link-to 'letter' letter.id}}{{letter.number}}{{/link-to}}{{/each}})
         </div>
       {{else}}
         <div class="header_dates">

@@ -57,13 +57,3 @@
     @include icon('user');
   }
 }
-
-.nav_search {
-  [type=text] {
-    width: 177px; // TODO: magic number, calculate instead
-  }
-
-  [type=submit] {
-    @include icon('magnifying-glass', null);
-  }
-}

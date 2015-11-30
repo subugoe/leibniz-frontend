@@ -12,6 +12,7 @@
 .content_lanes {
   display: table;
   opacity: 0;
+  width: 100%;
 
   &.-rendered {
     @include transition(opacity);

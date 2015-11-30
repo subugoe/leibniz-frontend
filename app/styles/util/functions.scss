@@ -3,9 +3,9 @@
 @function auto-color($background-color) {
   // Calculations based on https://vimeo.com/60224584
   @if (.2126 * red($background-color) + .7152 * green($background-color) + .0722 * blue($background-color)) / 255 <= .5 {
-    @return mix($white, $background-color, 95%);
+    @return mix(white, $background-color, 95%);
   } @else {
-    @return mix($black, $background-color, 70%);
+    @return mix(black, $background-color, 70%);
   }
 }
 

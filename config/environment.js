@@ -7,9 +7,9 @@ module.exports = function(environment) {
     baseURL: '/',
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' http://leibniz.sub.uni-goettingen.de",
+      'script-src': "*",
       'font-src': "'self'",
-      'connect-src': "'self' http://leibniz.sub.uni-goettingen.de",
+      'connect-src': "*",
       'img-src': "'self' data:",
       'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"
@@ -17,8 +17,8 @@ module.exports = function(environment) {
     intl: {
       defaultLocale: 'de-de'
     },
-    firstLetterID: 'l3717', // TODO: Get first letter ID from Solr
-    solrURL: 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select',
+    firstLetterID: 'l3714', // TODO: Get first letter ID from Solr
+    solrURL: 'http://adw-dev.tc.sub.uni-goettingen.de/solr/leibniz/select',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

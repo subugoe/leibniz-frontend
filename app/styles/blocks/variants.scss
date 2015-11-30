@@ -4,15 +4,23 @@
 }
 
 .variants_button {
-  @include button;
   background: $disabled-color;
   min-width: 4em;
 
-  &.-active {
-    @extend %variant-backgrounds;
+  @include hover {
+    background: shade($disabled-color, 20);
   }
 
-  @include hover {
-    background: shade($disabled-color, 25);
+  &.-active {
+    background: $text-color;
+    @extend %variant-backgrounds;
+
+    @include hover {
+      background: shade($text-color, 20);
+    }
+  }
+
+  &.-other {
+    @include icon('dots-three-horizontal', false);
   }
 }

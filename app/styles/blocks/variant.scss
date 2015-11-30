@@ -1,7 +1,7 @@
 .variant {
   @extend %variant-colors;
   @include drop-shadow;
-  @include transition(color, background, opacity);
+  @include transition(color, background, opacity, top);
   background: white;
   border-left: $border-width-bold $border-style $border-color-dark;
   border-radius: $br;
@@ -12,7 +12,8 @@
   padding: ($g / 4);
   position: absolute;
   right: ($g / 2);
-  top: 0;
+  transition-duration: .3s;
+  z-index: -1;
 
   &.-hover {
     color: $link-color;
@@ -26,6 +27,7 @@
 
   &.-visible {
     opacity: 1;
+    z-index: 0;
   }
 
   .eds {
@@ -33,7 +35,9 @@
   }
 
   .source {
+    font-style: italic;
     font-weight: bold;
+    font-style: italic;
 
     + .source {
       margin-left: .5em;

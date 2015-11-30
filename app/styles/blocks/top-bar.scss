@@ -2,6 +2,7 @@
   background: $alpha-color;
   color: auto-color($alpha-color);
   padding: ($g / 4) ($g / 4) ($g / 4) (5 * $g);
+  text-shadow: 0 -1px 0 $shade-medium;
 
   a {
     color: auto-color($alpha-color);
@@ -12,9 +13,45 @@
   }
 }
 
+.top-bar_search {
+  color: white;
+  float: right;
+  margin: (-$g / 4) $g;
+  position: relative;
+}
+
+.top-bar_search-input {
+  background: $shade-medium;
+  border-color: $shade-medium;
+  color: white;
+  padding-right: (1.5 * $g);
+  width: 12em;
+
+  &:focus {
+    background: $shine;
+    //border-color: $link;
+  }
+}
+
+.top-bar_search-submit {
+  @include icon('magnifying-glass', null);
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: white;
+  padding: ($g / 4);
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 .top-bar_toggle-nav {
   @include icon('menu', 'right');
+  border-radius: 0;
+  box-shadow: none;
   float: right;
+  margin: (-$g / 4);
+  padding: ($g / 4);
 
   &:before {
     font-size: $g;
