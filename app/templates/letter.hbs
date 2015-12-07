@@ -1,6 +1,8 @@
 {{#if content.brief_nummer}}
 
-  {{letter-header content=content}}
+  {{#header-container}}
+    {{letter-header content=content}}
+  {{/header-container}}
 
   <main class="content" id="content">
 
@@ -11,51 +13,39 @@
     {{/unless}}
 
     <div class="content_lanes {{if rendered '-rendered'}}">
-
       {{#if content.volltext}}
-
         {{#each content.view.lanes as |lane index|}}
-
           {{#if index}}
             {{!TODO: Find a way to omit those parameters}}
             {{drag-handle beforeResize='clearVariantConnectors' afterResize='positionVariants'}}
           {{/if}}
-
           {{letter-lane lane=lane content=content laneTypes=laneTypes positionVariants='positionVariants'}}
-
         {{/each}}
-
       {{else}}
-
         <div class="lane">
           <p class="transcript_fulltext-not-available">{{{t 'fulltextNotAvailable'}}}</p>
         </div>
-
       {{/if}}
-
     </div>
 
   </main>
 
 {{else}}
 
-  {{#if content.error}}
-
-      <div class="header_main">
+  {{#header-container}}
+    <div class="header_main">
+      {{#if content.error}}
         <h1 class="header_title">
           {{{t 'databaseError'}}}
         </h1>
         <p>{{content.error}}</p>
-      </div>
-
-  {{else}}
-
-    <div class="header_main">
-      <h1 class="header_title">
-        {{{t 'letterNotExisting' id=content.id}}}
-      </h1>
+      {{else}}
+        <h1 class="header_title">
+          404
+        </h1>
+        <p>{{{t 'letterNotExisting' id=content.id}}} {{#link-to 'index'}}{{t 'goToStart'}}{{/link-to}}</p>
+      {{/if}}
     </div>
-
-  {{/if}}
+  {{/header-container}}
 
 {{/if}}

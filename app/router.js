@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('letter', { path: '/letter/:letter_id' });
+  this.route('404', { path: '*path'});
 });
 
 export default Router;

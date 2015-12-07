@@ -131,7 +131,7 @@ export default Ember.Route.extend({
     return letter;
   },
   renderTemplate: function() {
-    this.render({ outlet: 'letter' });
+    this.render();
     this.controller.set('rendered', false);
   },
   setupController: function (controller, model) {
