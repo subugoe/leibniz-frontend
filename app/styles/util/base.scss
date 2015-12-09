@@ -19,7 +19,6 @@ body {
 a {
   @include transition(color, border-color);
   color: $link-color;
-  outline: 0;
   text-decoration: none;
 
   &:hover {
@@ -42,17 +41,6 @@ b {
   font-weight: bold;
 }
 
-h1,
-h2,
-h3,
-p,
-ol,
-ul,
-form,
-table {
-  margin: 0 0 $g;
-}
-
 h1 {
   @include typo-scale(2);
 }
@@ -68,6 +56,12 @@ h6 {
   font-size: $font-size;
 }
 
+input,
+select,
+textarea {
+  font: inherit;
+}
+
 button {
   @include button;
 
@@ -81,17 +75,13 @@ button {
 [type=search],
 [type=text],
 [type=url] {
-  @include placeholder-color($border-color);
+  @include placeholder-color($text-color-light);
   @include transition(background);
-  background: $shade;
-  border: 0;
-  border-bottom: $border-width-bold solid $link-color;
-  font: inherit;
-  outline: 0;
-  padding: ($g / 4) ($g / 4) ($g / 4 - $border-width-bold);
+  background: white;
+  border: $border-width solid $border-color;
+  padding: ($g / 4);
 
   &:focus {
-    background: $shine;
     border-color: $link-hover-color;
     transition: none;
   }
