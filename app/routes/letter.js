@@ -5,14 +5,14 @@ import config from '../config/environment';
 
 export default Ember.Route.extend({
   actions: {
-    clearVariantConnectors: function() {
+    clearVariantConnectors() {
       this.clearVariantConnectors();
     },
-    positionVariants: function() {
+    positionVariants() {
       this.positionVariants();
     }
   },
-  model: function(params) {
+  model(params) {
     var query = `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`;
     return this.solrQuery(query).then( (json) => {
       var letter = {};
@@ -35,28 +35,20 @@ export default Ember.Route.extend({
       return {error};
     });
   },
-  solrQuery: function(query) {
-    // TODO: JSONP does not allow error handling. For now, just assume the
-    // request failed if there is no response within 3 seconds.
+  solrQuery(query) {
     return new Ember.RSVP.Promise( function(resolve, reject){
-      Ember.$.ajax({
-        data: {
-          q: query,
-          rows: 9999,
-          wt: 'json'
-        },
-        dataType: 'jsonp',
-        jsonp: 'json.wrf',
-        url: config.solrURL,
-        timeout: 3000
+      Ember.$.getJSON(config.solrURL, {
+        q: query,
+        rows: 9999,
+        wt: 'json'
       }).done( function(data) {
         resolve(data);
       }).error( function() {
-        reject(new Error('Solr request timed out'));
+        reject(new Error('Database offline'));
       });
     });
   },
-  parseSolrResponse: function(json) {
+  parseSolrResponse(json) {
     // TODO: Is letter always the first doc in response?
     var letter = json.response.docs[0];
     letter.bothDatesPresent = letter.datum_julianisch && letter.datum_gregorianisch;
@@ -130,15 +122,15 @@ export default Ember.Route.extend({
 
     return letter;
   },
-  renderTemplate: function() {
+  renderTemplate() {
     this.render();
     this.controller.set('rendered', false);
   },
-  setupController: function (controller, model) {
+  setupController(controller, model) {
     this._super(controller, model);
     controller.set('rendered', true);
   },
-  afterModel: function() {
+  afterModel() {
     Ember.run.next( () => {
       this.activateLinks();
 
@@ -163,7 +155,7 @@ export default Ember.Route.extend({
     });
   },
   // Turn static links into ember transition links
-  activateLinks: function() {
+  activateLinks() {
     var route = this;
     // TODO: Get <a> elements directly
     Ember.$('.metadata').find('a').not('[href^="http://"]').click( function(e) {
@@ -172,7 +164,7 @@ export default Ember.Route.extend({
       route.transitionTo('letter', letterID);
     });
   },
-  loadSVG: function(id) {
+  loadSVG(id) {
     return new Ember.RSVP.Promise( (resolve) => {
       this.solrQuery(`id:${id}`).then( function(json) {
         if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('svg_code')) {
@@ -181,7 +173,7 @@ export default Ember.Route.extend({
       });
     });
   },
-  renderMathJax: function() {
+  renderMathJax() {
     var context = this.context;
     return new Ember.RSVP.Promise( (resolve) => {
       if ( context.volltext && typeof MathJax !== 'undefined' ) {
@@ -193,10 +185,10 @@ export default Ember.Route.extend({
       }
     });
   },
-  clearVariantConnectors: function() {
+  clearVariantConnectors() {
     Ember.$('.content_svg-overlay').remove(); // TODO: Find a more elegant way to re-render SVG
   },
-  positionVariants: function() {
+  positionVariants() {
     var $ = Ember.$;
     var $laneTranscript = $('.transcript');
     var $references = $laneTranscript.find('.reference');
