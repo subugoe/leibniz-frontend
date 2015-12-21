@@ -56,12 +56,6 @@ h6 {
   font-size: $font-size;
 }
 
-input,
-select,
-textarea {
-  font: inherit;
-}
-
 button {
   @include button;
 
@@ -72,17 +66,22 @@ button {
   }
 }
 
-[type=search],
-[type=text],
-[type=url] {
+input,
+select,
+textarea {
   @include placeholder-color($text-color-light);
   @include transition(background);
   background: white;
   border: $border-width solid $border-color;
-  padding: ($g / 4);
+  font: inherit;
+  padding: floor($g / 8);
 
   &:focus {
     border-color: $link-hover-color;
     transition: none;
   }
+}
+
+select {
+  cursor: pointer;
 }

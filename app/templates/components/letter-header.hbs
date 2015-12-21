@@ -1,6 +1,6 @@
 <div class="header_main">
-  <h1 class="header_title">
-    <span class="header_correspondents">
+  <div class="header_title">
+    <h1 class="header_correspondents">
       {{content.korrespondenten_anzeige}}
       {{#pop-up}}
         {{t 'sender'}}:
@@ -11,19 +11,9 @@
         <span class="header_recipient-first-name">{{content.empfaenger_vorname}}</span>
         <span class="header_recipient-last-name">{{content.empfaenger_nachname}}</span>
       {{/pop-up}}
-    </span>
-  </h1>
-  <div class="header_subtitle">
-    {{#if content.beilage_titel}}
-      <div class="header_attachment">
-        {{content.beilage_titel}}
-        ({{t 'attachmentTo'}}
-        {{#each content.attachmentToLetters as |letter index|}}
-          {{if index ', '}}
-          {{#link-to 'letter' letter.id}}{{letter.number}}{{/link-to}}{{/each}})
-      </div>
-    {{else}}
-      <div class="header_dates">
+    </h1>
+    <p class="header_info">
+      {{#if content.datum_anzeige}}
         {{content.datum_anzeige}}
         {{#pop-up}}
           {{#if content.bothDatesPresent}}
@@ -52,49 +42,71 @@
             <br>{{t 'addedByEditor'}}
           {{/if}}
         {{/pop-up}}
-      </div>
-    {{/if}}
+      {{/if}}
+      {{content.beilage_titel}}
+    </p>
   </div>
-</div>
 
-<div class="header_aside">
   <div class="header_pagination">
-    {{#if content.brief_id_vorgaenger}}
-      {{#link-to 'letter' content.brief_id_vorgaenger (query-params view=content.viewQuery) class="header_step -prev"}}
+    <p>
+      {{#if content.attachmentToLetters}}
+        <div class="header_attachment">
+          {{t 'attachmentTo'}}
+          {{#each content.attachmentToLetters as |letter index|}}{{if index ', '}}{{#link-to 'letter' letter.id}}N.&nbsp;{{letter.number}}{{/link-to}}{{/each}}
+        </div>
+      {{else}}
+        {{#if content.brief_id_vorgaenger}}
+          {{t 'respondsTo'}}
+          {{#link-to 'letter' content.brief_id_vorgaenger}}N.&nbsp;{{content.brief_nummer_vorgaenger}}{{/link-to}},
+        {{else}}
+          {{t 'respondsIsFirst'}},
+        {{/if}}
+        {{#if content.brief_id_nachfolger}}
+          {{t 'respondedBy'}}
+          {{#link-to 'letter' content.brief_id_nachfolger}}N.&nbsp;{{content.brief_nummer_nachfolger}}{{/link-to}}
+        {{else}}
+          {{t 'respondsIsLast'}}
+        {{/if}}
+        {{#if content.attachment}}
+          ({{t 'attachment'}}
+          {{#link-to 'letter' content.attachment.id}}N.&nbsp;{{content.attachment.number}}{{/link-to}})
+        {{/if}}
+      {{/if}}
+    </p>
+    <p>
+      {{#if content.prevLetter}}
+        {{#link-to 'letter' content.prevLetter.id (query-params view=content.viewQuery) class="header_step -prev"}}
+          <span class="sr-only">{{{t 'letterPrev'}}}</span>
+        {{/link-to}}
+      {{else}}
+        <span class="header_step -prev -disabled">
+          {{#pop-up}}{{t 'letterNotExistingPrev'}}{{/pop-up}}
+        </span>
+      {{/if}}
+      <span class="header_current-letter">
+        <select onChange={{action 'changeLetter' value='target.value'}}>
+          {{#each content.allLetters as |letter|}}
+            <option value={{letter.id}} selected={{eq letter.id content.id}}>
+              {{letter.reihe}}, {{letter.band}} N.&nbsp;{{letter.brief_nummer}}
+            </option>
+          {{/each}}
+        </select>
         {{#pop-up}}
-          {{{t 'letterPrev'}}}<br>
           {{{t 'series' series=content.reihe}}}<br>
           {{{t 'volume' volume=content.band}}}<br>
-          {{{t 'number' number=content.brief_nummer_vorgaenger}}}
+          {{{t 'number' number=content.brief_nummer}}}
         {{/pop-up}}
-      {{/link-to}}
-    {{else}}
-      <span class="header_step -prev -disabled">
-        {{#pop-up}}{{t 'letterNotExistingPrev'}}{{/pop-up}}
       </span>
-    {{/if}}
-    <span class="header_current-letter">
-      {{content.reihe}}, {{content.band}} N.&nbsp;{{content.brief_nummer}}
-      {{#pop-up}}
-        {{{t 'series' series=content.reihe}}}<br>
-        {{{t 'volume' volume=content.band}}}<br>
-        {{{t 'number' number=content.brief_nummer}}}
-      {{/pop-up}}
-    </span>
-    {{#if content.brief_id_nachfolger}}
-      {{#link-to 'letter' content.brief_id_nachfolger (query-params view=content.viewQuery) class="header_step -next"}}
-        {{#pop-up}}
-          {{{t 'letterNext'}}}<br>
-          {{{t 'series' series=content.reihe}}}<br>
-          {{{t 'volume' volume=content.band}}}<br>
-          {{{t 'number' number=content.brief_nummer_nachfolger}}}
-        {{/pop-up}}
-      {{/link-to}}
-    {{else}}
-      <span class="header_step -next -disabled">
-        {{#pop-up}}{{t 'letterNotExistingNext'}}{{/pop-up}}
-      </span>
-    {{/if}}
+      {{#if content.nextLetter}}
+        {{#link-to 'letter' content.nextLetter.id (query-params view=content.viewQuery) class="header_step -next"}}
+          <span class="sr-only">{{{t 'letterNext'}}}</span>
+        {{/link-to}}
+      {{else}}
+        <span class="header_step -next -disabled">
+          {{#pop-up}}{{t 'letterNotExistingNext'}}{{/pop-up}}
+        </span>
+      {{/if}}
+    </p>
   </div>
 </div>
 
@@ -107,8 +119,8 @@
   </button>
 </div>
 
-{{letter-metadata content=content}}
+{{partial 'partials/letter-metadata'}}
 
-{{letter-citation content=content}}
+{{partial 'partials/letter-citation'}}
 
 {{yield}}
