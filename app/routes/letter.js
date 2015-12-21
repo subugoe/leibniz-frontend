@@ -1,12 +1,15 @@
 // Allow starting numerals with decimal point:
 /* jshint -W008 */
 import Ember from 'ember';
-import config from '../config/environment';
+import Solr from '../mixins/solr';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(Solr, {
   actions: {
     clearVariantConnectors() {
       this.clearVariantConnectors();
+    },
+    changeLetter(id) {
+      this.transitionTo('letter', id);
     },
     positionVariants() {
       this.positionVariants();
@@ -14,10 +17,10 @@ export default Ember.Route.extend({
   },
   model(params) {
     var query = `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`;
-    return this.solrQuery(query).then( (json) => {
+    return this.query(query, {sort: 'type asc'}).then( (json) => {
       var letter = {};
       if ( typeof json.response === 'object' && json.response.docs.length > 0 ) {
-        letter = this.parseSolrResponse(json);
+        letter = this.parseResponse(json);
       } else {
         letter.id = params.letter_id;
       }
@@ -35,94 +38,17 @@ export default Ember.Route.extend({
       return {error};
     });
   },
-  solrQuery(query) {
-    return new Ember.RSVP.Promise( function(resolve, reject){
-      Ember.$.getJSON(config.solrURL, {
-        q: query,
-        rows: 9999,
-        wt: 'json'
-      }).done( function(data) {
-        resolve(data);
-      }).error( function() {
-        reject(new Error('Database offline'));
-      });
-    });
-  },
-  parseSolrResponse(json) {
-    // TODO: Is letter always the first doc in response?
-    var letter = json.response.docs[0];
-    letter.bothDatesPresent = letter.datum_julianisch && letter.datum_gregorianisch;
-    letter.dateAddedByEditor = letter.datum_anzeige.indexOf('[') > -1;
-    letter.exactDateUnknown = letter.datum_julianisch_bis;
-    letter.variants = json.response.docs.slice(1);
-
-    // Merge 'textzeuge' arrays
-    if ( 'textzeuge_bezeichnung' in letter ) {
-      letter.witnesses = [];
-      letter.textzeuge_bezeichnung.forEach( function(textzeuge, index) {
-        // Use 1-based index for easier Sass and Handlebars handling
-        letter.witnesses[index + 1] = {
-          identifier: textzeuge,
-          type: letter.textzeuge_art[index],
-          text: letter.textzeuge_text[index],
-          visible: true
-        };
-      });
-    }
-    if ( 'beilage_brief_link' in letter ) {
-      letter.attachmentToLetters = [];
-      for ( let link of letter.beilage_brief_link ) {
-        let $link = Ember.$(link);
-        let parentLetter = {};
-        parentLetter.id = $link.attr('href');
-        parentLetter.number = $link.text();
-        letter.attachmentToLetters.push( parentLetter );
-      }
-    }
-
-    // Convert XHTML to HTML5
-    letter.volltext = Ember.$('<div/>', { html: letter.volltext }).html();
-
-    var regex = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?><\/span>(.*?)<span class="[^"]*end-reference[^>]*><\/span>/g;
-    letter.volltext = letter.volltext.replace(regex, function (str, id, text) {
-      // Append every <p>, prepend every </p> with reference span using a
-      // different data attribute for non-linked parts of this reference
-      text = text.replace('</p>', '</span></p>');
-      text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference" data-ref-id="${id}">`);
-      text = `<span class="reference" data-ref-id="${id}">${text}</span>`;
-      // Replace last dummy with actual reference
-      var lastDataIndex = text.lastIndexOf('data-ref-id');
-      text = text.substr(0, lastDataIndex) + 'data-id' + text.substr(lastDataIndex + 'data-ref-id'.length);
-      return text;
-    });
-
-    // Determine variant types from IDs
-    if ( 'variants' in letter ) {
-      letter.variants.forEach( function(variant) {
-        var typeHint = variant.id.substr(0, 4);
-        switch ( typeHint ) {
-          case 'vara':
-            variant.type = 'note';
-            break;
-          case 'varc':
-            variant.type = 'variant';
-            break;
-        }
-        if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
-          variant.textzeuge[0] = variant.textzeuge[0].trim(); // TODO: Remove this once Solr is cleaned
-          var witnessIdentifier = variant.textzeuge[0];
-          variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
-        } else {
-          // Letter contains variants without textual witnesses
-          letter.otherVariants = true;
-        }
-        variant.visible = true;
-      });
-    }
-
-    return letter;
-  },
   renderTemplate() {
+    var allLetters = this.controllerFor('application').get('model');
+    var currentLetterId = this.get('controller.model.id');
+    allLetters.forEach( (letter, index) => {
+      if ( letter.id === currentLetterId ) {
+        this.set('controller.model.prevLetter', index > 0 ? allLetters[index - 1] : null);
+        this.set('controller.model.nextLetter', index < allLetters.length - 1 ? allLetters[index + 1] : null);
+        return false;
+      }
+    });
+    this.set('controller.model.allLetters', allLetters);
     this.render();
     this.controller.set('rendered', false);
   },
@@ -166,7 +92,7 @@ export default Ember.Route.extend({
   },
   loadSVG(id) {
     return new Ember.RSVP.Promise( (resolve) => {
-      this.solrQuery(`id:${id}`).then( function(json) {
+      this.query(`id:${id}`).then( function(json) {
         if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('svg_code')) {
           resolve(json.response.docs[0].svg_code);
         }

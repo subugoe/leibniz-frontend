@@ -19,7 +19,7 @@
 }
 
 .top-bar_search {
-  margin: floor(-$g / 8) ($g / 2);
+  margin: floor(-$g / 8) $g;
   display: inline-block;
   position: relative;
 }
@@ -41,7 +41,7 @@
   border-radius: 0;
   box-shadow: none;
   color: $link-color;
-  padding: ceil($g / 8);
+  padding: ceil($g / 8) ($g / 4);
   position: absolute;
   right: 0;
   top: 0;
