@@ -1,6 +1,15 @@
 .variants {
   @extend %lane;
   background: $shade;
+
+  .reference.-image {
+    background: none;
+    cursor: default;
+    display: block;
+    text-align: center;
+    margin: $g 0;
+    padding: 0;
+  }
 }
 
 .variants_button {
