@@ -16,3 +16,7 @@
 </div>
 
 {{outlet 'nav'}}
+
+<button class="main_scroll-top {{if showScrolltop '-visible'}}" {{action 'scrollToTop'}}>
+  <span class="sr-only">{{t 'scrollToTop'}}</span>
+</button>

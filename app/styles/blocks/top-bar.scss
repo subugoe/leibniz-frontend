@@ -19,7 +19,7 @@
 }
 
 .top-bar_search {
-  margin: floor(-$g / 8) $g;
+  margin: floor(-$g / 8) ($g / 4);
   display: inline-block;
   position: relative;
 }

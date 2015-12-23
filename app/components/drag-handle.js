@@ -13,8 +13,10 @@ export default Ember.Component.extend({
     $(window).on( 'mousemove', (event) => {
       var posX = event.pageX;
       if ( posX > 99 && posX < contentWidth - 99 ) {
-        var $lane = $this.prev('.lane');
-        $lane.css('width', (posX / contentWidth * 100) + '%' );
+        var $leftLane = $this.prev('.lane');
+        var $rightLane = $this.next('.lane');
+        $leftLane.css('width', (posX / contentWidth * 100) + '%' );
+        $rightLane.css('width', (100 - posX / contentWidth * 100) + '%' );
         $this.css('left', '');
 
       }
