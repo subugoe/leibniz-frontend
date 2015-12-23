@@ -19,7 +19,7 @@
             {{!TODO: Find a way to omit those parameters}}
             {{drag-handle beforeResize='clearVariantConnectors' afterResize='positionVariants'}}
           {{/if}}
-          {{letter-lane lane=lane content=content laneTypes=laneTypes positionVariants='positionVariants'}}
+          {{component (concat 'lane-' lane.type) content=content lane=lane laneTypes=laneTypes positionVariants='positionVariants'}}
         {{/each}}
       {{else}}
         <div class="lane">

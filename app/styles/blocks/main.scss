@@ -7,3 +7,25 @@
     padding-right: $nav-width;
   }
 }
+
+.main_scroll-top {
+  @include button('shady');
+  @include icon('chevron-up', false);
+  @include transition(opacity, z-index);
+  background: white;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  bottom: (1.5 * $g);
+  box-shadow: 0 0 $shadow-size $shadow-color;
+  height: (1.5 * $g);
+  opacity: 0;
+  position: fixed;
+  right: 0;
+  width: (1.5 * $g);
+  z-index: -1;
+
+  &.-visible {
+    opacity: 1;
+    z-index: 999;
+  }
+}

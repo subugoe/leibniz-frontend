@@ -1,40 +1,46 @@
-<div class="lane_actions">
-  <ul>
-    {{#each content.witnesses as |witness index|}}
-      <li>
-        <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
-          {{witness.identifier}}
-        </button>
-        {{#pop-up}}
-          <b>{{{witness.type}}}</b><br>
-          {{{witness.text}}}
-        {{/pop-up}}
-      </li>
-    {{/each}}
-    {{#if content.otherVariants}}
-      <li>
-        <button {{action 'toggleVariants' 'other'}} class="variants_button -other {{if otherVariantsVisible '-active'}}">
-          <span class="sr-only">{{t 'otherVariants'}}</span>
-        </button>
-        {{#pop-up}}
-          {{t 'otherVariants'}}
-        {{/pop-up}}
-      </li>
+<header class="lane_header">
+  {{partial 'partials/lane-type'}}
+
+  <div class="lane_actions">
+    <ul>
+      {{#each content.witnesses as |witness index|}}
+        <li>
+          <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
+            {{witness.identifier}}
+          </button>
+          {{#pop-up}}
+            <b>{{{witness.type}}}</b><br>
+            {{{witness.text}}}
+          {{/pop-up}}
+        </li>
+      {{/each}}
+      {{#if content.otherVariants}}
+        <li>
+          <button {{action 'toggleVariants' 'other'}} class="variants_button -other {{if otherVariantsVisible '-active'}}">
+            <span class="sr-only">{{t 'otherVariants'}}</span>
+          </button>
+          {{#pop-up}}
+            {{t 'otherVariants'}}
+          {{/pop-up}}
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+</header>
+
+<div class="lane_content">
+  {{#each content.variants as |variant|}}
+    {{#if variant.visible}}
+      <div class="variant {{if variant.witnessIndex (concat '-color' variant.witnessIndex)}}" id="{{variant.id}}">
+
+        {{{variant.text_schnipsel}}}
+
+        <span class="variant_type {{if (eq variant.type 'note') '-dark'}}">
+          {{t variant.type}}
+        </span>
+      </div>
     {{/if}}
-  </ul>
+  {{/each}}
+
+  {{yield}}
 </div>
-
-{{#each content.variants as |variant|}}
-  {{#if variant.visible}}
-    <div class="variant {{if variant.witnessIndex (concat '-color' variant.witnessIndex)}}" id="{{variant.id}}">
-
-      {{{variant.text_schnipsel}}}
-
-      <span class="variant_type {{if (eq variant.type 'note') '-dark'}}">
-        {{t variant.type}}
-      </span>
-    </div>
-  {{/if}}
-{{/each}}
-
-{{yield}}

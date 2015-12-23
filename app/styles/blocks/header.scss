@@ -17,6 +17,7 @@
   margin: (-1.25 * $g) ($g / 4) 0 (-$g / 4);
   padding: ($g / 4);
   position: absolute;
+  z-index: 9;
 
   // Rounded bottom border
   @include after {
@@ -37,6 +38,7 @@
 }
 
 .header_main {
+  @extend %clearfix;
   height: (3 * $g);
   padding: ($g / 4) ($g / 2) ($g / 4) (5 * $g); // Make room on left for logo
 }
@@ -76,8 +78,8 @@
 }
 
 .header_below {
+  bottom: round(-$g / 2 - $g / 8);
   font-size: 0; // Get rid of whitespace between buttons
-  margin-top: (-$g / 2);
   position: absolute;
   text-align: center;
   width: 100%;

@@ -11,6 +11,7 @@
   min-width: 12em;
   opacity: 0;
   padding: ($g / 4) ($g / 2);
+  pointer-events: none; // TODO: This is not supported in IE<11
   position: absolute;
   text-align: left;
   top: 100%;
