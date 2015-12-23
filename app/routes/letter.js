@@ -125,11 +125,11 @@ export default Ember.Route.extend(Solr, {
     }
 
     var $laneVariants = $('.variants');
-    var $actionsBlock = $laneVariants.find('.lane_actions');
+    var $laneHeader = $laneVariants.find('.lane_header');
     var $variants = $laneVariants.find('.variant');
-    var prevVariantBottom = $actionsBlock.position().top + $actionsBlock.outerHeight();
-    // NOTE: Shorthand css properties like `padding` are not supported in Firefox
     var marginBetweenVariants = parseInt( $laneVariants.css('line-height') ) / 2;
+    var prevVariantBottom = $laneHeader.position().top + $laneHeader.outerHeight();
+    // NOTE: Shorthand css properties like `padding` are not supported in Firefox
 
     // Using plain JS for SVG since jQuery struggles with namespaces
     var svgNS = 'http://www.w3.org/2000/svg';
@@ -160,10 +160,11 @@ export default Ember.Route.extend(Solr, {
       path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');
+      // 14: padding right of .lane_content
       var pathD = `M ${left + 3}, ${bottom - .5}
-                   L ${$laneTranscript.width()}, ${bottom - .5}
-                   C ${$laneTranscript.width() + 21}, ${bottom - .5},
-                     ${$laneTranscript.width() + 21}, ${variantTop + $variant.outerHeight() / 2 - .5},
+                   L ${$laneTranscript.width() - 14}, ${bottom - .5}
+                   C ${$laneTranscript.width()}, ${bottom - .5},
+                     ${$laneTranscript.width()}, ${variantTop + $variant.outerHeight() / 2 - .5},
                      ${$variant.offset().left}, ${variantTop + $variant.outerHeight() / 2 - .5}`;
       path.setAttribute('d', pathD);
       svg.appendChild(path);

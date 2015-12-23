@@ -1,6 +1,8 @@
-<div class="lane_actions">
+<header class="lane_header">
+  {{partial 'partials/lane-type'}}
+</header>
+
+<div class="lane_content">
+  {{{content.volltext}}}
+  {{yield}}
 </div>
-
-{{{content.volltext}}}
-
-{{yield}}
