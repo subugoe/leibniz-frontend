@@ -61,7 +61,7 @@ export default Ember.Route.extend(Solr, {
       this.activateLinks();
 
       // Convert image references to SVG images
-      Ember.$('.transcript').find('.reference.-image').each( (index, ref) => {
+      Ember.$('.transcript, .variants').find('.reference.-image').each( (index, ref) => {
         var imageID = Ember.$(ref).data('id');
         this.loadSVG(imageID).then( function(svg) {
           Ember.$(ref).html(svg);
