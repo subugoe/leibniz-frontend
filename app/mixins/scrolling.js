@@ -7,6 +7,7 @@ export default Ember.Mixin.create({
       var scrollPos = Ember.$(window).scrollTop();
       return this.scrolled(scrollPos);
     };
+    this.unbindScrolling();
     Ember.$(window).bind('scroll', onScroll);
     Ember.$(document).bind('touchmove', onScroll);
   },
