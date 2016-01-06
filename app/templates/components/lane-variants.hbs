@@ -4,15 +4,17 @@
   <div class="lane_actions">
     <ul>
       {{#each content.witnesses as |witness index|}}
-        <li>
-          <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
-            {{witness.identifier}}
-          </button>
-          {{#pop-up}}
-            <b>{{{witness.type}}}</b><br>
-            {{{witness.text}}}
-          {{/pop-up}}
-        </li>
+        {{#if witness.hasVariants}}
+          <li>
+            <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
+              {{witness.identifier}}
+            </button>
+            {{#pop-up}}
+              <b>{{{witness.type}}}</b><br>
+              {{{witness.text}}}
+            {{/pop-up}}
+          </li>
+        {{/if}}
       {{/each}}
       {{#if content.otherVariants}}
         <li>
