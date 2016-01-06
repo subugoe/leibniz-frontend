@@ -28,6 +28,7 @@ export default Ember.Mixin.create({
       letter.textzeuge_bezeichnung.forEach( function(textzeuge, index) {
         // Use 1-based index for easier Sass and Handlebars handling
         letter.witnesses[index + 1] = {
+          hasVariants: ( ! ('textzeuge_aktiv' in letter) || letter.textzeuge_aktiv[index] ),
           identifier: textzeuge,
           type: letter.textzeuge_art[index],
           text: letter.textzeuge_text[index],
