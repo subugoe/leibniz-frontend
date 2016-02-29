@@ -1,0 +1,18 @@
+<div class="lane-type">
+  <span class="lane-type_toggle">
+    {{t lane.type}}
+  </span>
+  <div class="lane-type_dropdown">
+    <ul class="lane-type_list">
+      {{#each laneTypes as |laneType|}}
+        {{#unless (eq laneType lane.type)}}
+          <li class="lane-type_item">
+            <button class="lane-type_button">
+              {{t laneType}}
+            </button>
+          </li>
+        {{/unless}}
+      {{/each}}
+    </ul>
+  </div>
+</div>

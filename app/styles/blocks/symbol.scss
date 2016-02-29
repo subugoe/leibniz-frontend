@@ -1,10 +1,11 @@
-//Das hier muss als Mixin gestaltet werden,
-// da die anderen davon erben werden:
 .symbol {
   font-style: italic;
 
-  &.-unicode {
-    font-family: fontello;
+  &.-big-rectangle {
+    border: 1px solid $text-color;
+    display: inline-block;
+    height: 0.7em;
+    width: 1em;
   }
   &.-border-top {
     border-top: 1px solid $text-color;
@@ -12,8 +13,8 @@
   }
   &.-border-bottom {
     border-bottom: 1px solid $text-color;
-    padding: 2px;
     font-size: 80%;
+    padding: 2px;
   }
   &.-border-left {
     border-left: 1px solid $text-color;
@@ -23,59 +24,43 @@
     border-right: 1px solid $text-color;
     padding: 2px;
   }
+  &.-frac {
+    display: inline-table;
+    line-height: 0.5em;
+    position: relative;
+    top: -0.5em;
+  }
+  &.-small-rectangle {
+    border: 1px solid $text-color;
+    display: inline-block;
+    height: 0.7em;
+    width: 0.7em;
+  }
+  &.-sub {
+    bottom: -0.5em;
+    font-size: 80%;
+    position: relative;
+    vertical-align: super;
+    margin-left: -0.5em;
+  }
   &.-sup {
+    font-size: 80%;
+    margin-left: -0.5em;
     position: relative;
     top: -0.5em;
     vertical-align: super;
-    margin-left: -0.5em;
-    font-size: 80%;
   }
-  &.-sub {
-    position: relative;
-    bottom: -0.5em;
-    vertical-align: super;
-    margin-left: -0.5em;
-    font-size: 80%;
-  }
-  &.-small-rectangle {
-    width: 0.7em;
-    height: 0.7em;
-    display: inline-block;
-    border: 1px solid $text-color;
-  }
-  &.-big-rectangle {
-    width: 1em;
-    height: 0.7em;
-    display: inline-block;
-    border: 1px solid $text-color;
-  }
-  &.-upper {
-
+  &.-unicode {
+    font-family: fontello;
   }
 }
 
-.symbol_sub {
-    border-top: 1px solid $text-color;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
-    display: inline-block;
-    line-height: 1.4em;
-    margin-left: -1.5em;
-}
-
-.symbol-frac {
-  display: inline-table;
-  line-height: 0.5em;
-  position: relative;
-  top: -0.5em;
-}
-
-.symbol-row {
+.symbol_row {
   display: table-row;
   font-size: 80%;
 }
 
-.symbol-content {
+.symbol_content {
   display: table-cell;
   text-align: center;
 }

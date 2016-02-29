@@ -7,5 +7,5 @@ export default Ember.Controller.extend({
     'transcript',
     'variants'
   ],
-  view: '{"lanes":[{"type":"transcript","width":50},{"type":"variants"}]}'
+  view: '{"lanes":[{"type":"transcript","width":50},{"type":"variants","width":50}]}'
 });

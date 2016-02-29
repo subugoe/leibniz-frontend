@@ -7,7 +7,7 @@ export default Ember.Component.extend({
     var $this = this.$();
     var $parent = $this.parent();
     $parent.css('position', 'relative');
-    if ( $parent.offset().left > 0.75 * Ember.$(window).width() ) {
+    if ( $parent.offset().left > 0.5 * Ember.$(window).width() ) {
       $this.addClass('-right');
     }
     var newMinWidth = $this.height();

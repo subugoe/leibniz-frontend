@@ -4,6 +4,10 @@
   float: left;
   position: relative;
   width: 100%;
+
+  p:nth-child(n+2) {
+    margin-top: ($g / 4);
+  }
 }
 
 .header_logo {
@@ -13,6 +17,7 @@
   margin: (-1.25 * $g) ($g / 4) 0 (-$g / 4);
   padding: ($g / 4);
   position: absolute;
+  z-index: 9;
 
   // Rounded bottom border
   @include after {
@@ -33,28 +38,23 @@
 }
 
 .header_main {
+  @extend %clearfix;
   height: (3 * $g);
-  padding: ($g / 2) 12em ($g / 2) (5 * $g); // Make room on right for header_aside
+  padding: ($g / 4) ($g / 2) ($g / 4) (5 * $g); // Make room on left for logo
 }
 
-.header_aside {
-  padding: ($g / 2);
-  position: absolute;
-  right: 0;
-  top: 0;
+.header_pagination {
+  float: right;
+  text-align: right;
 }
 
 .header_title {
-  @include typo-scale(1);
-  margin: 0;
+  float: left;
 }
 
 .header_correspondents {
-  display: inline-block;
-}
-
-.header_dates {
-  display: inline-block;
+  @include typo-scale(1);
+  margin-top: floor($g / 8);
 }
 
 .header_date {
@@ -63,10 +63,6 @@
 
 .header_step {
   @include button('shady');
-
-  @include hover {
-    background: $shade;
-  }
 
   &.-prev {
     @include icon('chevron-left', false, 1);
@@ -82,8 +78,8 @@
 }
 
 .header_below {
+  bottom: round(-$g / 2 - $g / 8);
   font-size: 0; // Get rid of whitespace between buttons
-  margin-top: (-$g / 2);
   position: absolute;
   text-align: center;
   width: 100%;

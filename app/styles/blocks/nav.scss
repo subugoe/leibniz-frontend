@@ -12,10 +12,16 @@
   &.-visible {
     right: 0;
   }
+
+  p,
+  ul {
+    margin-bottom: $g;
+  }
 }
 
 .nav_heading {
   @include typo-scale(2);
+  margin-bottom: $g;
 }
 
 .nav_subheading {

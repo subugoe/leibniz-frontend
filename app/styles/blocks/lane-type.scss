@@ -1,15 +1,15 @@
-.select-lane-type {
-  display: inline-block;
+.lane-type {
+  padding: ($g / 2) 0 0;
   position: relative;
 }
 
-.select-lane-type_toggle {
+.lane-type_toggle {
   @include transition(color);
   color: $text-color-light;
   display: inline-block;
 }
 
-.select-lane-type_dropdown {
+.lane-type_dropdown {
   @extend %popup;
 
   &.-open {
@@ -17,17 +17,17 @@
   }
 }
 
-.select-lane-type_list {
+.lane-type_list {
   margin: (-$g / 4) (-$g / 2);
 }
 
-.select-lane-type_item {
+.lane-type_item {
   & + & {
     border-top: $border-width $border-style $border-color;
   }
 }
 
-.select-lane-type_button {
+.lane-type_button {
   color: $link-color;
   display: block;
   padding: ($g / 4) ($g / 2);

@@ -5,31 +5,33 @@
   text-shadow: 0 -1px 0 $shade-medium;
 
   a {
-    color: auto-color($alpha-color);
+    color: white;
+    display: inline-block;
 
     @include hover {
-      color: auto-color($alpha-color);
+      color: white;
     }
   }
 }
 
-.top-bar_search {
-  color: white;
+.top-bar_right {
   float: right;
-  margin: (-$g / 4) $g;
+}
+
+.top-bar_search {
+  margin: floor(-$g / 8) ($g / 4);
+  display: inline-block;
   position: relative;
 }
 
 .top-bar_search-input {
-  background: $shade-medium;
-  border-color: $shade-medium;
-  color: white;
-  padding-right: (1.5 * $g);
+  background: $highlight-color;
+  border-color: $alpha-color;
+  padding: floor($g / 8) (1.5 * $g) floor($g / 8) ($g / 4);
   width: 12em;
 
   &:focus {
-    background: $shine;
-    //border-color: $link;
+    background: white;
   }
 }
 
@@ -38,18 +40,22 @@
   background: none;
   border-radius: 0;
   box-shadow: none;
-  color: white;
-  padding: ($g / 4);
+  color: $link-color;
+  padding: ceil($g / 8) ($g / 4);
   position: absolute;
   right: 0;
   top: 0;
+
+  @include hover {
+    background: none;
+    color: $link-hover-color;
+  }
 }
 
 .top-bar_toggle-nav {
   @include icon('menu', 'right');
   border-radius: 0;
   box-shadow: none;
-  float: right;
   margin: (-$g / 4);
   padding: ($g / 4);
 

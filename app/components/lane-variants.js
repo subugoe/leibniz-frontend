@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import Lane from '../mixins/lane';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Lane, {
   otherVariantsVisible: true,
   actions: {
     toggleVariants(witnessId) {
@@ -19,6 +20,10 @@ export default Ember.Component.extend({
         var toggleIndexedAndHasIndexedWitness = ( variant.textzeuge && variant.textzeuge[0] === witnessId );
         var toggleOtherAndHasOtherWitness = ( witnessId === 'other' && ! variant.witnessIndex );
         if ( toggleIndexedAndHasIndexedWitness || toggleOtherAndHasOtherWitness ) {
+          if ( variant.visible ) {
+            var $references = Ember.$('.lane.transcript').find(`[data-id=${variant.id}], [data-ref-id=${variant.id}]`);
+            $references.removeClass('-highlight');
+          }
           return Ember.set(variant, 'visible', ! variant.visible);
         }
       });

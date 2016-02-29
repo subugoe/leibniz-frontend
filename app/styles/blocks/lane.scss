@@ -1,35 +1,43 @@
 .lane {
   display: table-cell;
-  padding: ($g / 2);
   position: relative;
   vertical-align: top;
 
-  & + & {
+  &:nth-child(n+2) {
     border-left: $border-width $border-style $border-color;
   }
 }
 
 .lane_actions {
-  padding-bottom: ($g / 2);
+  @include transition(background, box-shadow);
+  padding: ($g / 2);
+
+  &.-fixed {
+    background: $highlight-color;
+    box-shadow: 0 -1px 0 $border-color inset, 0 $shadow-size $shadow-size (-$shadow-size) $shadow-color;
+    position: relative;
+    z-index: 1;
+  }
 
   ul {
-    display: table;
-    margin: 0 auto;
+    margin: (-$g / 4) auto;
+    font-size: 0;
+    line-height: 0;
   }
 
   li {
-    display: table-cell;
-    padding: 0 ($g / 4);
+    display: inline-block;
+    margin: ($g / 4) ($g / 8);
+    padding: 0 ($g / 8);
+    font-size: $font-size;
+    line-height: $line-height;
   }
 }
 
 .lane_content {
-  position: relative;
+  padding: ($g / 2);
 }
 
 .lane_header {
-  background: $shade;
-  margin: (-$g / 2) (-$g / 2) ($g / 2);
-  padding: ($g / 2);
   text-align: center;
 }

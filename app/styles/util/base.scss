@@ -19,7 +19,6 @@ body {
 a {
   @include transition(color, border-color);
   color: $link-color;
-  outline: 0;
   text-decoration: none;
 
   &:hover {
@@ -40,17 +39,6 @@ i {
 
 b {
   font-weight: bold;
-}
-
-h1,
-h2,
-h3,
-p,
-ol,
-ul,
-form,
-table {
-  margin: 0 0 $g;
 }
 
 h1 {
@@ -78,21 +66,22 @@ button {
   }
 }
 
-[type=search],
-[type=text],
-[type=url] {
-  @include placeholder-color($border-color);
+input,
+select,
+textarea {
+  @include placeholder-color($text-color-light);
   @include transition(background);
-  background: $shade;
-  border: 0;
-  border-bottom: $border-width-bold solid $link-color;
+  background: white;
+  border: $border-width solid $border-color;
   font: inherit;
-  outline: 0;
-  padding: ($g / 4) ($g / 4) ($g / 4 - $border-width-bold);
+  padding: floor($g / 8);
 
   &:focus {
-    background: $shine;
     border-color: $link-hover-color;
     transition: none;
   }
+}
+
+select {
+  cursor: pointer;
 }

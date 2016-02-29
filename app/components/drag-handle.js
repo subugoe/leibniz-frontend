@@ -8,14 +8,15 @@ export default Ember.Component.extend({
     this.$().css('background-position', `center ${event.offsetY - dragHandlerHeight / 2}px`);
   },
   mouseDown() {
-    this.sendAction('clearVariantConnectors');
     var $this = this.$();
     var contentWidth = $('.content').outerWidth();
     $(window).on( 'mousemove', (event) => {
       var posX = event.pageX;
       if ( posX > 99 && posX < contentWidth - 99 ) {
-        var $lane = $this.prev('.lane');
-        $lane.css('width', (posX / contentWidth * 100) + '%' );
+        var $leftLane = $this.prev('.lane');
+        var $rightLane = $this.next('.lane');
+        $leftLane.css('width', (posX / contentWidth * 100) + '%' );
+        $rightLane.css('width', (100 - posX / contentWidth * 100) + '%' );
         $this.css('left', '');
 
       }

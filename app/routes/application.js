@@ -1,8 +1,12 @@
 import Ember from 'ember';
+import Solr from '../mixins/solr';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(Solr, {
   intl: Ember.inject.service(),
-  beforeModel: function() {
+  model() {
+    return this.loadAllLettersInVolume();
+  },
+  beforeModel() {
     // define the app's runtime locale
     // For example, here you would maybe do an API lookup to resolver
     // which locale the user should be targeted and perhaps lazily
@@ -10,11 +14,18 @@ export default Ember.Route.extend({
     // method with the results of the XHR request
     this.get('intl').setLocale('de-de');
   },
-  renderTemplate: function() {
+  renderTemplate() {
     this.render();
     this.render('nav', {
 			into: 'application',
 			outlet: 'nav'
 		});
-	}
+	},
+  loadAllLettersInVolume() {
+    return this.query('type:brief', {fl: 'id, band, reihe, brief_nummer', sort: 'brief_nummer asc'}).then( (json) => {
+      if ( json.response.docs.length > 0 ) {
+        return json.response.docs;
+      }
+    });
+  },
 });
