@@ -56,7 +56,7 @@ task emberServe(type: Exec) {
   description = "Creating ember server"
   dependsOn npmPackages, bowerInstall
 
-  commandLine "node_modules/ember-cli/bin/ember", "serve"
+  commandLine "./node_modules/ember-cli/bin/ember", "serve"
 
 }
 
@@ -66,7 +66,7 @@ task emberBuildDev(type: Exec) {
   description = "Build development server"
   dependsOn npmPackages, bowerInstall
 
-  commandLine "node_modules/ember-cli/bin/ember", "build", "--", "environment", "development"
+  commandLine "./node_modules/ember-cli/bin/ember", "build", "--", "environment", "development"
 
 }
 
@@ -76,7 +76,7 @@ task emberBuildProd(type: Exec) {
   description = "Build production server"
   dependsOn npmPackages, bowerInstall
 
-  commandLine "node_modules/ember-cli/bin/ember", "build", "--", "environment", "production"
+  commandLine "./node_modules/ember-cli/bin/ember", "build", "--", "environment", "production"
 
 }
 
