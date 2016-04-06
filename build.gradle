@@ -67,7 +67,7 @@ task emberBuildDev(type: Exec) {
   dependsOn npmPackages, bowerInstall
 
   commandLine "ln", "-s", "/usr/bin/nodejs", "/usr/bin/node"
-  commandLine "./node_modules/ember-cli/bin/ember", "build", "--", "environment", "development"
+  commandLine "node_modules/ember-cli/bin/ember", "build", "--", "environment", "development"
 
 }
 
