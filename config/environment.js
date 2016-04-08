@@ -18,7 +18,7 @@ module.exports = function(environment) {
       defaultLocale: 'de-de'
     },
     firstLetterID: 'l3714', // TODO: Get first letter ID from Solr
-    solrURL: 'http://adw-dev.tc.sub.uni-goettingen.de/solr/leibniz/select',
+    solrURL: 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
