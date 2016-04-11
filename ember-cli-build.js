@@ -24,12 +24,13 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
   app.import('bower_components/javascript-detect-element-resize/jquery.resize.js');
 
+
   // Import MathJax via Funnel since there are sooo many components
   var mathJax = new Funnel('bower_components/MathJax', {
     destDir: '/assets/MathJax'
   });
 
-  var fontello = new Funnel('public/assets/fontello', {
+  var fontello = new Funnel('vendor/fontello', {
     destDir: '/assets/fontello'
   });
 
