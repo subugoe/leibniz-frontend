@@ -50,10 +50,8 @@
   <div class="header_pagination">
     <p>
       {{#if content.attachmentToLetters}}
-        <div class="header_attachment">
           {{t 'attachmentTo'}}
           {{#each content.attachmentToLetters as |letter index|}}{{if index ', '}}{{#link-to 'letter' letter.id}}N.&nbsp;{{letter.number}}{{/link-to}}{{/each}}
-        </div>
       {{else}}
         {{#if content.brief_id_vorgaenger}}
           {{t 'respondsTo'}}
@@ -71,6 +69,11 @@
           ({{t 'attachment'}}
           {{#link-to 'letter' content.attachment.id}}N.&nbsp;{{content.attachment.number}}{{/link-to}})
         {{/if}}
+      {{/if}}
+      {{#if content.tex_name}}
+      - TeXName: {{content.tex_name}}
+      {{else}}
+      - Kein TeXName
       {{/if}}
     </p>
     <p>
