@@ -10,7 +10,11 @@
   }
 
   .bigindent {
-    text-indent: (2 * $g);
+    text-indent: (3 * $g);
+  }
+
+  .middleindent {
+    text-indent: (1.5 * $g);
   }
 
   .center {
