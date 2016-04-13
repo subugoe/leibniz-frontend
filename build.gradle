@@ -1,0 +1,87 @@
+// configuration according to https://objectpartners.com/2015/04/29/using-gradle-and-bower-to-manage-jscss-dependencies/
+
+plugins {
+
+  id "com.moowork.node" version "0.12"
+
+}
+
+
+node {
+
+  version = "5.9.1"
+  npmVersion = "3.7.3"
+  download = true  
+
+}
+
+
+task npmCacheConfig(type: NpmTask) {
+
+  description = "Configure the NPM cache"
+  def npmCacheDir = "${gradle.getGradleUserHomeDir()}/caches/npm"
+  outputs.files file(npmCacheDir)
+  args = [ "config", "set", "cache", npmCacheDir ]
+
+}
+
+
+task npmPackages(type: NpmTask, dependsOn: npmCacheConfig) {
+
+  description = "Install Node.js packages"
+  args = [ "install" ]
+  inputs.files file("package.json")
+  outputs.files file("node_modules")
+
+}
+
+
+task bowerInstall(type: NodeTask) {
+
+  description = "Configure bower install"
+  script = file("node_modules/bower/bin/bower")
+  args = [ "--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
+           "--config.storage.packages=${gradle.getGradleUserHomeDir()}/caches/bower/packages",
+           "--config.storage.registry=${gradle.getGradleUserHomeDir()}/caches/bower/registry",
+           "install" ]
+  inputs.files file("bower.json")
+  outputs.files file("bower_components")
+  dependsOn npmPackages
+
+}
+
+
+task emberServe(type: NodeTask) {
+  
+  description = "Creating ember server"
+  dependsOn npmPackages, bowerInstall
+
+  script = file("node_modules/ember-cli/bin/ember")
+  args = ["serve"]
+
+}
+
+
+task emberBuildDev(type: NodeTask) {
+
+  description = "Build development server"
+  dependsOn npmPackages, bowerInstall
+
+  script = file("node_modules/ember-cli/bin/ember")
+  args = ["build", "--", "environment", "development"]
+
+}
+
+
+task emberBuildProd(type: NodeTask) {
+
+  description = "Build production server"
+  dependsOn npmPackages, bowerInstall
+
+  script = file("node_modules/ember-cli/bin/ember")
+  args = ["build", "--", "environment", "production"]
+
+}
+
+
+
