@@ -33,6 +33,7 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    ENV.solrURL = 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select';
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -41,6 +42,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
+    ENV.solrURL = 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select';
+
     // Testem prefers this...
     ENV.baseURL = '/';
     ENV.locationType = 'none';

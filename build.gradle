@@ -68,7 +68,7 @@ task emberBuildDev(type: NodeTask) {
   dependsOn npmPackages, bowerInstall
 
   script = file("node_modules/ember-cli/bin/ember")
-  args = ["build", "--", "environment", "development"]
+  args = ["build", "--environment=development"]
 
 }
 
@@ -79,7 +79,7 @@ task emberBuildProd(type: NodeTask) {
   dependsOn npmPackages, bowerInstall
 
   script = file("node_modules/ember-cli/bin/ember")
-  args = ["build", "--", "environment", "production"]
+  args = ["build", "--environment=production"]
 
 }
 
