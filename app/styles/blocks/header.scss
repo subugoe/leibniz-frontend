@@ -78,11 +78,10 @@
 }
 
 .header_below {
-  bottom: round(-$g / 2 - $g / 8);
-  font-size: 0; // Get rid of whitespace between buttons
+  bottom: round(-$g / 2 - $border-width);
+  left: 50%;
   position: absolute;
-  text-align: center;
-  width: 100%;
+  transform: translateX(-50%);
   z-index: 2;
 }
 
@@ -91,6 +90,7 @@
   @include header-button;
   @include icon('chevron-down', null);
   @include transition(background, color);
+  float: left;
 
   &:not(:first-child):not(:last-child) {
     @include header-button(center);
