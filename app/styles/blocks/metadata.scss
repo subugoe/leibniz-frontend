@@ -1,5 +1,9 @@
 .metadata {
   @extend %header-aside;
+  
+  .caps {
+    text-transform: capitalize;
+  }
 }
 
 .metadata_witness {
