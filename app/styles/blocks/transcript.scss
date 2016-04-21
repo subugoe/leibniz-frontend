@@ -1,10 +1,6 @@
 .transcript {
   @extend %lane;
 
-  a {
-    @include link-border;
-  }
-
   p {
     text-indent: $g;
   }
@@ -16,7 +12,7 @@
   .middleindent {
     text-indent: (1.5 * $g);
   }
-  
+
   .to-space {
     letter-spacing: 0.35em;
   }
