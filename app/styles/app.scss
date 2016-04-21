@@ -15,12 +15,11 @@
 @import 'mixins/header-button';
 @import 'mixins/hover';
 @import 'mixins/icon';
-@import 'mixins/link-border-on-hover';
-@import 'mixins/link-border';
 @import 'mixins/placeholder-color';
 @import 'mixins/transition';
 @import 'mixins/typo-scale';
 
+@import 'extends/caption';
 @import 'extends/header-aside';
 @import 'extends/popup';
 @import 'extends/spinner';
@@ -47,4 +46,3 @@
 @import 'blocks/transcript';
 @import 'blocks/variant';
 @import 'blocks/variants';
-

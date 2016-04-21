@@ -4,8 +4,8 @@
 }
 
 .lane-type_toggle {
+  @extend %caption;
   @include transition(color);
-  color: $text-color-light;
   display: inline-block;
 }
 
