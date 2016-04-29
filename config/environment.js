@@ -8,7 +8,7 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
       'default-src': "'none'",
       'script-src': "*",
-      'font-src': "'self'",
+      'font-src': "*",
       'connect-src': "*",
       'img-src': "'self' data:",
       'style-src': "'self' 'unsafe-inline'",
