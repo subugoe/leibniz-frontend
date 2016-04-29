@@ -36,6 +36,10 @@
 
 .lane_content {
   padding: ($g / 2);
+
+  td {
+    padding: 0 ($g / 4);
+  }
 }
 
 .lane_header {
