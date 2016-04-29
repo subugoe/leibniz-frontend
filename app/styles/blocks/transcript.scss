@@ -1,10 +1,4 @@
 .transcript {
-  @extend %lane;
-
-  a {
-    @include link-border;
-  }
-
   p {
     text-indent: $g;
   }
@@ -16,9 +10,9 @@
   .middleindent {
     text-indent: (1.5 * $g);
   }
-  
+
   .to-space {
-    letter-spacing: 0.35em;
+    letter-spacing: 0.3em;
   }
 
   .center {
@@ -34,7 +28,7 @@
     cursor: pointer;
     background: $shade;
     border-radius: $br;
-    padding: ($g / 4);
+    padding: ($g / 4) 0;
 
     &.-hover {
       color: $link-color;

@@ -1,7 +1,0 @@
-@mixin link-border {
-  border-bottom: $border-width $border-style $border-color;
-
-  @include hover {
-    border-color: $link-hover-color;
-  }
-}

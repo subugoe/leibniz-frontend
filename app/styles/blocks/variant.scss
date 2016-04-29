@@ -37,11 +37,14 @@
   .source {
     font-style: italic;
     font-weight: bold;
-    font-style: italic;
 
     + .source {
       margin-left: .5em;
     }
+  }
+
+  .to-space {
+    letter-spacing: 0.3em;
   }
 }
 

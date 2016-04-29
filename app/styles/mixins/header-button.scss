@@ -1,4 +1,5 @@
 $header-button-width: 5 * $u !default; // no unit
+$buttonSvgPath: null;
 
 @mixin header-button($position: null) {
   @if $position == left {
