@@ -7,35 +7,42 @@
     height: 0.7em;
     width: 1em;
   }
+
   &.-border-top {
     border-top: 1px solid $text-color;
     padding-top: 2px;
   }
+
   &.-border-bottom {
     border-bottom: 1px solid $text-color;
     font-size: 80%;
     padding: 2px;
   }
+
   &.-border-left {
     border-left: 1px solid $text-color;
     padding: 2px;
   }
+
   &.-border-right {
     border-right: 1px solid $text-color;
     padding: 2px;
   }
+
   &.-frac {
     display: inline-table;
     line-height: 0.5em;
     position: relative;
     top: -0.5em;
   }
+
   &.-small-rectangle {
     border: 1px solid $text-color;
     display: inline-block;
     height: 0.7em;
     width: 0.7em;
   }
+
   &.-sub {
     bottom: -0.5em;
     font-size: 80%;
@@ -43,6 +50,7 @@
     vertical-align: super;
     margin-left: -0.5em;
   }
+
   &.-sup {
     font-size: 80%;
     margin-left: -0.5em;
@@ -50,6 +58,7 @@
     top: -0.5em;
     vertical-align: super;
   }
+
   &.-unicode {
     font-family: fontello;
   }
