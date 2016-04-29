@@ -1,11 +1,5 @@
 $header-button-width: 5 * $u !default; // no unit
-$buttonSvgPath: "M0, #{$u / 2 + .5}\
-      c#{$u / 2}, 0, #{$u / 2}, #{-$u / 2}, #{$u}, #{-$u / 2}\
-      l#{999 - $u}, 0\
-      l0, #{$u}\
-      l#{-999 + $u}, 0\
-      c#{-$u / 2}, 0, #{-$u / 2}, #{-$u / 2}, #{-$u}, #{-$u / 2}\
-      Z" !default;
+$buttonSvgPath: null;
 
 @mixin header-button($position: null) {
   @if $position == left {

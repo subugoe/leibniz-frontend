@@ -20,7 +20,7 @@
   }
 
   &:before {
-    @extend .icon-#{$name};
+    @extend .icon-#{$name} !optional;
 
     @if $position == 'left' {
       margin-right: .5em;
