@@ -38,7 +38,6 @@
 }
 
 .header_main {
-  @extend %clearfix;
   height: (3 * $g);
   padding: ($g / 4) ($g / 2) ($g / 4) (5 * $g); // Make room on left for logo
 }

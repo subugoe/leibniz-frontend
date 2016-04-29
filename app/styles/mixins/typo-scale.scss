@@ -22,5 +22,5 @@ $typo-scale-allow-half-steps: true;
       $value: ($value / $ratio);
     }
   }
-  @return $value
+  @return $value;
 }
