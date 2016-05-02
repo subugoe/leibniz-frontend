@@ -1,8 +1,12 @@
 .metadata {
   @extend %header-aside;
-  
+
   .caps {
     text-transform: capitalize;
+  }
+
+  .reference.-biblio {
+    border-bottom: $border-width dotted;
   }
 }
 
