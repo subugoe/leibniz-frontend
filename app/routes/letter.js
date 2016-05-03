@@ -209,15 +209,6 @@ export default Ember.Route.extend(Solr, {
       });
 
       prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;
-
-      // TODO: Child variants / variants in variants
-      var $childReferences = $variant.find('.reference.-afootnote, .reference.-cfootnote');
-      $childReferences.each( function() {
-        var childVariantID = $(this).data('id');
-        var $childVariant = $variants.filter('#' + childVariantID);
-        $childVariant.css( {top: prevVariantBottom, marginLeft: '30px' /* TODO: use class instead */} ).addClass('-visible');
-        prevVariantBottom += $childVariant.outerHeight() + marginBetweenVariants;
-      });
     });
 
     $variantsLane.height(prevVariantBottom);
