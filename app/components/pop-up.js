@@ -5,14 +5,14 @@ export default Ember.Component.extend({
   tagName: 'span',
   didInsertElement() {
     var $this = this.$();
-    $this.parent().css('position', 'relative');
-    var newWidth = ( $this.outerHeight() + $this.outerWidth() ) / 2.5;
-    if ( newWidth > $this.outerWidth() ) {
-      $this.width(newWidth);
+    var $parent = $this.parent();
+    $parent.css('position', 'relative');
+    if ( $parent.offset().left > 0.5 * Ember.$(window).width() ) {
+      $this.addClass('-right');
     }
-    var right = Ember.$(window).width() - $this.offset().left - $this.outerWidth() - 10;
-    if ( right < 0 ) {
-      $this.width( $this.width() + right );
+    var newMinWidth = $this.height();
+    if ( newMinWidth > $this.width() ) {
+      $this.css({ minWidth: newMinWidth });
     }
   }
 });

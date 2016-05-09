@@ -8,7 +8,7 @@
   font-style: normal;
   left: 0;
   margin: ($g / 4) 0 0;
-  min-width: 6em;
+  min-width: 12em;
   opacity: 0;
   padding: ($g / 4) ($g / 2);
   pointer-events: none; // TODO: This is not supported in IE<11
@@ -37,10 +37,6 @@
       left: auto;
       right: ($g / 2);
     }
-  }
-
-  &.-wide {
-    min-width: 12em;
   }
 }
 

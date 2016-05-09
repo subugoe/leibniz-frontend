@@ -57,29 +57,14 @@ export default Ember.Route.extend(Solr, {
     controller.set('rendered', true);
   },
   afterModel() {
-    var $ = Ember.$;
-
     Ember.run.next( () => {
       this.activateLinks();
 
-      // Add bibliographic info popups
-      $('.metadata').find('.reference.-biblio').each( (index, ref) => {
-        var id = $(ref).data('href');
-        this.loadBiblio(id).then( function(html) {
-          // TODO: This is not an instance of "pop-up" component, but merely
-          // a dumb DOM node with he same class name. Therefore, position and
-          // size are not adjusted automatically.
-          var $popup = $('<span class="pop-up -wide -right"/>');
-          $popup.html(html);
-          $(ref).css('position', 'relative').append($popup);
-        });
-      });
-
       // Convert image references to SVG images
-      $('.transcript, .variants').find('.reference.-image').each( (index, ref) => {
-        var id = $(ref).data('id');
-        this.loadSVG(id).then( function(svg) {
-          $(ref).html(svg);
+      Ember.$('.transcript, .variants').find('.reference.-image').each( (index, ref) => {
+        var imageID = Ember.$(ref).data('id');
+        this.loadSVG(imageID).then( function(svg) {
+          Ember.$(ref).html(svg);
         });
       });
 
@@ -87,7 +72,7 @@ export default Ember.Route.extend(Solr, {
       this.renderMathJax().then( () => {
         // TODO: For some reason, resize is always triggered once
         // this.positionVariants();
-        $('.lane').resize( () => {
+        Ember.$('.lane').resize( () => {
           Ember.run.debounce(this, this.clearVariantConnectors, 333, true);
           Ember.run.debounce(this, this.positionVariants, 333);
         });
@@ -105,19 +90,10 @@ export default Ember.Route.extend(Solr, {
       route.transitionTo('letter', letterID);
     });
   },
-  loadBiblio(id) {
-    return new Ember.RSVP.Promise( (resolve) => {
-      this.query(`id:${id}`).then( function(json) {
-        if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('bibliographische_angabe') ) {
-          resolve(json.response.docs[0].bibliographische_angabe);
-        }
-      });
-    });
-  },
   loadSVG(id) {
     return new Ember.RSVP.Promise( (resolve) => {
       this.query(`id:${id}`).then( function(json) {
-        if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('svg_code') ) {
+        if ( json.response.docs.length > 0 && json.response.docs[0].hasOwnProperty('svg_code')) {
           resolve(json.response.docs[0].svg_code);
         }
       });
@@ -140,18 +116,18 @@ export default Ember.Route.extend(Solr, {
   },
   positionVariants() {
     var $ = Ember.$;
-    var $transcriptLane = $('.transcript');
-    var $references = $transcriptLane.find('.reference.-afootnote, .reference.-cfootnote');
+    var $laneTranscript = $('.transcript');
+    var $references = $laneTranscript.find('.reference');
 
     this.clearVariantConnectors();
     if ( $references.length === 0 ) {
       return;
     }
 
-    var $variantsLane = $('.variants');
-    var $laneHeader = $variantsLane.find('.lane_header');
-    var $variants = $variantsLane.find('.variant');
-    var marginBetweenVariants = parseInt( $variantsLane.css('line-height') ) / 2;
+    var $laneVariants = $('.variants');
+    var $laneHeader = $laneVariants.find('.lane_header');
+    var $variants = $laneVariants.find('.variant');
+    var marginBetweenVariants = parseInt( $laneVariants.css('line-height') ) / 2;
     var prevVariantBottom = $laneHeader.position().top + $laneHeader.outerHeight();
     // NOTE: Shorthand css properties like `padding` are not supported in Firefox
 
@@ -168,7 +144,7 @@ export default Ember.Route.extend(Solr, {
       var variantID = $this.data('id');
       var $variant = $variants.filter('#' + variantID);
       if ( $variant.length === 0 ) {
-        return; // no variant with this ID
+        return; // variant not available
       }
       var left = $this.position().left;
       var top = $this.position().top;
@@ -186,9 +162,9 @@ export default Ember.Route.extend(Solr, {
       path.setAttribute('style', 'stroke-width: 1px');
       // 14: padding right of .lane_content
       var pathD = `M ${left + 3}, ${bottom - .5}
-                   L ${$transcriptLane.width() - 14}, ${bottom - .5}
-                   C ${$transcriptLane.width()}, ${bottom - .5},
-                     ${$transcriptLane.width()}, ${variantTop + $variant.outerHeight() / 2 - .5},
+                   L ${$laneTranscript.width() - 14}, ${bottom - .5}
+                   C ${$laneTranscript.width()}, ${bottom - .5},
+                     ${$laneTranscript.width()}, ${variantTop + $variant.outerHeight() / 2 - .5},
                      ${$variant.offset().left}, ${variantTop + $variant.outerHeight() / 2 - .5}`;
       path.setAttribute('d', pathD);
       svg.appendChild(path);
@@ -235,7 +211,7 @@ export default Ember.Route.extend(Solr, {
       });
     });
 
-    $variantsLane.height(prevVariantBottom);
+    $laneVariants.height(prevVariantBottom);
   }
 });
 

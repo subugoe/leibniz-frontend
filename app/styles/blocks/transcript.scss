@@ -1,6 +1,4 @@
 .transcript {
-  @extend %lane !optional;
-
   p {
     text-indent: $g;
   }
