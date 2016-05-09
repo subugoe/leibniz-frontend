@@ -34,6 +34,33 @@
     font-style: italic;
   }
 
+  .reference {
+    @include transition(color, background);
+    cursor: pointer;
+    background: $shade;
+    border-radius: $br;
+    padding: ($g / 4) 0;
+
+    &.-hover {
+      color: $link-color;
+      transition: none;
+    }
+
+    &.-highlight {
+      background: $text-color-light;
+      color: white;
+    }
+
+    &.-image {
+      background: none;
+      cursor: default;
+      display: block;
+      text-align: center;
+      margin: $g 0;
+      padding: 0;
+    }
+  }
+
   .source {
     font-style: italic;
     font-weight: bold;
