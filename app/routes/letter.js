@@ -185,6 +185,30 @@ export default Ember.Route.extend(Solr, {
       });
 
       prevVariantBottom = variantTop + $variant.outerHeight() + marginBetweenVariants;
+
+      // Child variants / variants in variants
+      var $childReferences = $variant.find('.reference.-afootnote, .reference.-cfootnote');
+      $childReferences.each( function() {
+        var childVariantID = $(this).data('id');
+        var $childVariant = $variants.filter('#' + childVariantID);
+        $childVariant.css( {top: prevVariantBottom} ).addClass('-child -visible');
+        prevVariantBottom += $childVariant.outerHeight() + marginBetweenVariants;
+
+        // Add click handler to highlight reference/variant pair
+        var $childGroup = $(this).add($childReferences.filter(`[data-ref-id=${childVariantID}]`)).add($childVariant);
+
+        $childGroup.off('click').click( () => {
+          $childGroup.toggleClass('-highlight');
+          return false;
+        });
+
+        // NOTE: Cannot use toggleClass, see above
+        $childGroup.hover( () => {
+          $childGroup.addClass('-hover');
+        }, () => {
+          $childGroup.removeClass('-hover');
+        });
+      });
     });
 
     $laneVariants.height(prevVariantBottom);
