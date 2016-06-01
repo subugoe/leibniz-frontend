@@ -61,17 +61,40 @@ export default Ember.Mixin.create({
     // Convert XHTML to HTML5
     letter.volltext = Ember.$('<div/>', { html: letter.volltext }).html();
 
-    var regex = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?><\/span>(.*?)<span class="[^"]*end-reference[^>]*><\/span>/g;
-    letter.volltext = letter.volltext.replace(regex, function (str, id, text) {
-      // Append every <p>, prepend every </p> with reference span using a
-      // different data attribute for non-linked parts of this reference
-      text = text.replace('</p>', '</span></p>');
-      text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference" data-ref-id="${id}">`);
-      text = `<span class="reference" data-ref-id="${id}">${text}</span>`;
-      // Replace last dummy with actual reference
-      var lastDataIndex = text.lastIndexOf('data-ref-id');
-      text = text.substr(0, lastDataIndex) + 'data-id' + text.substr(lastDataIndex + 'data-ref-id'.length);
-      return text;
+    // serveral rounds of replacing strings for big references to catch them all
+    // possible structures: AA, ABBA, ABAB
+    // 1: fish out all start references and store label in array
+    // 2: create correct spans for all labels
+    var referenceIDs = [];
+    var regexStart = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?>/g;
+    letter.volltext = letter.volltext.replace(regexStart, function (str, dataID) {
+      referenceIDs.push(dataID);
+      return str;
+    });
+
+    referenceIDs.forEach(function(elem) {
+      var regex = '(?:<span class="[^"]*start-reference).+?data-id="';
+      regex += elem;
+      regex += '" [^>]*></span>';
+      regex += '(.*?)<span class="[^"]*end-reference.+?data-id="';
+      regex += elem;
+      regex += '"[^>]*><\/span>';
+      regex = new RegExp(regex);
+      letter.volltext = letter.volltext.replace(regex, function(str, text) {
+        text = text.replace('</p>', '</span></p>');
+        text = text.replace('</span>', '</span></span>');
+        text = text.replace(/(<span class="reference[^>].*?>)/g, '</span>$1<span class="reference -cfootnote" data-id="'+elem+'">');
+        text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference -cfootnote" data-id="${elem}">`);
+        text = text.replace(/(<span class="start-reference[^(?:\/span>)].*?<\/span>)/g, ' </span>$1<span class="reference -cfootnote" data-id="'+elem+'">');
+        text = '<span class="reference -cfootnote" data-id="'+elem+'">'+text+'</span>';
+        return text;
+      });
+    });
+
+    // remove trailing </span> for references
+    var regexspan = /<span class="reference -cfootnote" data-id="([^"]+)"><\/span>/g;
+    letter.volltext = letter.volltext.replace(regexspan, function(str, dataID) {
+      return '<span class="reference -cfootnote" data-id="'+dataID+'">';
     });
 
     // Determine variant types from IDs

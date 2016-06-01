@@ -126,7 +126,8 @@ export default Ember.Route.extend(Solr, {
 
     var $laneVariants = $('.variants');
     var $laneHeader = $laneVariants.find('.lane_header');
-    var $variants = $laneVariants.find('.variant');
+    var $variants = $laneVariants.find('.variant').not('.-child');
+    var $variantsArr = [];
     var marginBetweenVariants = parseInt( $laneVariants.css('line-height') ) / 2;
     var prevVariantBottom = $laneHeader.position().top + $laneHeader.outerHeight();
     // NOTE: Shorthand css properties like `padding` are not supported in Firefox
@@ -142,35 +143,21 @@ export default Ember.Route.extend(Solr, {
     $references.each( function() {
       var $this = $(this);
       var variantID = $this.data('id');
+      if ( $.inArray(variantID, $variantsArr) !== -1) {
+        return; // variant already defined
+      }
+      $variantsArr.push(variantID);
+
       var $variant = $variants.filter('#' + variantID);
       if ( $variant.length === 0 ) {
         return; // variant not available
       }
-      var left = $this.position().left;
       var top = $this.position().top;
-      var bottom = $this.position().top + $this.outerHeight();
-
       var variantTop = (top < prevVariantBottom ? prevVariantBottom : top);
       $variant.css( {top: variantTop} ).addClass('-visible');
 
-      // Draw a curved line from reference to variant
-      var path = document.createElementNS(svgNS, 'path');
-      // NOTE: This provides an SVG-compatible rgb(...) color value
-      var strokeColor = $variant.css('border-left-color');
-      path.setAttribute('stroke', strokeColor);
-      path.setAttribute('fill', 'none');
-      path.setAttribute('style', 'stroke-width: 1px');
-      // 14: padding right of .lane_content
-      var pathD = `M ${left + 3}, ${bottom - .5}
-                   L ${$laneTranscript.width() - 14}, ${bottom - .5}
-                   C ${$laneTranscript.width()}, ${bottom - .5},
-                     ${$laneTranscript.width()}, ${variantTop + $variant.outerHeight() / 2 - .5},
-                     ${$variant.offset().left}, ${variantTop + $variant.outerHeight() / 2 - .5}`;
-      path.setAttribute('d', pathD);
-      svg.appendChild(path);
-
       // Add click handler to highlight reference/variant pair
-      var $group = $this.add($references.filter(`[data-ref-id=${variantID}]`)).add($variant);
+      var $group = $this.add($references.filter(`[data-id=${variantID}]`)).add($variant);
       $group.off('click').click( () => {
         $group.toggleClass('-highlight');
         return false;
@@ -209,9 +196,37 @@ export default Ember.Route.extend(Solr, {
           $childGroup.removeClass('-hover');
         });
       });
+
     });
 
     $laneVariants.height(prevVariantBottom);
+
+    // Draw curved SVG-line from (last) reference to respective variant
+    $('.variant').each( function() {
+      var id = this.id;
+      var reference = $('.transcript').find('.reference[data-id="'+id+'"]').last();
+      if (reference.length === 0) {
+        return;
+      }
+      var left = reference.position().left;
+      var bottom = reference.position().top + reference.outerHeight();
+
+      // Draw a curved line from reference to variant
+      var path = document.createElementNS(svgNS, 'path');
+      // NOTE: This provides an SVG-compatible rgb(...) color value
+      var strokeColor = $(this).css('border-left-color');
+      path.setAttribute('stroke', strokeColor);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('style', 'stroke-width: 1px');
+      // 14: padding right of .lane_content
+      var pathD = `M ${left + 3}, ${bottom - .5}
+                   L ${$laneTranscript.width() - 14}, ${bottom - .5}
+                   C ${$laneTranscript.width()}, ${bottom - .5},
+                     ${$laneTranscript.width()}, ${this.offsetTop + $(this).outerHeight() / 2 },
+                     ${$(this).offset().left}, ${this.offsetTop + $(this).outerHeight() / 2 }`;
+      path.setAttribute('d', pathD);
+      svg.appendChild(path);
+    });
   }
 });
 
