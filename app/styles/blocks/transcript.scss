@@ -23,6 +23,10 @@
     text-indent: 0;
   }
 
+  .smallmargin {
+    text-indent: $g;
+  }
+
   .reference {
     @include transition(color, background);
     cursor: pointer;
