@@ -82,8 +82,6 @@ export default Ember.Mixin.create({
       regex = new RegExp(regex);
       letter.volltext = letter.volltext.replace(regex, function(str, text) {
         text = text.replace('</p>', '</span></p>');
-        text = text.replace('</span>', '</span></span>');
-        text = text.replace(/(<span class="reference[^>].*?>)/g, '</span>$1<span class="reference -cfootnote" data-id="'+elem+'">');
         text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference -cfootnote" data-id="${elem}">`);
         text = text.replace(/(<span class="start-reference[^(?:\/span>)].*?<\/span>)/g, ' </span>$1<span class="reference -cfootnote" data-id="'+elem+'">');
         text = '<span class="reference -cfootnote" data-id="'+elem+'">'+text+'</span>';
