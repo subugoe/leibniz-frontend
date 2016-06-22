@@ -67,24 +67,19 @@ export default Ember.Mixin.create({
     // 2: create correct spans for all labels
     var referenceIDs = [];
     var regexStart = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?>/g;
-    letter.volltext = letter.volltext.replace(regexStart, function (str, dataID) {
+      letter.volltext.replace(regexStart, function (str, dataID) {
       referenceIDs.push(dataID);
       return str;
     });
 
     referenceIDs.forEach(function(elem) {
-      var regex = '(?:<span class="[^"]*start-reference).+?data-id="';
-      regex += elem;
-      regex += '" [^>]*></span>';
-      regex += '(.*?)<span class="[^"]*end-reference.+?data-id="';
-      regex += elem;
-      regex += '"[^>]*><\/span>';
+      var regex = '<span class="[^"]*start-reference.+?data-id="'+elem+'"[^>]*?><\/span>(.*)';
+      regex += '<span class="end-reference.*?data-id="'+elem+'"[^>]*?><\/span>';
       regex = new RegExp(regex);
       letter.volltext = letter.volltext.replace(regex, function(str, text) {
         text = text.replace('</p>', '</span></p>');
         text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference -cfootnote" data-id="${elem}">`);
-        text = text.replace(/(<span class="start-reference[^(?:\/span>)].*?<\/span>)/g, ' </span>$1<span class="reference -cfootnote" data-id="'+elem+'">');
-        text = '<span class="reference -cfootnote" data-id="'+elem+'">'+text+'</span>';
+        text = '<span class="reference -cfootnote" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
         return text;
       });
     });
