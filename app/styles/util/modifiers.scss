@@ -2,6 +2,10 @@
   font-variant: small-caps;
 }
 
+.flip {
+  transform: scaleY(-1);
+}
+
 .italic {
   font-style: italic;
 }
