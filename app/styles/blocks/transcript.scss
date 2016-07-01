@@ -42,6 +42,11 @@
     &.-highlight {
       background: $text-color-light;
       color: white;
+
+      .math {
+        background: $text-color-light;
+        border-radius: $br;
+      }
     }
 
     &.-image {
