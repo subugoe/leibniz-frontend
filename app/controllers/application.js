@@ -1,7 +1,9 @@
+import config from '../config/environment';
 import Ember from 'ember';
 import Scrolling from '../mixins/scrolling';
 
 export default Ember.Controller.extend(Scrolling, {
+  baseURL: config.baseURL,
   showNav: false,
   actions: {
     scrollToTop: function() {
