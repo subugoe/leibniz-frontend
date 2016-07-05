@@ -41,14 +41,16 @@ export default Ember.Route.extend(Solr, {
   renderTemplate() {
     var allLetters = this.controllerFor('application').get('model');
     var currentLetterId = this.get('controller.model.id');
-    allLetters.forEach( (letter, index) => {
-      if ( letter.id === currentLetterId ) {
-        this.set('controller.model.prevLetter', index > 0 ? allLetters[index - 1] : null);
-        this.set('controller.model.nextLetter', index < allLetters.length - 1 ? allLetters[index + 1] : null);
-        return false;
-      }
-    });
-    this.set('controller.model.allLetters', allLetters);
+    if ( allLetters ) {
+      allLetters.forEach( (letter, index) => {
+        if ( letter.id === currentLetterId ) {
+          this.set('controller.model.prevLetter', index > 0 ? allLetters[index - 1] : null);
+          this.set('controller.model.nextLetter', index < allLetters.length - 1 ? allLetters[index + 1] : null);
+          return false;
+        }
+      });
+      this.set('controller.model.allLetters', allLetters);
+    }
     this.render();
     this.controller.set('rendered', false);
   },
