@@ -34,9 +34,9 @@
   {{#each content.variants as |variant|}}
     {{#if variant.visible}}
       <div class="variant {{if variant.witnessIndex (concat '-color' variant.witnessIndex)}}" id="{{variant.id}}">
-
-        {{{variant.text_schnipsel}}}
-
+        <span class="variant_content">
+          {{{variant.text_schnipsel}}}
+        </span>
         <span class="variant_type {{if (eq variant.type 'note') '-dark'}}">
           {{t variant.type}}
         </span>
