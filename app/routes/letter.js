@@ -62,18 +62,35 @@ export default Ember.Route.extend(Solr, {
     Ember.run.next( () => {
       this.activateLinks();
 
+      var promises = [];
+
+      promises.push( this.renderMathJax() );
+
       // Convert image references to SVG images
       Ember.$('.transcript, .variants').find('.reference.-image').each( (index, ref) => {
         var imageID = Ember.$(ref).data('id');
-        this.loadSVG(imageID).then( function(svg) {
-          Ember.$(ref).html(svg);
-        });
+        promises.push(
+          new Ember.RSVP.Promise( (resolve) => {
+            this.loadSVG(imageID).then( function(svg) {
+              Ember.$(ref).html(svg);
+              resolve(true);
+            });
+          })
+        );
       });
 
-      // Render MathJax, then position variants
-      this.renderMathJax().then( () => {
+      // Position variants after MathJax has been rendered and images have been loaded
+      Ember.RSVP.Promise.all(promises).then( () => {
         // TODO: For some reason, resize is always triggered once
         // this.positionVariants();
+
+        // Store variant with MathJax and images to eliminate the need to re-run both
+        // TODO: Would be nice if MathJax was able to render strings directly
+        var variants = this.get('controller.model.variants');
+        variants.forEach( function(variant) {
+          Ember.set(variant, 'text_schnipsel', Ember.$('#' + variant.id + ' .variant_content').html());
+        });
+
         Ember.$('.lane').resize( () => {
           Ember.run.debounce(this, this.clearVariantConnectors, 333, true);
           Ember.run.debounce(this, this.positionVariants, 333);
