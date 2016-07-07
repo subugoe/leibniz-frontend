@@ -27,5 +27,5 @@ export default Ember.Route.extend(Solr, {
         return json.response.docs;
       }
     });
-  },
+  }
 });
