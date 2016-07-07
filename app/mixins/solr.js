@@ -10,7 +10,7 @@ export default Ember.Mixin.create({
       Ember.$.getJSON(config.solrURL, options).done( function(data) {
         resolve(data);
       }).error( function() {
-        reject(new Error('Database offline'));
+        reject(new Error('Invalid request or database offline'));
       });
     });
   },

@@ -1,0 +1,37 @@
+.search {
+  padding: ($g / 2);
+
+  p:nth-child(n+2) {
+    margin-top: 0;
+  }
+}
+
+.search_id {
+  font-size: $font-size-small;
+}
+
+.search_info {
+  color: $text-color-light;
+}
+
+.search_input {
+  max-width: 100%;
+  width: 32em;
+}
+
+.search_result {
+  background: $lane-bg-color;
+  box-shadow: $card-shadow;
+  clear: both;
+  margin: 0 ($g * 2) ($g / 2) 0;
+  max-width: 100%;
+  padding: ($g / 2);
+
+  &.-right {
+    margin: 0 0 ($g / 2) ($g * 2);
+  }
+}
+
+.search_title {
+  font-weight: bold;
+}

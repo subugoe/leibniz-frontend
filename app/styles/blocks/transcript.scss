@@ -1,4 +1,6 @@
 .transcript {
+  background: $lane-bg-color;
+
   p {
     text-indent: $g;
   }
@@ -62,4 +64,5 @@
 
 .transcript_fulltext-not-available {
   font-style: italic;
+  margin: $g;
 }

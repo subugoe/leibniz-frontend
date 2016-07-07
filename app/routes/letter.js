@@ -16,7 +16,7 @@ export default Ember.Route.extend(Solr, {
     }
   },
   model(params) {
-    var query = `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`;
+    var query = `id:${params.letter_id} OR (doc_id:${params.letter_id} AND type:variante)`;
     return this.query(query, {sort: 'type asc'}).then( (json) => {
       var letter = {};
       if ( typeof json.response === 'object' && json.response.docs.length > 0 ) {
@@ -56,6 +56,9 @@ export default Ember.Route.extend(Solr, {
   },
   setupController(controller, model) {
     this._super(controller, model);
+    var appController = this.controllerFor('application');
+    appController.set('query', null);
+    appController.set('showSearch', true);
     controller.set('rendered', true);
   },
   afterModel() {

@@ -28,7 +28,11 @@ export default Ember.Mixin.create(Scrolling, {
     }
   },
   scrolled(scrollPos) {
-    var headerHeight = this.$().offset().top + this.$('.lane-type').outerHeight();
+    var $laneType = this.$('.lane-type');
+    if ( $laneType.length === 0 ) {
+      return;
+    }
+    var headerHeight = this.$().offset().top + $laneType.outerHeight();
     var scrolledBelowLaneHeader = ( scrollPos > headerHeight );
     this.$('.lane_actions').toggleClass('-fixed', scrolledBelowLaneHeader).css({
       top: scrollPos - headerHeight

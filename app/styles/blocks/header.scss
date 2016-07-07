@@ -49,9 +49,10 @@
 
 .header_title {
   float: left;
+  max-width: 100%;
 }
 
-.header_correspondents {
+.header_heading {
   @include typo-scale(1);
   margin-top: floor($g / 8);
 }
