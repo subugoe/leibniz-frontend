@@ -21,16 +21,20 @@ test('visiting /search', function(assert) {
   andThen(function() {
     var passed = true;
     var dates = find('.search_date');
-    dates.each(function(index) {
-      if (index === 0) {
-        return true;
-      }
-      // Letters should be sorted by dates descending.
-      // Fail if the current datetime is bigger than the preceding one.
-      if (this.getAttribute('datetime') > dates[index - 1].getAttribute('datetime')) {
-        passed = false;
-      }
-    });
+    if (dates.length === 0) {
+      passed = false;
+    } else {
+      dates.each(function(index) {
+        if (index === 0) {
+          return true;
+        }
+        // Letters should be sorted by dates descending.
+        // Fail if the current datetime is bigger than the preceding one.
+        if (this.getAttribute('datetime') > dates[index - 1].getAttribute('datetime')) {
+          passed = false;
+        }
+      });
+    }
     assert.equal(passed, true, 'Results should be sorted by date descending');
   });
 });
