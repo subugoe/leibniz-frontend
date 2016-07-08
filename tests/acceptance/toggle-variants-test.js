@@ -5,7 +5,7 @@ moduleForAcceptance('Acceptance | toggle variants test');
 
 // TODO: Make this test more elaborate
 test('toggle variants', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   // Make sure this letter actually has variants with formulas and images
   visit('/letter/l36137');
@@ -26,9 +26,9 @@ test('toggle variants', function(assert) {
   click('.variants .variants_button');
   andThen(function() {
     var visibleVariantsCount = find('.variants .variant:visible').length;
-    // var lessHighlightsCount = find('.transcript .reference.-highlight').length;
+    var lessHighlightsCount = find('.transcript .reference.-highlight').length;
     assert.ok(visibleVariantsCount < variantsCount, 'less variants should be visible');
-    // assert.ok(lessHighlightsCount < highlightsCount, 'less references should be highlighted')
+    assert.ok(lessHighlightsCount < highlightsCount, 'less references should be highlighted')
   });
 
   // Restore all variants, check images

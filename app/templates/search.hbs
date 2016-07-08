@@ -1,7 +1,7 @@
 {{#header-container}}
   <div class="header_main">
     <div class="header_title">
-      {{input value=query type=text class='search_input' placeholder=(t 'searchNoun')}}
+      {{input class='search_input' placeholder=(t 'searchNoun') type=text value=query}}
       <p class="header_info">
         {{#if rendered}}
           {{#if query}}

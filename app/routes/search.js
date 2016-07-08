@@ -2,14 +2,23 @@ import Ember from 'ember';
 import Solr from '../mixins/solr';
 
 export default Ember.Route.extend(Solr, {
+  queryParams: {
+    order: {
+      replace: true,
+    },
+    query: {
+      replace: true,
+    },
+  },
+  order: 'reihe asc, band asc, brief_nummer asc',
   actions: {
     queryParamsDidChange() {
-      this.controllerFor('search').set('rendered', false);
-      this.refresh();
+      Ember.run.debounce(this, this.refresh, 500);
     }
   },
   model(params) {
     // TODO: Include variants and add associated letters to results
+    this.controllerFor('search').set('rendered', false);
     if ( ! params.query ) {
       return;
     }
@@ -28,7 +37,7 @@ export default Ember.Route.extend(Solr, {
                 ` OR kontext:${q}` +
                 `)`;
     return this.query(query, {sort: params.order}).then( (json) => {
-      var model = {query: params.q};
+      var model = {};
       if ( typeof json.response === 'object' && json.response.docs.length > 0 ) {
         model.results = json.response.docs;
         model.results.forEach( (letter) => {
