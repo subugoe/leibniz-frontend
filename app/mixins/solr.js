@@ -66,30 +66,44 @@ export default Ember.Mixin.create({
     // 1: fish out all start references and store label in array
     // 2: create correct spans for all labels
     var referenceIDs = [];
-    var regexStart = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?>/g;
-      letter.volltext.replace(regexStart, function (str, dataID) {
+    var regexStart = /<span class="start-reference -cfootnote" data-id="([^"]+)".*?>/g;
+    letter.volltext.replace(regexStart, function (str, dataID) {
       referenceIDs.push(dataID);
       return str;
     });
 
+    // references can be nested. If they are started, but not ended within a string, they have to be escaped
     referenceIDs.forEach(function(elem) {
-      var regex = '<span class="[^"]*start-reference.+?data-id="'+elem+'"[^>]*?><\/span>(.*)';
-      regex += '<span class="end-reference.*?data-id="'+elem+'"[^>]*?><\/span>';
+      var regex = '<span class="start-reference -cfootnote" data-id="'+elem+'"><\/span>(.*?)';
+      regex += '<span class="end-reference -cfootnote" data-id="'+elem+'"><\/span>';
       regex = new RegExp(regex);
       letter.volltext = letter.volltext.replace(regex, function(str, text) {
+        // references can be nested. If they are started, but not ended within a string, they have to be escaped
+        var countReg = /<span class="start-reference -cfootnote" data-id="([^"]+)"><\/span>/g;
+        text.replace(countReg, function (countStr, countID) {
+          if (text.match(countID).length < 2) {
+            var countRep = '</span><!-- unmatched start -->'+countStr+'<span class="reference -cfootnote" data-id="'+elem+'">';
+            text = text.replace(countStr, countRep);
+         }
+         return text;
+        });
+        // references can also be ended within another reference
+        countReg = /<span class="end-reference -cfootnote" data-id="([^"]+)"><\/span>/g;
+        text.replace(countReg, function (countStr, countID) {
+          if (text.match(countID).length < 2) {
+            var countRep = '</span><!-- unmatched end -->'+countStr+'<span class="reference -cfootnote" data-id="'+elem+'">';
+            text = text.replace(countStr, countRep);
+         }
+         return text;
+        });
+
         text = text.replace('</p>', '</span></p>');
-        text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference -cfootnote" data-id="${elem}">`);
+        text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -cfootnote" data-id="${elem}">`);
         text = '<span class="reference -cfootnote" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
         return text;
       });
     });
-
-    // remove trailing </span> for references
-    var regexspan = /<span class="reference -cfootnote" data-id="([^"]+)"><\/span>/g;
-    letter.volltext = letter.volltext.replace(regexspan, function(str, dataID) {
-      return '<span class="reference -cfootnote" data-id="'+dataID+'">';
-    });
-
+ 
     // Determine variant types from IDs
     if ( 'variants' in letter ) {
       letter.variants.forEach( function(variant) {
