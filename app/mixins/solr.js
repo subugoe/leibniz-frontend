@@ -89,8 +89,8 @@ export default Ember.Mixin.create({
          return text;
         });
         text = text.replace('</p>', '</span></p>');
-        text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -cfootnote" data-id="${elem}">`);
-        text = '<span class="reference -cfootnote" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
+        text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
+        text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
         return text;
       });
     });
@@ -116,6 +116,29 @@ export default Ember.Mixin.create({
         }
         variant.visible = true;
       });
+
+      // convert encoding of references in variants
+      letter.variants.forEach( function(variant) {
+          var varRefsIDs = [];
+          var varRegStart = /<span class="start-reference -[a,c]footnote" data-id="([^"]+)".*?>/g;
+          variant.text_schnipsel.replace(varRegStart, function (str, varRefID) {
+            varRefsIDs.push(varRefID);
+            return str;
+          });
+          varRefsIDs.forEach(function(varID) {
+            var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+varID+'"\/>(.*?)';
+            regex += '<span class="end-reference -([a,c]footnote)" data-id="'+varID+'"\/>';
+            regex = new RegExp(regex);
+            variant.text_schnipsel = variant.text_schnipsel.replace(regex, function(str, type, text) {
+              // no nested references assumed
+              text = text.replace('</p>', '</span></p>');
+              text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -${type}" data-id="${varID}">`);
+              text = '<span class="reference -'+type+'" data-id="'+varID+'">'+text+'</span><!-- '+varID+' -->';
+              return text;
+            });
+          });
+      });
+
     }
 
     return letter;
