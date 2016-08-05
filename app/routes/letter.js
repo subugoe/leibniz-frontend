@@ -139,16 +139,15 @@ export default Ember.Route.extend(Solr, {
   positionVariants() {
     var $ = Ember.$;
     var $laneTranscript = $('.transcript');
+    var $laneVariants = $('.variants');
     var $references = $laneTranscript.find('.reference');
-
     this.clearVariantConnectors();
     if ( $references.length === 0 ) {
       return;
     }
 
-    var $laneVariants = $('.variants');
     var $laneHeader = $laneVariants.find('.lane_header');
-    var $variants = $laneVariants.find('.variant').not('.-child');
+    var $variants = $laneVariants.find('.variant');
     var $variantsArr = [];
     var marginBetweenVariants = parseInt( $laneVariants.css('line-height') ) / 2;
     var prevVariantBottom = $laneHeader.position().top + $laneHeader.outerHeight();
@@ -204,7 +203,7 @@ export default Ember.Route.extend(Solr, {
         prevVariantBottom += $childVariant.outerHeight() + marginBetweenVariants;
 
         // Add click handler to highlight reference/variant pair
-        var $childGroup = $(this).add($childReferences.filter(`[data-ref-id=${childVariantID}]`)).add($childVariant);
+        var $childGroup = $(this).add($childReferences.filter(`[data-id=${childVariantID}]`)).add($childVariant);
 
         $childGroup.off('click').click( () => {
           $childGroup.toggleClass('-highlight');
@@ -227,11 +226,10 @@ export default Ember.Route.extend(Solr, {
     $('.variant').each( function() {
       var id = this.id;
       var reference = $('.transcript').find('.reference[data-id="'+id+'"]').last();
-      if (reference.length === 0) {
+      var varReference = $('.variant').find('.reference[data-id="'+id+'"]').last();
+      if (reference.length === 0 && varReference.length === 0) {
         return;
       }
-      var left = reference.position().left;
-      var bottom = reference.position().top + reference.outerHeight();
 
       // Draw a curved line from reference to variant
       var path = document.createElementNS(svgNS, 'path');
@@ -240,13 +238,31 @@ export default Ember.Route.extend(Solr, {
       path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');
-      // 14: padding right of .lane_content
-      var pathD = `M ${left + 3}, ${bottom - .5}
-                   L ${$laneTranscript.width() - 14}, ${bottom - .5}
-                   C ${$laneTranscript.width()}, ${bottom - .5},
-                     ${$laneTranscript.width()}, ${this.offsetTop + $(this).outerHeight() / 2 },
-                     ${$(this).offset().left}, ${this.offsetTop + $(this).outerHeight() / 2 }`;
-      path.setAttribute('d', pathD);
+      if (reference.length !== 0) {
+        let left = reference.position().left;
+        let bottom = reference.position().top + reference.outerHeight();
+        // 14: padding right of .lane_content
+        let pathD = `M ${left + 3}, ${bottom - .5}
+                     L ${$laneTranscript.width() - 14}, ${bottom - .5}
+                     C ${$laneTranscript.width()}, ${bottom - .5},
+                       ${$laneTranscript.width()}, ${this.offsetTop + $(this).outerHeight() / 2 },
+                       ${$(this).offset().left}, ${this.offsetTop + $(this).outerHeight() / 2 }`;
+        path.setAttribute('d', pathD);
+      } else {
+        let startX = $laneVariants.position().left + varReference.closest('div').position().left + varReference.position().left;
+        let startY = varReference.closest('div').position().top + varReference.position().top + varReference.innerHeight();
+        let left = $laneVariants.position().left + 10;
+        let endX = $(this).offset().left;
+        let endY = this.offsetTop + $(this).outerHeight() / 2;
+        let pathD = `M ${startX + 5}, ${startY - .5}
+                     L ${left + 10}, ${startY - .5}
+                     Q ${left}, ${startY - .5}, ${left}, ${startY + 10}
+                     L ${left}, ${endY - 10}
+                     Q ${left}, ${endY}, ${left + 10}, ${endY}
+                     L  ${endX}, ${endY}`;
+        path.setAttribute('d', pathD);
+     }
+
       svg.appendChild(path);
     });
   }
