@@ -3,7 +3,6 @@
     $color: nth($variant-colors, $i);
     &.-color#{$i} {
       border-color: $color;
-      color: $color;
     }
   }
 }

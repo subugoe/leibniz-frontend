@@ -108,8 +108,13 @@ export default Ember.Mixin.create({
             break;
         }
         if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
-          var witnessIdentifier = variant.textzeuge[0];
-          variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
+          var witnessIdentifier1 = variant.textzeuge[0];
+          variant.witnessIndex1 = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier1) + 1;
+          if ( variant.textzeuge.length > 0 ) {
+            var witnessIdentifier2 = variant.textzeuge[1];
+            variant.witnessIndex2 = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier2) + 1;
+          }
+
         } else {
           // Letter contains variants without textual witnesses
           letter.otherVariants = true;
