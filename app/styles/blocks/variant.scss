@@ -89,3 +89,15 @@
     color: white;
   }
 }
+
+.variant_secondBorder {
+  @extend %variant-colors;
+  content: " ";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border-left: $border-width-bold $border-style $border-color-dark;
+}
+
