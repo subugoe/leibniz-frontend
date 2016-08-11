@@ -26,7 +26,8 @@
   }
 
   .smallmargin {
-    text-indent: $g;
+    text-indent: 0;
+    margin-left: $g;
   }
 
   .reference {
