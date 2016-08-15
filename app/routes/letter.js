@@ -234,7 +234,7 @@ export default Ember.Route.extend(Solr, {
       // Draw a curved line from reference to variant
       var path = document.createElementNS(svgNS, 'path');
       // NOTE: This provides an SVG-compatible rgb(...) color value
-      var strokeColor = $(this).css('border-left-color');
+      var strokeColor = $(this).find('.variant_border0').css('border-left-color');
       path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');

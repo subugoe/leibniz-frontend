@@ -90,6 +90,7 @@ export default Ember.Mixin.create({
         });
         text = text.replace('</p>', '</span></p>');
         text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
+        text = text.replace(/(<table .*?td[^>]*?>)/, `</span>$1<span class="reference -${type}" data-id="${elem}">`);
         text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
         return text;
       });
@@ -108,13 +109,10 @@ export default Ember.Mixin.create({
             break;
         }
         if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
-          var witnessIdentifier1 = variant.textzeuge[0];
-          variant.witnessIndex1 = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier1) + 1;
-          if ( variant.textzeuge.length > 0 ) {
-            var witnessIdentifier2 = variant.textzeuge[1];
-            variant.witnessIndex2 = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier2) + 1;
-          }
-
+          variant.witnessesIndex = [];
+          variant.textzeuge.forEach( function(elem, index) {
+            variant.witnessesIndex[index] = letter.textzeuge_bezeichnung.indexOf(elem)+1;
+          });
         } else {
           // Letter contains variants without textual witnesses
           letter.otherVariants = true;
