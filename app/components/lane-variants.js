@@ -18,9 +18,9 @@ export default Ember.Component.extend(Lane, {
       this.get('content.variants').forEach( (item, index, variants) => {
         var variant = variants.objectAt(index);
         if ( variant.textzeuge && variant.textzeuge.length > 1) {
-          // if variants have two textzeuge
-          // they are shown when the current witness is not active (it will be after this function) or the other one is active
-          // they are not shown when the current witness is active and the other one is not active
+          // if variants have more than one witness
+          // they are shown when the current witness is not active (it will be after this function) or at least one other is active
+          // they are not shown when the current witness is active and no other is active
           let showVariant = false;
           variant.textzeuge.forEach( function(elem) {
             if ( elem === witnessId ) {

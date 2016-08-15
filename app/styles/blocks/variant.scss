@@ -3,7 +3,6 @@
   @include drop-shadow;
   @include transition(color, background, opacity, top);
   background: white;
-  border-left: $border-width-bold $border-style $border-color-dark;
   border-radius: $br;
   cursor: pointer;
   left: ($g / 2);
@@ -59,6 +58,7 @@
       margin: $g 0;
       padding: 0;
     }
+
   }
 
   .source {
@@ -75,13 +75,27 @@
   }
 }
 
+.variant_content {
+  display: block;
+  padding: 0px;
+  padding-bottom: 1.5em;
+  margin: 0px;
+
+  @for $i from 0 through 5 {
+    &.-shift#{$i} {
+      padding-left: #{3 * $i}px;
+    }
+  }
+}
+
 .variant_type {
   background: $shade;
   border-radius: $br 0 0;
-  float: right;
   font-size: $font-size-small;
   line-height: 1;
-  margin: ($g / 4) (-$g / 4) (-$g / 4) ($g / 4);
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
   padding: ($g / 4);
 
   &.-dark {
@@ -90,14 +104,15 @@
   }
 }
 
-.variant_secondBorder {
-  @extend %variant-colors;
-  content: " ";
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  border-left: $border-width-bold $border-style $border-color-dark;
+@for $i from 0 through 5 {
+  .variant_border#{$i} {
+    @extend %variant-colors;
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: #{$i * 3}px;
+    right: 0px;
+    bottom: 0px;
+    border-left: $border-width-bold $border-style $border-color-dark;
+  }
 }
-
