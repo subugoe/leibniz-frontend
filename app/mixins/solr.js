@@ -90,7 +90,9 @@ export default Ember.Mixin.create({
         });
         text = text.replace('</p>', '</span></p>');
         text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
-        text = text.replace(/(<table .*?td[^>]*?>)/, `</span>$1<span class="reference -${type}" data-id="${elem}">`);
+        text = text.replace(/(<table .*?tr[^>]*?>)/g, `</span>$1<span class="reference -${type}" data-id="${elem}">`);
+        text = text.replace('</td>', '</span></td>');
+        text = text.replace(/(<td [^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
         text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
         return text;
       });
