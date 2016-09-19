@@ -84,6 +84,11 @@
           {{#link-to 'letter' content.attachment.id}}N.&nbsp;{{content.attachment.number}}{{/link-to}})
         {{/if}}
       {{/if}}
+      {{#if content.tex_name}}
+      - TeXName: {{content.tex_name}}
+      {{else}}
+      - Kein TeXName
+      {{/if}}
     </p>
     <p>
       {{#if content.prevLetter}}
