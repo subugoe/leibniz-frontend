@@ -238,6 +238,7 @@ export default Ember.Route.extend(Solr, {
       path.setAttribute('stroke', strokeColor);
       path.setAttribute('fill', 'none');
       path.setAttribute('style', 'stroke-width: 1px');
+      path.setAttribute('id', id);
       if (reference.length !== 0) {
         let left = reference.position().left;
         let bottom = reference.position().top + reference.outerHeight();
