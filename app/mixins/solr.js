@@ -93,7 +93,9 @@ export default Ember.Mixin.create({
         text = text.replace(/(<table .*?tr[^>]*?>)/g, `</span>$1<span class="reference -${type}" data-id="${elem}">`);
         text = text.replace('</td>', '</span></td>');
         text = text.replace(/(<td [^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
-        text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text+'</span><!-- '+elem+' -->';
+        text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text;
+        // Note: MathJax makes problems positioning elements, so there is another one positioned closely to bottom right of reference
+        text += '<span class="reference-end" style="position:relative;"><span style="position:absolute;bottom:0;right:0;"></span></span></span><!-- '+elem+' -->';
         return text;
       });
     });
