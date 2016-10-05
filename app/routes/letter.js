@@ -240,11 +240,11 @@ export default Ember.Route.extend(Solr, {
       path.setAttribute('style', 'stroke-width: 1px');
       path.setAttribute('id', id);
       if (reference.length !== 0) {
-        let left = reference.position().left;
         let bottomRightElement = reference.children().last();
+        let left = bottomRightElement.position().left;
         let bottom = bottomRightElement.position().top + bottomRightElement.outerHeight()+7;
         // 14: padding right of .lane_content
-        let pathD = `M ${left + 3}, ${bottom - .5}
+        let pathD = `M ${left}, ${bottom - .5}
                      L ${$laneTranscript.width() - 14}, ${bottom - .5}
                      C ${$laneTranscript.width()}, ${bottom - .5},
                        ${$laneTranscript.width()}, ${this.offsetTop + $(this).outerHeight() / 2 },
