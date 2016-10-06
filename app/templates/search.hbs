@@ -1,0 +1,69 @@
+{{#header-container}}
+  <div class="header_main">
+    <div class="header_title">
+      {{input class='search_input' placeholder=(t 'searchNoun') type=text value=query}}
+      <p class="header_info">
+        {{#if rendered}}
+          {{#if query}}
+            {{content.results.length}} {{t 'resultsFor'}} <i>{{query}}</i>,
+            {{t 'orderBy'}}
+            <select class="search_order" onchange={{action 'changeOrder' value='target.value'}}>
+              <option value="reihe asc, band asc, brief_nummer asc" selected={{eq order 'reihe asc, band asc, brief_nummer asc'}}>{{t 'seriesVolumeNumberAsc'}}</option>
+              <option value="reihe desc, band desc, brief_nummer desc" selected={{eq order 'reihe desc, band desc, brief_nummer desc'}}>{{t 'seriesVolumeNumberDesc'}}</option>
+              <option value="datum_gregorianisch asc" selected={{eq order 'datum_gregorianisch asc'}}>{{t 'dateAsc'}}</option>
+              <option value="datum_gregorianisch desc" selected={{eq order 'datum_gregorianisch desc'}}>{{t 'dateDesc'}}</option>
+            </select>
+          {{else}}
+            {{t 'enterSearchTerm'}}
+          {{/if}}
+        {{/if}}
+      </p>
+    </div>
+  </div>
+{{/header-container}}
+
+<main class="content" id="content">
+  <div class="search">
+    {{#if content.error}}
+      {{content.error}}
+    {{/if}}
+    {{#if rendered}}
+      <ul class="search_results">
+        {{#each content.results as |letter|}}
+          <li class="search_result {{unless letter.sentByFocusPerson '-right'}}">
+            {{#link-to "letter" letter.id class="search_title"}}
+              <span class="search_correspondents">{{letter.korrespondenten_anzeige}}</span>
+              <span class="search_id">({{letter.reihe}}, {{letter.band}}&nbsp;N.&nbsp;{{letter.brief_nummer}})</span>
+            {{/link-to}}
+
+            <div class="search_info">
+              {{#if letter.ort_anzeige}}
+                <span class="search_location">{{letter.ort_anzeige}}</span>,
+              {{/if}}
+
+              {{#if letter.datum_anzeige}}
+                <time class="search_date" datetime="{{letter.datum_gregorianisch}}">
+                  {{letter.datum_anzeige}}
+                </time>
+              {{/if}}
+            </div>
+
+            <p class="search_excerpt">
+              {{#if letter.excerpt}}
+                {{{letter.excerpt}}}
+              {{else}}
+                {{t 'fulltextNotAvailable'}}
+              {{/if}}
+            </p>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="content_loading">
+        <span class="sr-only">{{{t 'loading'}}}</span>
+      </div>
+    {{/if}}
+  </div>
+</main>
+
+{{outlet}}

@@ -16,7 +16,7 @@ export default Ember.Route.extend(Solr, {
     }
   },
   model(params) {
-    var query = `id:${params.letter_id} or (doc_id:${params.letter_id} and type:variante)`;
+    var query = `id:${params.letter_id} OR (doc_id:${params.letter_id} AND type:variante)`;
     return this.query(query, {sort: 'type asc'}).then( (json) => {
       var letter = {};
       if ( typeof json.response === 'object' && json.response.docs.length > 0 ) {
@@ -41,37 +41,59 @@ export default Ember.Route.extend(Solr, {
   renderTemplate() {
     var allLetters = this.controllerFor('application').get('model');
     var currentLetterId = this.get('controller.model.id');
-    allLetters.forEach( (letter, index) => {
-      if ( letter.id === currentLetterId ) {
-        this.set('controller.model.prevLetter', index > 0 ? allLetters[index - 1] : null);
-        this.set('controller.model.nextLetter', index < allLetters.length - 1 ? allLetters[index + 1] : null);
-        return false;
-      }
-    });
-    this.set('controller.model.allLetters', allLetters);
+    if ( allLetters ) {
+      allLetters.forEach( (letter, index) => {
+        if ( letter.id === currentLetterId ) {
+          this.set('controller.model.prevLetter', index > 0 ? allLetters[index - 1] : null);
+          this.set('controller.model.nextLetter', index < allLetters.length - 1 ? allLetters[index + 1] : null);
+          return false;
+        }
+      });
+      this.set('controller.model.allLetters', allLetters);
+    }
     this.render();
     this.controller.set('rendered', false);
   },
   setupController(controller, model) {
     this._super(controller, model);
+    var appController = this.controllerFor('application');
+    appController.set('query', null);
+    appController.set('showSearch', true);
     controller.set('rendered', true);
   },
   afterModel() {
     Ember.run.next( () => {
       this.activateLinks();
 
+      var promises = [];
+
+      promises.push( this.renderMathJax() );
+
       // Convert image references to SVG images
       Ember.$('.transcript, .variants').find('.reference.-image').each( (index, ref) => {
         var imageID = Ember.$(ref).data('id');
-        this.loadSVG(imageID).then( function(svg) {
-          Ember.$(ref).html(svg);
-        });
+        promises.push(
+          new Ember.RSVP.Promise( (resolve) => {
+            this.loadSVG(imageID).then( function(svg) {
+              Ember.$(ref).html(svg);
+              resolve(true);
+            });
+          })
+        );
       });
 
-      // Render MathJax, then position variants
-      this.renderMathJax().then( () => {
+      // Position variants after MathJax has been rendered and images have been loaded
+      Ember.RSVP.Promise.all(promises).then( () => {
         // TODO: For some reason, resize is always triggered once
         // this.positionVariants();
+
+        // Store variant with MathJax and images to eliminate the need to re-run both
+        // TODO: Would be nice if MathJax was able to render strings directly
+        var variants = this.get('controller.model.variants');
+        variants.forEach( function(variant) {
+          Ember.set(variant, 'text_schnipsel', Ember.$('#' + variant.id + ' .variant_content').html());
+        });
+
         Ember.$('.lane').resize( () => {
           Ember.run.debounce(this, this.clearVariantConnectors, 333, true);
           Ember.run.debounce(this, this.positionVariants, 333);
@@ -117,16 +139,16 @@ export default Ember.Route.extend(Solr, {
   positionVariants() {
     var $ = Ember.$;
     var $laneTranscript = $('.transcript');
+    var $laneVariants = $('.variants');
     var $references = $laneTranscript.find('.reference');
-
     this.clearVariantConnectors();
     if ( $references.length === 0 ) {
       return;
     }
 
-    var $laneVariants = $('.variants');
     var $laneHeader = $laneVariants.find('.lane_header');
     var $variants = $laneVariants.find('.variant');
+    var $variantsArr = [];
     var marginBetweenVariants = parseInt( $laneVariants.css('line-height') ) / 2;
     var prevVariantBottom = $laneHeader.position().top + $laneHeader.outerHeight();
     // NOTE: Shorthand css properties like `padding` are not supported in Firefox
@@ -142,35 +164,21 @@ export default Ember.Route.extend(Solr, {
     $references.each( function() {
       var $this = $(this);
       var variantID = $this.data('id');
+      if ( $.inArray(variantID, $variantsArr) !== -1) {
+        return; // variant already defined
+      }
+      $variantsArr.push(variantID);
+
       var $variant = $variants.filter('#' + variantID);
       if ( $variant.length === 0 ) {
         return; // variant not available
       }
-      var left = $this.position().left;
       var top = $this.position().top;
-      var bottom = $this.position().top + $this.outerHeight();
-
       var variantTop = (top < prevVariantBottom ? prevVariantBottom : top);
       $variant.css( {top: variantTop} ).addClass('-visible');
 
-      // Draw a curved line from reference to variant
-      var path = document.createElementNS(svgNS, 'path');
-      // NOTE: This provides an SVG-compatible rgb(...) color value
-      var strokeColor = $variant.css('border-left-color');
-      path.setAttribute('stroke', strokeColor);
-      path.setAttribute('fill', 'none');
-      path.setAttribute('style', 'stroke-width: 1px');
-      // 14: padding right of .lane_content
-      var pathD = `M ${left + 3}, ${bottom - .5}
-                   L ${$laneTranscript.width() - 14}, ${bottom - .5}
-                   C ${$laneTranscript.width()}, ${bottom - .5},
-                     ${$laneTranscript.width()}, ${variantTop + $variant.outerHeight() / 2 - .5},
-                     ${$variant.offset().left}, ${variantTop + $variant.outerHeight() / 2 - .5}`;
-      path.setAttribute('d', pathD);
-      svg.appendChild(path);
-
       // Add click handler to highlight reference/variant pair
-      var $group = $this.add($references.filter(`[data-ref-id=${variantID}]`)).add($variant);
+      var $group = $this.add($references.filter(`[data-id=${variantID}]`)).add($variant);
       $group.off('click').click( () => {
         $group.toggleClass('-highlight');
         return false;
@@ -195,7 +203,7 @@ export default Ember.Route.extend(Solr, {
         prevVariantBottom += $childVariant.outerHeight() + marginBetweenVariants;
 
         // Add click handler to highlight reference/variant pair
-        var $childGroup = $(this).add($childReferences.filter(`[data-ref-id=${childVariantID}]`)).add($childVariant);
+        var $childGroup = $(this).add($childReferences.filter(`[data-id=${childVariantID}]`)).add($childVariant);
 
         $childGroup.off('click').click( () => {
           $childGroup.toggleClass('-highlight');
@@ -209,9 +217,56 @@ export default Ember.Route.extend(Solr, {
           $childGroup.removeClass('-hover');
         });
       });
+
     });
 
     $laneVariants.height(prevVariantBottom);
+
+    // Draw curved SVG-line from (last) reference to respective variant
+    $('.variant').each( function() {
+      var id = this.id;
+      var reference = $('.transcript').find('.reference[data-id="'+id+'"]').last();
+      var varReference = $('.variant').find('.reference[data-id="'+id+'"]').last();
+      if (reference.length === 0 && varReference.length === 0) {
+        return;
+      }
+
+      // Draw a curved line from reference to variant
+      var path = document.createElementNS(svgNS, 'path');
+      // NOTE: This provides an SVG-compatible rgb(...) color value
+      var strokeColor = $(this).find('.variant_border0').css('border-left-color');
+      path.setAttribute('stroke', strokeColor);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('style', 'stroke-width: 1px');
+      path.setAttribute('id', id);
+      if (reference.length !== 0) {
+        let bottomRightElement = reference.children().last();
+        let left = bottomRightElement.position().left;
+        let bottom = bottomRightElement.position().top + bottomRightElement.outerHeight()+7;
+        // 14: padding right of .lane_content
+        let pathD = `M ${left}, ${bottom - .5}
+                     L ${$laneTranscript.width() - 14}, ${bottom - .5}
+                     C ${$laneTranscript.width()}, ${bottom - .5},
+                       ${$laneTranscript.width()}, ${this.offsetTop + $(this).outerHeight() / 2 },
+                       ${$(this).offset().left}, ${this.offsetTop + $(this).outerHeight() / 2 }`;
+        path.setAttribute('d', pathD);
+      } else {
+        let startX = $laneVariants.position().left + varReference.closest('div').position().left + varReference.position().left;
+        let startY = varReference.closest('div').position().top + varReference.position().top + varReference.innerHeight();
+        let left = $laneVariants.position().left + 10;
+        let endX = $(this).offset().left;
+        let endY = this.offsetTop + $(this).outerHeight() / 2;
+        let pathD = `M ${startX + 5}, ${startY - .5}
+                     L ${left + 10}, ${startY - .5}
+                     Q ${left}, ${startY - .5}, ${left}, ${startY + 10}
+                     L ${left}, ${endY - 10}
+                     Q ${left}, ${endY}, ${left + 10}, ${endY}
+                     L  ${endX}, ${endY}`;
+        path.setAttribute('d', pathD);
+     }
+
+      svg.appendChild(path);
+    });
   }
 });
 

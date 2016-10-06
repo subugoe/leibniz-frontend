@@ -22,10 +22,10 @@ export default Ember.Route.extend(Solr, {
 		});
 	},
   loadAllLettersInVolume() {
-    return this.query('type:brief', {fl: 'id, band, reihe, brief_nummer', sort: 'brief_nummer asc'}).then( (json) => {
+    return this.query('type:brief', {fl: 'id, band, reihe, brief_nummer', sort: 'reihe asc, band asc, brief_nummer asc'}).then( (json) => {
       if ( json.response.docs.length > 0 ) {
         return json.response.docs;
       }
     });
-  },
+  }
 });

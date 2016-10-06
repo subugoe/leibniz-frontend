@@ -31,12 +31,22 @@
 </header>
 
 <div class="lane_content">
-  {{#each content.variants as |variant|}}
+  {{#each content.variants as |variant index|}}
     {{#if variant.visible}}
-      <div class="variant {{if variant.witnessIndex (concat '-color' variant.witnessIndex)}}" id="{{variant.id}}">
-
-        {{{variant.text_schnipsel}}}
-
+      <div class="variant" id="{{variant.id}}">
+        {{#each variant.witnessesIndex as |zeuge windex|}}
+          <span class="variant_border{{windex}} -color{{zeuge}}"></span>
+          {{#if (eq variant.witnessesIndex.length (incr windex))}}
+            <span class="variant_content -shift{{windex}}">
+            {{{variant.text_schnipsel}}}
+            </span>
+          {{/if}}
+        {{else}}
+          <span class="variant_border0"></span>
+          <span class="variant_content">
+            {{{variant.text_schnipsel}}}
+          </span>
+        {{/each}}
         <span class="variant_type {{if (eq variant.type 'note') '-dark'}}">
           {{t variant.type}}
         </span>

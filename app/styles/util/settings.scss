@@ -1,11 +1,14 @@
 // Base colors
 $alpha-color: #c90230;
-$shade: rgba(black, .06);
+$shade: #f0f0f0;;
 $shade-medium: rgba(black, .12);
 $shade-dark: rgba(black, .6);
 $shine: rgba(white, .3);
 
 // Semantic colors
+$bg-color: #f7f7f7;
+$lane-bg-color: #fff;
+$lane-bg-dark-color: #eee;
 $border-color: #ccc;
 $border-color-dark: #aaa;
 $link-color: $alpha-color;
@@ -46,3 +49,4 @@ $img-path: '../img/';
 
 // Others
 $noise: url($img-path + 'noise.png');
+$card-shadow: 0 0 1px $shade-medium, 0 2px 5px $shade;

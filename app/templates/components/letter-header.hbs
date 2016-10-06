@@ -1,6 +1,6 @@
 <div class="header_main">
   <div class="header_title">
-    <h1 class="header_correspondents">
+    <h1 class="header_heading">
       {{content.korrespondenten_anzeige}}
       {{#pop-up}}
         {{t 'sender'}}:
@@ -53,15 +53,29 @@
           {{t 'attachmentTo'}}
           {{#each content.attachmentToLetters as |letter index|}}{{if index ', '}}{{#link-to 'letter' letter.id}}N.&nbsp;{{letter.number}}{{/link-to}}{{/each}}
       {{else}}
-        {{#if content.brief_id_vorgaenger}}
+        {{#if content.brief_vorgaenger_id}}
           {{t 'respondsTo'}}
-          {{#link-to 'letter' content.brief_id_vorgaenger}}N.&nbsp;{{content.brief_nummer_vorgaenger}}{{/link-to}},
+          <span>
+            {{#link-to 'letter' content.brief_vorgaenger_id}}{{content.brief_vorgaenger_reihe}}, {{content.brief_vorgaenger_band}}&nbsp;N.&nbsp;{{content.brief_vorgaenger_nummer}}{{/link-to}},
+            {{#pop-up}}
+              {{{t 'series' series=content.brief_vorgaenger_reihe}}}<br>
+              {{{t 'volume' volume=content.brief_vorgaenger_band}}}<br>
+              {{{t 'number' number=content.brief_vorgaenger_nummer}}}
+            {{/pop-up}}
+          </span>
         {{else}}
           {{t 'respondsIsFirst'}},
         {{/if}}
-        {{#if content.brief_id_nachfolger}}
+        {{#if content.brief_nachfolger_id}}
           {{t 'respondedBy'}}
-          {{#link-to 'letter' content.brief_id_nachfolger}}N.&nbsp;{{content.brief_nummer_nachfolger}}{{/link-to}}
+          <span>
+            {{#link-to 'letter' content.brief_nachfolger_id}}{{content.brief_nachfolger_reihe}}, {{content.brief_nachfolger_band}}&nbsp;N.&nbsp;{{content.brief_nachfolger_nummer}}{{/link-to}}
+            {{#pop-up}}
+              {{{t 'series' series=content.brief_nachfolger_reihe}}}<br>
+              {{{t 'volume' volume=content.brief_nachfolger_band}}}<br>
+              {{{t 'number' number=content.brief_nachfolger_nummer}}}
+            {{/pop-up}}
+          </span>
         {{else}}
           {{t 'respondsIsLast'}}
         {{/if}}

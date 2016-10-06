@@ -10,7 +10,7 @@ export default Ember.Mixin.create({
       Ember.$.getJSON(config.solrURL, options).done( function(data) {
         resolve(data);
       }).error( function() {
-        reject(new Error('Database offline'));
+        reject(new Error('Invalid request or database offline'));
       });
     });
   },
@@ -61,19 +61,45 @@ export default Ember.Mixin.create({
     // Convert XHTML to HTML5
     letter.volltext = Ember.$('<div/>', { html: letter.volltext }).html();
 
-    var regex = /<span class="[^"]*start-reference.+?data-id="([^"]+)".*?><\/span>(.*?)<span class="[^"]*end-reference[^>]*><\/span>/g;
-    letter.volltext = letter.volltext.replace(regex, function (str, id, text) {
-      // Append every <p>, prepend every </p> with reference span using a
-      // different data attribute for non-linked parts of this reference
-      text = text.replace('</p>', '</span></p>');
-      text = text.replace(/(<p[^>]*>)/g, `$1<span class="reference" data-ref-id="${id}">`);
-      text = `<span class="reference" data-ref-id="${id}">${text}</span>`;
-      // Replace last dummy with actual reference
-      var lastDataIndex = text.lastIndexOf('data-ref-id');
-      text = text.substr(0, lastDataIndex) + 'data-id' + text.substr(lastDataIndex + 'data-ref-id'.length);
-      return text;
+    // serveral rounds of replacing strings for big references to catch them all
+    // possible structures: AA, ABBA, ABAB
+    // 1: fish out all start references and store label in array
+    // 2: create correct spans for all labels
+    var referenceIDs = [];
+    var regexStart = /<span class="start-reference -[a,c]footnote" data-id="([^"]+)".*?>/g;
+    letter.volltext.replace(regexStart, function (str, dataID) {
+      referenceIDs.push(dataID);
+      return str;
     });
 
+    // references can be nested. If they are started, but not ended within a string, they have to be escaped
+    referenceIDs.forEach(function(elem) {
+      var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+elem+'"><\/span>(.*?)';
+      regex += '<span class="end-reference -([a,c]footnote)" data-id="'+elem+'"><\/span>';
+      regex = new RegExp(regex);
+      letter.volltext = letter.volltext.replace(regex, function(str, type, text) {
+        // if other references are started, but not ended, 
+        // or ended but not started, within another string, they have to be escaped
+        var countReg = /<span class="([^>]+)-reference -[a,c]footnote" data-id="([^"]+)"><\/span>/g;
+        text.replace(countReg, function (countStr, countType, countID) {
+          if (text.match(countID).length < 2) {
+            var countRep = '</span><!-- unmatched start -->'+countStr+'<span class="reference -'+type+'" data-id="'+elem+'">';
+            text = text.replace(countStr, countRep);
+         }
+         return text;
+        });
+        text = text.replace('</p>', '</span></p>');
+        text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
+        text = text.replace(/(<table .*?tr[^>]*?>)/g, `</span>$1<span class="reference -${type}" data-id="${elem}">`);
+        text = text.replace('</td>', '</span></td>');
+        text = text.replace(/(<td [^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
+        text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text;
+        // Note: MathJax makes problems positioning elements, so there is another one positioned closely to bottom right of reference
+        text += '<span class="reference-end" style="position:relative;"><span style="position:absolute;bottom:0;right:0;"></span></span></span><!-- '+elem+' -->';
+        return text;
+      });
+    });
+ 
     // Determine variant types from IDs
     if ( 'variants' in letter ) {
       letter.variants.forEach( function(variant) {
@@ -87,14 +113,39 @@ export default Ember.Mixin.create({
             break;
         }
         if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
-          var witnessIdentifier = variant.textzeuge[0];
-          variant.witnessIndex = letter.textzeuge_bezeichnung.indexOf(witnessIdentifier) + 1;
+          variant.witnessesIndex = [];
+          variant.textzeuge.forEach( function(elem, index) {
+            variant.witnessesIndex[index] = letter.textzeuge_bezeichnung.indexOf(elem)+1;
+          });
         } else {
           // Letter contains variants without textual witnesses
           letter.otherVariants = true;
         }
         variant.visible = true;
       });
+
+      // convert encoding of references in variants
+      letter.variants.forEach( function(variant) {
+          var varRefsIDs = [];
+          var varRegStart = /<span class="start-reference -[a,c]footnote" data-id="([^"]+)".*?>/g;
+          variant.text_schnipsel.replace(varRegStart, function (str, varRefID) {
+            varRefsIDs.push(varRefID);
+            return str;
+          });
+          varRefsIDs.forEach(function(varID) {
+            var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+varID+'"\/>(.*?)';
+            regex += '<span class="end-reference -([a,c]footnote)" data-id="'+varID+'"\/>';
+            regex = new RegExp(regex);
+            variant.text_schnipsel = variant.text_schnipsel.replace(regex, function(str, type, text) {
+              // no nested references assumed
+              text = text.replace('</p>', '</span></p>');
+              text = text.replace(/(<p[^>]*?>)/g, `$1<span class="reference -${type}" data-id="${varID}">`);
+              text = '<span class="reference -'+type+'" data-id="'+varID+'">'+text+'</span><!-- '+varID+' -->';
+              return text;
+            });
+          });
+      });
+
     }
 
     return letter;
