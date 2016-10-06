@@ -33,9 +33,29 @@
   .reference {
     @include transition(color, background);
     cursor: pointer;
-    background: $shade;
+    background-color: #f0f0f0;
     border-radius: $br;
     padding: ($g / 4) 0;
+
+    .math {
+      background-color: #f0f0f0;
+    }
+
+    .reference {
+      background-color: #d4d4d4;
+
+      .math {
+        background-color: #d4d4d4;
+      }
+
+      .reference {
+        background-color: #c8c8c8;
+
+        .math {
+          background-color: #c8c8c8;
+        }
+      }
+    }
 
     &.-hover {
       color: $link-color;
