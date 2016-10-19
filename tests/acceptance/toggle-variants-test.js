@@ -8,7 +8,7 @@ test('toggle variants', function(assert) {
   assert.expect(3);
 
   // Make sure this letter actually has variants with formulas and images
-  visit('/letter/l36137');
+  visit('/letter/l37134');
 
   var variantsCount = 0
   var highlightsCount = 0
