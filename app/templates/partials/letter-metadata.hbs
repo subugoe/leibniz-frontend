@@ -33,5 +33,12 @@
   </h3>
   <p>{{#each content.sprache as |sprache index|}}{{if index ', '}}{{t (concat 'languageName.' sprache)}}{{/each}}</p>
 
+  {{#if content.zeilenverweis}}
+    <h3>
+      Hinweis:
+    </h3>
+      {{t 'referencedLines'}}
+    {{/if}}
+
   {{yield}}
 </aside>
