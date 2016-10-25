@@ -6,7 +6,7 @@
       {{#each content.witnesses as |witness index|}}
         {{#if witness.hasVariants}}
           <li>
-            <button {{action 'toggleVariants' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
+            <button {{action 'toggleWitness' witness.identifier}} class="variants_button -color{{index}} {{if witness.visible '-active'}}">
               {{witness.identifier}}
             </button>
             {{#pop-up}}
@@ -18,7 +18,7 @@
       {{/each}}
       {{#if content.otherVariants}}
         <li>
-          <button {{action 'toggleVariants' 'other'}} class="variants_button -other {{if otherVariantsVisible '-active'}}">
+          <button {{action 'toggleWitness' 'other'}} class="variants_button -other {{if otherVariantsVisible '-active'}}">
             <span class="sr-only">{{t 'otherVariants'}}</span>
           </button>
           {{#pop-up}}
