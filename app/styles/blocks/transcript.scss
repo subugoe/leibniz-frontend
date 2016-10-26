@@ -37,6 +37,15 @@
     border-radius: $br;
     padding: ($g / 4) 0;
 
+    .reference_end {
+      position:relative;
+
+      .svgline-helper {
+        position:absolute;
+        bottom:0;right:0;
+      }
+    }
+
     .math {
       background-color: #f0f0f0;
     }
