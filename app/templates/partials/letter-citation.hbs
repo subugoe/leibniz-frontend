@@ -6,14 +6,14 @@
   <p>
     {{content.absender_vorname}} {{content.absender_nachname}} an
     {{content.empfaenger_vorname}} {{content.empfaenger_nachname}},
-    {{content.ort}}, {{content.datum_anzeige}}, in:
+    {{content.ort}}, {{content.datum_anzeige}}, in:<br />
     Gottfried Wilhelm Leibniz, Sämtliche Schriften und Briefe,
     hrsg. v. d. Berlin-Brandenburgischen Akademie der Wissenschaften
     u. d. Akademie der Wissenschaften zu Göttingen, Berlin:
-    {{if (eq content.band '5') 'Akademie Verlag 2003' ''}}
-    {{if (eq content.band '6') 'Akademie Verlag 2004' ''}}
-    {{if (eq content.band '7') 'Akademie Verlag 2011' ''}}
-    {{if (eq content.band '8') 'De Gruyter Verlag 2015' ''}},
+    {{if (eq content.band '5') 'Akademie Verlag 2003,'}}
+    {{if (eq content.band '6') 'Akademie Verlag 2004,'}}
+    {{if (eq content.band '7') 'Akademie Verlag 2011,'}}
+    {{if (eq content.band '8') 'De Gruyter Verlag 2015,'}}<br />
     Reihe {{content.reihe}}, Bd. {{content.band}}, N. {{content.brief_nummer}}
   </p>
   <p>
