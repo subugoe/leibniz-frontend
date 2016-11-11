@@ -126,6 +126,10 @@ export default Ember.Mixin.create({
 
       // convert encoding of references in variants
       letter.variants.forEach( function(variant) {
+
+        // Convert XHTML to HTML5
+        variant.text_schnipsel = Ember.$('<span/>', { html: variant.text_schnipsel }).html();
+
           var varRefsIDs = [];
           var varRegStart = /<span class="start-reference -[a,c]footnote" data-id="([^"]+)".*?>/g;
           variant.text_schnipsel.replace(varRegStart, function (str, varRefID) {
