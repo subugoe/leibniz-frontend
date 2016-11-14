@@ -88,6 +88,13 @@
       padding: 0;
     }
   }
+
+  .roundbox {
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 0px 2px;
+    padding: 1px 2px;
+  }
 }
 
 .transcript_fulltext-not-available {

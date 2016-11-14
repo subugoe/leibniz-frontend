@@ -4,7 +4,7 @@
   &.-big-rectangle {
     border: 1px solid $text-color;
     display: inline-block;
-    height: 0.7em;
+    height: 0.75em;
     width: 1em;
   }
 
@@ -59,16 +59,145 @@
     vertical-align: super;
   }
 
-  &.-tall {
-    font-size: 1.5em;
-  }
-
   &.-unicode {
     font-family: fontello;
-  }
 
-  &.-normal {
-    font-style: normal;
+    &.-ain {
+      font-size: 1.7em;
+      position: relative;
+      bottom: -0.2em;
+      &:after {
+        content: "\E80F";
+      }
+    }
+
+    &.-curvedown {
+      font-style: normal;
+      font-size: 1.5em;
+      position: relative;
+      bottom: -0.3em;
+      &:after {
+        content: "\E810";
+      }
+    }
+
+    &.-curvepropto {
+      font-size: 1.2em;
+      position: relative;
+      bottom: -0.2em;
+      padding: 0 1px;
+      &:after {
+        content: "\E800";
+      }
+    }
+
+    &.-dgl {
+      font-size: 1.2em;
+      &:after {
+        content: "\E803";
+      }
+    }
+
+    &.-dmitstrich {
+      font-style: normal;
+      &:after {
+        content: "\E811";
+      }
+    }
+
+    &.-ligatou {
+      font-size: 0.8em;
+      &:after {
+        content: "\E804";
+      }
+    }
+
+    &.-ligatss {
+      font-size: 1.2em;
+      position: relative;
+      bottom: -0.15em;
+      &:after {
+        content: "\E801";
+      }
+    }
+
+    &.-linfty {
+      font-size: 1.3em;
+      position: relative;
+      bottom: -0.15em;
+      &:after {
+        content: "\E802";
+      }
+    }
+
+    &.-linftyone {
+      font-size: 1.5em;
+      position: relative;
+      bottom: 0.05em;
+      &:after {
+        content: "\E80A";
+      }
+    }
+
+    &.-linftytwo {
+      font-size: 1.5em;
+      position: relative;
+      bottom: 0.05em;
+      &:after {
+        content: "\E80B";
+      }
+    }
+
+    &.-linftythree {
+      font-size: 1.5em;
+      position: relative;
+      bottom: 0.05em;
+      &:after {
+        content: "\E80C";
+      }
+    }
+
+    &.-linftytwosquare {
+      font-size: 1.5em;
+      position: relative;
+      bottom: 0.05em;
+      &:after {
+        content: "\E809";
+      }
+    }
+
+    &.-loopand {
+      font-size: 1.7em;
+      position: relative;
+      bottom: -0.2em;
+      &:after {
+        content: "\E80E";
+      }
+    }
+
+    &.-ovd {
+      font-style: normal;
+      font-size: 1.1em;
+      margin-right: -0.4em;
+      &:after {
+        content: "\E813";
+      }
+    }
+
+    &.-pm {
+      font-size: 0.9em;
+      font-style: normal;
+      &:after {
+        content: "\E805";
+      }
+    }
+
+    &.-rechteck {
+      font-style: normal;
+      &:after {
+        content: "\E806";
+      }
+    }
   }
 }
 
