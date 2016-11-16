@@ -1,16 +1,29 @@
 .icon {
 
   line-height: 1em;
-
-  &.-saturn-stars {
-    font-size: 5em;
-  }
-
-  &.-saturn {
-    font-size: 2em;
-  }
   
   &.-unicode {
     font-family: fontello;
+
+    &.-curlyand {
+      font-size: 1.3em;
+      &:after {
+        content: "\E80D";
+      }
+    }
+
+    &.-saturn {
+      font-size: 3em;
+      &:after {
+        content: "\E807";
+      }
+    }
+
+    &.-saturnstars {
+      font-size: 5em;
+      &:after {
+        content: "\E808";
+      }
+    }
   }
 }
