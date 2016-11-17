@@ -95,7 +95,7 @@ export default Ember.Mixin.create({
         text = text.replace(/(<td [^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
         text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text;
         // Note: MathJax makes problems positioning elements, so there is another one positioned closely to bottom right of reference
-        text += '<span class="reference-end"><span class="svgline-helper"></span></span></span><!-- '+elem+' -->';
+        text += '<span class="svg-anchor">&nsbp;</span></span><!-- '+elem+' -->';
         return text;
       });
     });
