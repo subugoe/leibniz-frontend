@@ -30,10 +30,19 @@
     margin-left: $g;
   }
 
+  .reference, .reference * {
+    background-color: #f0f0f0;
+  }
+  .reference .reference, .reference .reference * {
+    background-color: #d4d4d4;
+  }
+  .reference .reference .reference, .reference .reference .reference * {
+    background-color: #c8c8c8;
+  }
+
   .reference {
     @include transition(color, background);
     cursor: pointer;
-    background-color: #f0f0f0;
     border-radius: $br;
     padding: ($g / 4) 0;
 
@@ -43,37 +52,17 @@
       width: 0px;
     }
 
-    .math {
-      background-color: #f0f0f0;
-    }
-
-    .reference {
-      background-color: #d4d4d4;
-
-      .math {
-        background-color: #d4d4d4;
-      }
-
-      .reference {
-        background-color: #c8c8c8;
-
-        .math {
-          background-color: #c8c8c8;
-        }
-      }
-    }
-
     &.-hover {
       color: $link-color;
       transition: none;
     }
 
-    &.-highlight {
-      box-shadow: 5px 5px 2px rgba(0,0,0,0.5);
+    &.-highlight, &.-highlight * {
+      background-color: #a8a8a8 !important;
+    }
 
-      .math {
-        border-radius: $br;
-      }
+    &.-image, &.-image * {
+      background: none;
     }
 
     &.-image {
