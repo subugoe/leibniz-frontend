@@ -178,9 +178,11 @@ export default Ember.Route.extend(Solr, {
       $variant.css( {top: variantTop} ).addClass('-visible');
 
       // Add click handler to highlight reference/variant pair
+      // as references can be hidden below others, it has to travel through dom elements
       var $group = $this.add($references.filter(`[data-id=${variantID}]`)).add($variant);
       $group.off('click').click( () => {
         $group.toggleClass('-highlight');
+        $group.find("*").toggleClass('-highlight');
         return false;
       });
 
