@@ -137,8 +137,8 @@ export default Ember.Mixin.create({
             return str;
           });
           varRefsIDs.forEach(function(varID) {
-            var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+varID+'"\/>(.*?)';
-            regex += '<span class="end-reference -([a,c]footnote)" data-id="'+varID+'"\/>';
+            var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+varID+'"><\/span>(.*?)';
+            regex += '<span class="end-reference -([a,c]footnote)" data-id="'+varID+'"><\/span>';
             regex = new RegExp(regex);
             variant.text_schnipsel = variant.text_schnipsel.replace(regex, function(str, type, text) {
               // no nested references assumed
