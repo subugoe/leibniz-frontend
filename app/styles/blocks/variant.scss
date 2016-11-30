@@ -88,7 +88,7 @@
 
   @for $i from 0 through 5 {
     &.-shift#{$i} {
-      padding-left: #{3 * $i}px;
+      padding-left: #{4 * $i}px;
     }
   }
 }
@@ -115,7 +115,7 @@
     content: " ";
     position: absolute;
     top: 0px;
-    left: #{$i * 3}px;
+    left: #{$i * 4}px;
     right: 0px;
     bottom: 0px;
     border-left: $border-width-bold $border-style $border-color-dark;
