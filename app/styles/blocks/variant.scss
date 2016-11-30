@@ -20,7 +20,7 @@
   }
 
   &.-highlight {
-    background-color: #a8a8a8 !important;
+    background-color: rgb(190, 190, 190) !important;
   }
 
   &.-visible {
@@ -45,8 +45,7 @@
     }
 
     &.-highlight {
-      background: $text-color-light;
-      color: white;
+      background-color: rgb(190, 190, 190) !important;
     }
 
     &.-image {

@@ -30,14 +30,16 @@
     margin-left: $g;
   }
 
-  .reference, .reference * {
-    background-color: #f0f0f0;
+  // references can be unorderly nested.
+  // make sure, the darker color is handed down all the way
+  .reference {
+    background-color: rgb(235, 235, 235);
   }
-  .reference .reference, .reference .reference * {
-    background-color: #d4d4d4;
+  .reference .reference {
+    background-color: rgb(220, 220, 210);
   }
-  .reference .reference .reference, .reference .reference .reference * {
-    background-color: #c8c8c8;
+  .reference .reference .reference {
+    background-color: rgb(205, 205, 205);
   }
 
   .reference {
@@ -58,7 +60,7 @@
     }
 
     &.-highlight, &.-highlight * {
-      background-color: #a8a8a8 !important;
+      background-color: rgb(190, 190, 190) !important;
     }
 
     &.-image, &.-image * {
