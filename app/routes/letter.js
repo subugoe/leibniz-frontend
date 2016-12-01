@@ -178,9 +178,11 @@ export default Ember.Route.extend(Solr, {
       $variant.css( {top: variantTop} ).addClass('-visible');
 
       // Add click handler to highlight reference/variant pair
+      // as references can be hidden below others, it has to travel through dom elements
       var $group = $this.add($references.filter(`[data-id=${variantID}]`)).add($variant);
       $group.off('click').click( () => {
         $group.toggleClass('-highlight');
+        $group.find("*").toggleClass('-highlight');
         return false;
       });
 
@@ -242,7 +244,7 @@ export default Ember.Route.extend(Solr, {
       if (reference.length !== 0) {
         let bottomRightElement = reference.children().last();
         let left = bottomRightElement.position().left;
-        let bottom = bottomRightElement.position().top + bottomRightElement.outerHeight()+7;
+        let bottom = bottomRightElement.position().top + bottomRightElement.outerHeight();
         // 14: padding right of .lane_content
         let pathD = `M ${left}, ${bottom - .5}
                      L ${$laneTranscript.width() - 14}, ${bottom - .5}

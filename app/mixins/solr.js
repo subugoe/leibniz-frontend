@@ -95,7 +95,7 @@ export default Ember.Mixin.create({
         text = text.replace(/(<td [^>]*?>)/g, `$1<span class="reference -${type}" data-id="${elem}">`);
         text = '<span class="reference -'+type+'" data-id="'+elem+'">'+text;
         // Note: MathJax makes problems positioning elements, so there is another one positioned closely to bottom right of reference
-        text += '<span class="reference-end" style="position:relative;"><span style="position:absolute;bottom:0;right:0;"></span></span></span><!-- '+elem+' -->';
+        text += '<span class="svg-anchor">&nsbp;</span></span><!-- '+elem+' -->';
         return text;
       });
     });
@@ -126,6 +126,10 @@ export default Ember.Mixin.create({
 
       // convert encoding of references in variants
       letter.variants.forEach( function(variant) {
+
+        // Convert XHTML to HTML5
+        variant.text_schnipsel = Ember.$('<span/>', { html: variant.text_schnipsel }).html();
+
           var varRefsIDs = [];
           var varRegStart = /<span class="start-reference -[a,c]footnote" data-id="([^"]+)".*?>/g;
           variant.text_schnipsel.replace(varRegStart, function (str, varRefID) {
@@ -133,8 +137,8 @@ export default Ember.Mixin.create({
             return str;
           });
           varRefsIDs.forEach(function(varID) {
-            var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+varID+'"\/>(.*?)';
-            regex += '<span class="end-reference -([a,c]footnote)" data-id="'+varID+'"\/>';
+            var regex = '<span class="start-reference -([a,c]footnote)" data-id="'+varID+'"><\/span>(.*?)';
+            regex += '<span class="end-reference -([a,c]footnote)" data-id="'+varID+'"><\/span>';
             regex = new RegExp(regex);
             variant.text_schnipsel = variant.text_schnipsel.replace(regex, function(str, type, text) {
               // no nested references assumed

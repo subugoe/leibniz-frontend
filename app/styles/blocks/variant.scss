@@ -20,8 +20,7 @@
   }
 
   &.-highlight {
-    background: $text-color-light;
-    color: white;
+    background-color: rgb(190, 190, 190) !important;
   }
 
   &.-visible {
@@ -46,8 +45,7 @@
     }
 
     &.-highlight {
-      background: $text-color-light;
-      color: white;
+      background-color: rgb(190, 190, 190) !important;
     }
 
     &.-image {
@@ -59,6 +57,13 @@
       padding: 0;
     }
 
+  }
+
+  .roundbox {
+    border: 1px solid;
+    border-radius: 5px 5px;
+    margin: 0px 2px;
+    padding: 1px 2px;
   }
 
   .source {
@@ -83,7 +88,7 @@
 
   @for $i from 0 through 5 {
     &.-shift#{$i} {
-      padding-left: #{3 * $i}px;
+      padding-left: #{4 * $i}px;
     }
   }
 }
@@ -110,7 +115,7 @@
     content: " ";
     position: absolute;
     top: 0px;
-    left: #{$i * 3}px;
+    left: #{$i * 4}px;
     right: 0px;
     bottom: 0px;
     border-left: $border-width-bold $border-style $border-color-dark;

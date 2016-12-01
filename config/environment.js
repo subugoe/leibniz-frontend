@@ -14,7 +14,7 @@ module.exports = function(environment) {
       'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"
     },
-    firstLetterID: 'l3714', // TODO: Get first letter ID from Solr
+    firstLetterID: 'l35202', // TODO: Get first letter ID from Solr
     solrURL: 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select',
     texName: false,
     locationType: 'auto',

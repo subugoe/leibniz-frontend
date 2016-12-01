@@ -30,31 +30,28 @@
     margin-left: $g;
   }
 
+  // references can be unorderly nested.
+  // make sure, the darker color is handed down all the way
+  .reference {
+    background-color: rgb(235, 235, 235);
+  }
+  .reference .reference {
+    background-color: rgb(220, 220, 210);
+  }
+  .reference .reference .reference {
+    background-color: rgb(205, 205, 205);
+  }
+
   .reference {
     @include transition(color, background);
     cursor: pointer;
-    background-color: #f0f0f0;
     border-radius: $br;
     padding: ($g / 4) 0;
 
-    .math {
-      background-color: #f0f0f0;
-    }
-
-    .reference {
-      background-color: #d4d4d4;
-
-      .math {
-        background-color: #d4d4d4;
-      }
-
-      .reference {
-        background-color: #c8c8c8;
-
-        .math {
-          background-color: #c8c8c8;
-        }
-      }
+    .svg-anchor {
+      display: inline-block;
+      visibility: hidden;
+      width: 0px;
     }
 
     &.-hover {
@@ -62,14 +59,12 @@
       transition: none;
     }
 
-    &.-highlight {
-      background: $text-color-light;
-      color: white;
+    &.-highlight, &.-highlight * {
+      background-color: rgb(190, 190, 190) !important;
+    }
 
-      .math {
-        background: $text-color-light;
-        border-radius: $br;
-      }
+    &.-image, &.-image * {
+      background: none;
     }
 
     &.-image {
@@ -80,6 +75,13 @@
       margin: $g 0;
       padding: 0;
     }
+  }
+
+  .roundbox {
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 0px 2px;
+    padding: 1px 2px;
   }
 }
 
