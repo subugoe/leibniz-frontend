@@ -29,35 +29,40 @@ export default Ember.Component.extend(Lane, {
   toggleVariants() {
     // variants are shown when:
     // one of their witnesses is active, or
-    // it has others or no witness and the "others"-button is active
+    // it has others or no witness and the "others"-button is active, or
+    // it has a witness which is never shown anyway (e.g. Lil)
 
-    this.get('content.variants').forEach((item, index, variants) => {
+    this.get('content.variants').forEach( (item, index, variants) => {
       var showVariant = false;
       var variant = variants.objectAt(index);
-      if (variant.textzeuge) {
+      if ( variant.textzeuge ) {
         variant.textzeuge.forEach((elem) => {
           let hasWitnessButtons = Ember.$('.variants .variants_button:contains("'+elem+'")');
-          if (hasWitnessButtons.length > 0) {
-            // witness has a button
+          if ( hasWitnessButtons.length > 0 ) {
+            // variants witness has a button which is shown
             hasWitnessButtons.each((index,elem) => {
               if(Ember.$(elem).hasClass('-active')) {
                 showVariant = true;
               }
             });
           } else {
-            // witness has no button
-            if (Ember.$('.variants .variants_button:contains("Sonstige")').hasClass('-active')) {
+            if ( Ember.$('.variants .variants_button:contains("'+elem+'")').length === 0 ) {
+              // variant has witness, but witness has no button at all (e.g. Lil)
               showVariant = true;
+            } else if ( Ember.$('.variants .variants_button:contains("Sonstige")').hasClass('-active') ) {
+              // variant has no witness
+              showVariant = true;
+            } else {
             }
           }
         });
       } else {
         // variant doesn't have a witness and is only shown when "others" are active
-        if (Ember.$('.variants .variants_button:contains("Sonstige")').hasClass('-active')) {
+        if ( Ember.$('.variants .variants_button:contains("Sonstige")').hasClass('-active') ) {
           showVariant = true;
         }
       }
-      if (showVariant === false) {
+      if ( showVariant === false ) {
         // respecting reference has to be de-highlighted
         var $references = Ember.$('.lane.transcript').find(`[data-id=${variant.id}], [data-ref-id=${variant.id}]`);
         $references.removeClass('-highlight');

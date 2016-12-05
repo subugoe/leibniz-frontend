@@ -5,4 +5,7 @@
       border-color: $color;
     }
   }
+  &.-color-1 {
+    border-color: $border-color-light;
+  }
 }
