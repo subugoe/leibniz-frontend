@@ -115,7 +115,12 @@ export default Ember.Mixin.create({
         if ( variant.textzeuge && letter.textzeuge_bezeichnung ) {
           variant.witnessesIndex = [];
           variant.textzeuge.forEach( function(elem, index) {
-            variant.witnessesIndex[index] = letter.textzeuge_bezeichnung.indexOf(elem)+1;
+            let zeugenIndex = letter.textzeuge_bezeichnung.indexOf(elem);
+            if (zeugenIndex === -1) {
+              variant.witnessesIndex[index] = '-1';
+            } else {
+              variant.witnessesIndex[index] = letter.textzeuge_bezeichnung.indexOf(elem)+1;
+            }
           });
         } else {
           // Letter contains variants without textual witnesses
