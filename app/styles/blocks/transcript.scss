@@ -32,13 +32,16 @@
 
   // references can be unorderly nested.
   // make sure, the darker color is handed down all the way
-  .reference {
+  .reference,
+  .reference .math {
     background-color: rgb(235, 235, 235);
   }
-  .reference .reference {
+  .reference .reference,
+  .reference .reference .math {
     background-color: rgb(220, 220, 210);
   }
-  .reference .reference .reference {
+  .reference .reference .reference,
+  .reference .reference .reference .math {
     background-color: rgb(205, 205, 205);
   }
 
@@ -59,11 +62,13 @@
       transition: none;
     }
 
-    &.-highlight, &.-highlight * {
+    &.-highlight,
+    &.-highlight * {
       background-color: rgb(190, 190, 190) !important;
     }
 
-    &.-image, &.-image * {
+    &.-image,
+    &.-image * {
       background: none;
     }
 
