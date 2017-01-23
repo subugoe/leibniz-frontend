@@ -98,6 +98,9 @@ export default Ember.Route.extend(Solr, {
           Ember.run.debounce(this, this.clearVariantConnectors, 333, true);
           Ember.run.debounce(this, this.positionVariants, 333);
         });
+
+        // remove links from popups
+        Ember.$('.pop-up a').contents().unwrap();
         this.controller.set('rendered', true);
       });
     });
