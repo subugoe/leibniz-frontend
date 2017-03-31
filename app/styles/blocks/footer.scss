@@ -1,0 +1,32 @@
+.footer {
+  @include border(top);
+  color: $text-color;
+  float: left;
+  justify-content: center;
+  padding: ($g / 2) ($g / 2) ($g / 2) (3 * $g);
+  position: relative;
+  text-shadow: 0 -1px 0 $shade-medium;
+  width: 100%;
+
+  a {
+    color: $alpha-color;
+
+    @include hover {
+      color: $alpha-color;
+    }
+  }
+
+  svg {
+    width: 60%;
+  }
+
+  .footer_links {
+    float: left;
+    a {
+      padding-right: (3 * $g);
+    }
+  }
+  .footer_logo {
+    float: right;
+  }
+}
