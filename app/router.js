@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('404', { path: '*path'});
+  this.route('start', { path: '/start'});
   this.route('letter', { path: '/letter/:letter_id' });
   this.route('search');
 });
