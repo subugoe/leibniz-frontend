@@ -1,12 +1,10 @@
-.footer {
+footer {
   @include border(top);
   color: $text-color;
   float: left;
-  justify-content: center;
-  padding: ($g / 2) ($g / 2) ($g / 2) (3 * $g);
-  position: relative;
   text-shadow: 0 -1px 0 $shade-medium;
   width: 100%;
+  position: relative;
 
   a {
     color: $alpha-color;
@@ -20,13 +18,20 @@
     width: 60%;
   }
 
+  .footer {
+    width: 50%;
+    margin: $g/2 auto;
+    display: flex;
+  }
+
   .footer_links {
-    float: left;
+    width: 50%;
     a {
       padding-right: (3 * $g);
     }
   }
   .footer_logo {
-    float: right;
+    width: 50%;
+    text-align: right;
   }
 }
