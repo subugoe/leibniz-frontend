@@ -20,11 +20,6 @@
   }
 }
 
-.content_start {
-  width: 50%;
-  margin: 2*$g auto;
-}
-
 .content_svg-overlay {
   pointer-events: none; // TODO: Find a way to ignore pointer events in IE<10
   position: absolute;
