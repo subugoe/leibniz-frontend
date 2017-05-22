@@ -7,7 +7,9 @@ test('toggle nav sidebar', function(assert) {
   var navRight;
   assert.expect(2);
 
-  visit('/');
+  // Make sure this letter actually exists
+  visit('/letter/l3715');
+
   andThen( () => {
     navRight = find('.nav').css('right');
   });

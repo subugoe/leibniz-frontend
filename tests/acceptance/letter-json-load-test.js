@@ -4,7 +4,9 @@ import moduleForAcceptance from 'leibniz-frontend/tests/helpers/module-for-accep
 moduleForAcceptance('Acceptance | letter json load');
 
 test('letter loaded and header rendered', function(assert) {
-  visit('/').then(function() {
+
+  // Make sure this letter actually exists
+  visit('/letter/l3715').then(function() {
     assert.ok(find('.header_heading').text().length > 0, 'header contains correspondents\' names');
   });
 });
