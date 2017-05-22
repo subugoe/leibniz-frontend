@@ -5,7 +5,7 @@ moduleForAcceptance('Acceptance | render variants');
 
 test('render variants', function(assert) {
   // Make sure this letter actually has variants
-  visit('/');
+  visit('/letter/l3715');
 
   andThen(function() {
     var variantsCount = find('.variants .variant').length;

@@ -4,6 +4,7 @@ import Scrolling from '../mixins/scrolling';
 
 export default Ember.Controller.extend(Scrolling, {
   baseURL: config.baseURL,
+  firstLetterID: config.firstLetterID,
   showNav: false,
   showSearch: true,
   actions: {

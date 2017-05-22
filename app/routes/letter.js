@@ -90,9 +90,11 @@ export default Ember.Route.extend(Solr, {
         // Store variant with MathJax and images to eliminate the need to re-run both
         // TODO: Would be nice if MathJax was able to render strings directly
         var variants = this.get('controller.model.variants');
-        variants.forEach( function(variant) {
-          Ember.set(variant, 'text_schnipsel', Ember.$('#' + variant.id + ' .variant_content').html());
-        });
+        if ( typeof variants !== 'undefined' ) {
+          variants.forEach(function (variant) {
+            Ember.set(variant, 'text_schnipsel', Ember.$('#' + variant.id + ' .variant_content').html());
+          });
+        }
 
         Ember.$('.lane').resize( () => {
           Ember.run.debounce(this, this.clearVariantConnectors, 333, true);

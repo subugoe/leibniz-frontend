@@ -5,7 +5,8 @@ moduleForAcceptance('Acceptance | header toggles test');
 
 test('toggle metadata', function(assert) {
   assert.expect(4);
-  visit('/');
+  // Make sure this letter actually exists
+  visit('/letter/l3715');
 
   click('button.header_toggle.-metadata');
   andThen( () => {

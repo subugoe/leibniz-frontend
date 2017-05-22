@@ -16,10 +16,11 @@
       {{#if content.volltext}}
         {{#each content.view.lanes as |lane index|}}
           {{#if index}}
-            {{!TODO: Find a way to omit those parameters}}
+          {{!TODO: Find a way to omit those parameters}}
             {{drag-handle beforeResize='clearVariantConnectors' afterResize='positionVariants'}}
           {{/if}}
-          {{component (concat 'lane-' lane.type) content=content lane=lane laneTypes=laneTypes positionVariants='positionVariants'}}
+          {{component (concat 'lane-' lane.type) content=content lane=lane laneTypes=laneTypes
+                      positionVariants='positionVariants'}}
         {{/each}}
       {{else}}
         <div class="lane">
@@ -30,22 +31,38 @@
 
   </main>
 
+  {{#footer-container}}
+    {{letter-footer}}
+  {{/footer-container}}
+
 {{else}}
 
   {{#header-container}}
     <div class="header_main">
       {{#if content.error}}
-        <h1 class="header_title">
-          {{{t 'databaseError'}}}
-        </h1>
-        <p>{{content.error}}</p>
+        <div class="header_title">
+          <h1 class="header_heading">
+            {{{t 'databaseError'}}}
+          </h1>
+          <p class="header_info">
+            {{content.error}}
+          </p>
+        </div>
       {{else}}
-        <h1 class="header_title">
-          404
-        </h1>
-        <p>{{{t 'letterNotExisting' id=content.id}}} {{#link-to 'index'}}{{t 'goToStart'}}{{/link-to}}</p>
+        <div class="header_title">
+          <h1 class="header_heading">
+            404
+          </h1>
+          <p class="header_info">
+            {{{t 'letterNotExisting' id=content.id}}} {{#link-to 'index'}}{{t 'goToStart'}}{{/link-to}}
+          </p>
+        </div>
       {{/if}}
     </div>
   {{/header-container}}
+
+  {{#footer-container}}
+    {{letter-footer}}
+  {{/footer-container}}
 
 {{/if}}
