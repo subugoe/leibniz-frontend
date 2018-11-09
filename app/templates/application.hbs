@@ -3,6 +3,17 @@
   <div class="top-bar">
     <a href="{{baseURL}}" class="top-bar_title">{{t 'leibnizLetters'}}</a>
     <div class="top-bar_right">
+      Leibniz-Korrespondenz mit:
+      <span class="header_current-letter" style="position: relative;">
+        <select>
+          <option value="l35202">
+            Karl Friedrich Gauss
+          </option>
+          <option value="l3612">
+            Johann Bernoulli
+          </option>
+        </select>
+      </span>
       {{#if showSearch}}
         <form class="top-bar_search" method="get">
           {{input value=query type=text class='top-bar_search-input' placeholder=(t 'searchNoun')}}
