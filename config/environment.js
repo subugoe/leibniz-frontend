@@ -15,7 +15,7 @@ module.exports = function(environment) {
       'media-src': "'self'"
     },
     firstLetterID: 'l35202', // TODO: Get first letter ID from Solr
-    solrURL: 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select',
+    solrURL: 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select',
     texName: false,
     locationType: 'auto',
     EmberENV: {
@@ -31,7 +31,7 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
-    ENV.solrURL = 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select';
+    ENV.solrURL = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select';
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -41,7 +41,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
-    ENV.solrURL = 'http://leibnizdev.sub.uni-goettingen.de/solr/leibniz/select';
+    ENV.solrURL = 'http://leibniz.sub.uni-goettingen.de/solr/leibniz/select';
 
     // Testem prefers this...
     ENV.baseURL = '/';
